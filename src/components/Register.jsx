@@ -1,6 +1,37 @@
 // 使用的 UI 元件：https://tailwindcomponents.com/component/simple-registersign-up-form
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+// 不用把 auth 從 firebase.js 引入嗎？
+import { app } from "@/utils/firebase"
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function Register() {
+  const navigate = useNavigate()
+
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+
+  // 按下註冊鈕
+  function onSubmit() {
+    const auth = getAuth(app);
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        // 註冊後把使用者導向首頁
+        navigate('/');
+        // const user = userCredential.user;
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log("errorCode: ", errorCode)
+        console.log("errorMessage: ", errorMessage)
+      });
+  }
+
   return (
     <>
       {/* component */}
@@ -239,7 +270,8 @@ export default function Register() {
                       <input
                         type="text"
                         className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                        placeholder="John"
+                        placeholder="Johnny"
+                        onChange={e => setFirstName(e.target.value)}
                       />
                     </div>
                   </div>
@@ -254,7 +286,8 @@ export default function Register() {
                       <input
                         type="text"
                         className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                        placeholder="Smith"
+                        placeholder="Fang"
+                        onChange={e => setLastName(e.target.value)}
                       />
                     </div>
                   </div>
@@ -271,7 +304,8 @@ export default function Register() {
                       <input
                         type="email"
                         className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                        placeholder="johnsmith@example.com"
+                        placeholder="iamhandsome@example.com"
+                        onChange={e => setEmail(e.target.value.trim())}
                       />
                     </div>
                   </div>
@@ -289,13 +323,16 @@ export default function Register() {
                         type="password"
                         className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                         placeholder="************"
+                        onChange={e => setPassword(e.target.value)}
                       />
                     </div>
                   </div>
                 </div>
                 <div className="flex -mx-3">
                   <div className="w-full px-3 mb-5">
-                    <button className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">
+                    <button
+                      className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"
+                      onClick={onSubmit}>
                       REGISTER NOW
                     </button>
                   </div>
