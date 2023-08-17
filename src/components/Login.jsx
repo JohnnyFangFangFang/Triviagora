@@ -17,13 +17,15 @@ export default function Login() {
 
 
   // 按下登入鈕
-  function onSubmit() {
+  function handleLoginClick(e) {
+    e.preventDefault(); // 防止表單自動提交
+
     const auth = getAuth(app);
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        // 登入後把使用者導向首頁
+        // 登入後把使用者導向個人頁面
         console.log("成功登入耶耶耶")
-        navigate('/');
+        navigate('/profile');
         // const user = userCredential.user;
         // ...
       })
@@ -83,9 +85,9 @@ export default function Login() {
               <div className="mt-8 flex justify-center text-lg text-black">
                 {/* 登入鈕 */}
                 <button
-                  type="submit"
+                  type="button"
                   className="rounded-3xl bg-yellow-400 bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600"
-                  onClick={onSubmit}
+                  onClick={handleLoginClick}
                 >
                   Login
                 </button>

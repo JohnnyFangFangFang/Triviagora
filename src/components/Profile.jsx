@@ -1,6 +1,29 @@
 // 使用的 UI 元件：https://tailwindcomponents.com/component/profile-page
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { app } from "@/utils/firebase"
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import LogoutBtn from './LogoutBtn';
 
 export default function Profile() {
+  const navigate = useNavigate()
+  const [email, setEmail] = useState('');
+
+  // 確認使用者登入狀態
+  useEffect(() => {
+    const auth = getAuth(app);
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setEmail(user.email);
+        console.log("使用者 ID：", user.uid)
+        console.log("使用者 email：", user.email);
+      } else {
+        // 若使用者登出則導回登入頁面
+        navigate('/login');
+      }
+    });
+  }, []); // 注意，這裡的空陣列意味著 useEffect 只在組件掛載和卸載時運行。
+
   return (
     <>
       <div className="bg-gray-100">
@@ -41,6 +64,7 @@ export default function Profile() {
         </div>
         {/* End of Navbar */}
 
+        {/* 主體 */}
         <div className="container mx-auto my-5 p-5">
           <div className="md:flex no-wrap md:-mx-2 ">
             {/* Left Side */}
@@ -96,6 +120,7 @@ export default function Profile() {
               </div>
               {/* End of friends card */}
             </div>
+
             {/* Right Side */}
             <div className="w-full md:w-9/12 mx-2 h-64">
               {/* Profile tab */}
@@ -138,7 +163,7 @@ export default function Profile() {
                     <div className="grid grid-cols-2">
                       <div className="px-4 py-2 font-semibold">Email.</div>
                       <div className="px-4 py-2">
-                        <a className="text-blue-800" href="mailto:jane@example.com">jane@example.com</a>
+                        <a className="text-blue-800" href="mailto:jane@example.com">{email}</a>
                       </div>
                     </div>
                     <div className="grid grid-cols-2">
@@ -211,6 +236,9 @@ export default function Profile() {
               {/* End of profile tab */}
             </div>
           </div>
+
+          {/* 登出鈕 */}
+          <LogoutBtn otherClass="mt-4" />
         </div>
       </div>
     </>
