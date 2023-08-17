@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 創造自定義的 class 樣式 */
+@layer utilities {
+  .border-test-red {
+    border: 3px solid red;
+  }
+  .border-test-blue {
+    border: 3px solid blue;
+  }
+  .border-test-green {
+    border: 3px solid green;
+  }
+}
+
 
 /* 以下是原本啟動後的預設項目，可先註解掉 */
 /* :root {
