@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { HomePage, RegisterPage, LoginPage, ProfilePage } from './pages'
+import { HomePage, RegisterPage, LoginPage, ProfilePage, PostTriviaPage } from './pages'
 
 function App() {
   const basename = import.meta.env.PUBLIC_URL
@@ -11,6 +11,7 @@ function App() {
           <Route path="register" element={<RegisterPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="profile" element={<ProfilePage />} />
+          <Route path="posttrivia" element={<PostTriviaPage />} />
         </Routes>
       </BrowserRouter>
     </>

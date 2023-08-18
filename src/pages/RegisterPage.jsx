@@ -1,10 +1,8 @@
 import Register from '@/components/Register.jsx'
 
-const RegisterPage = () => {
+export default function RegisterPage() {
 
   return (
     <Register />
   )
-};
-
-export default RegisterPage;
+}

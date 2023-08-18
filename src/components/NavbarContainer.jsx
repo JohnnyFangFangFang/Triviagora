@@ -125,6 +125,14 @@ export default function NavbarContainer({ children, currentPage }) {
                     <span className="select-none">Profile</span>
                   </a>
                 </li>
+                <li>
+                  <a
+                    className={` ${currentPage === 'PostTrivia' ? 'active' : ''} flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600`}
+                    href="posttrivia"
+                  >
+                    <span className="select-none">Post Trivia</span>
+                  </a>
+                </li>
               </ul>
             </div>
             {/* navigation group end*/}
