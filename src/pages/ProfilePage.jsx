@@ -1,9 +1,12 @@
+import NavbarContainer from '@/components/NavbarContainer';
 import Profile from '@/components/Profile.jsx'
 
 const ProfilePage = () => {
 
   return (
-    <Profile />
+    <NavbarContainer currentPage="Profile">
+      <Profile />
+    </NavbarContainer>
   )
 };
 

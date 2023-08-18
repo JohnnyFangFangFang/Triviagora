@@ -26,9 +26,9 @@ export default function Profile() {
 
   return (
     <>
-      <div className="bg-gray-100">
-        {/* Navbar */}
-        <div className="w-full text-white bg-blue-300">
+      <div className="bg-gray-100 mt-16">
+        {/* Navbar 先註解掉，用 NavbarContainer 來套 */}
+        {/* <div className="w-full text-white bg-blue-300">
           <div className="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
             <div className="p-4 flex flex-row items-center justify-between">
               <a href="#" className="text-lg font-semibold tracking-widest uppercase rounded-lg focus:outline-none focus:shadow-outline">example
@@ -58,10 +58,10 @@ export default function Profile() {
                     <a className="block px-4 py-2 mt-2 text-sm bg-white md:mt-0 focus:text-gray-900 hover:bg-indigo-100 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Logout</a>
                   </div>
                 </div> */}
-              </div>
+              {/* </div>
             </nav>
           </div>
-        </div>
+        </div> */}
         {/* End of Navbar */}
 
         {/* 主體 */}
