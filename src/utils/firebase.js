@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCKn5SlnuU392bjI1cnrF26CWS8y4JG0nw",
@@ -12,6 +13,7 @@ const firebaseConfig = {
 
 // 啟動 Firebase
 export const app = initializeApp(firebaseConfig);
-
 // 把驗證功能匯出
 export const auth = getAuth(app);
+// Initialize Cloud Firestore and get a reference to the service
+export const db = getFirestore(app);

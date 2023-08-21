@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 // 使用的 UI 元件：https://tailwindcomponents.com/component/user-post-card
 // UI 元件備案：https://tailwindcomponents.com/component/maede
 
 
-export default function TriviaItem() {
+export default function TriviaItem({ title, triviaContent }) {
 
   return (
     <div className="flex items-center justify-center min-h-max my-4">
@@ -20,16 +21,10 @@ export default function TriviaItem() {
           </div>
         </div>
         <div className="mt-4 mb-6">
-          <div className="mb-3 text-xl font-bold">
-            Nulla sed leo tempus, feugiat velit vel, rhoncus neque?
-          </div>
-          <div className="text-sm text-neutral-600">
-            Aliquam a tristique sapien, nec bibendum urna. Maecenas convallis
-            dignissim turpis, non suscipit mauris interdum at. Morbi sed gravida
-            nisl, a pharetra nulla. Etiam tincidunt turpis leo, ut mollis ipsum
-            consectetur quis. Etiam faucibus est risus, ac condimentum mauris
-            consequat nec. Curabitur eget feugiat massa
-          </div>
+          {/* 標題 */}
+          <div className="mb-3 text-xl font-bold">{title}</div>
+          {/* 內文 */}
+          <div className="text-sm text-neutral-600">{triviaContent}</div>
         </div>
         <div>
           <div className="flex items-center justify-between text-slate-500">

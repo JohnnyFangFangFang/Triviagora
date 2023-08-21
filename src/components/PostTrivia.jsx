@@ -1,7 +1,31 @@
 // 使用的 UI 元件 post：https://tailwindcomponents.com/component/post-making-form
 // 使用的 UI 元件 upload：https://tailwindcomponents.com/component/uploader-template
 
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "@/utils/firebase"
+
 export default function PostTrivia() {
+  const navigate = useNavigate()
+
+  const [title, setTitle] = useState('')
+  const [triviaContent, setTriviaContent] = useState('')
+
+  // 發文功能
+  async function handlePostTriviaClick() {
+    try {
+      const docRef = await addDoc(collection(db, "trivia"), {
+        title,
+        triviaContent,
+      });
+      console.log("成功發文，文章 ID: ", docRef.id)
+      // 成功發文後導回首頁
+      navigate('/')
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  }
 
   return (
     <>
@@ -52,17 +76,21 @@ export default function PostTrivia() {
 
         {/* 右側發文區 */}
         <div className="editor col-span-2 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg">
+          {/* 標題 */}
           <input
             className="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none"
             spellCheck="false"
             placeholder="Title"
             type="text"
+            onChange={e => setTitle(e.target.value)}
           />
+          {/* 內文 */}
           <textarea
             className="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none"
             spellCheck="false"
             placeholder="Describe everything about this post here"
             defaultValue={""}
+            onChange={e => setTriviaContent(e.target.value)}
           />
           {/* icons */}
           <div className="icons flex text-gray-500 m-2">
@@ -123,7 +151,10 @@ export default function PostTrivia() {
             <div className="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 ml-auto">
               Cancel
             </div>
-            <div className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500">
+            <div
+              className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500"
+              onClick={handlePostTriviaClick}
+            >
               Post
             </div>
           </div>
