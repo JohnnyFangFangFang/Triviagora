@@ -3,23 +3,47 @@
 
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/utils/firebase"
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default function PostTrivia() {
   const navigate = useNavigate()
 
   const [title, setTitle] = useState('')
   const [triviaContent, setTriviaContent] = useState('')
+  const [imageFile, setImageFile] = useState(null)
+
+  // Get a reference to the storage service, which is used to create references in your storage bucket
+  const storage = getStorage();
 
   // 發文功能
   async function handlePostTriviaClick() {
     try {
-      const docRef = await addDoc(collection(db, "trivia"), {
-        title,
-        triviaContent,
-      });
+      // 先傳入空物件，目的是先取得文章 id 當作圖片標題，後面再把文章本身內容填入
+      const docRef = await addDoc(collection(db, "trivia"), {});
       console.log("成功發文，文章 ID: ", docRef.id)
+
+      // 上傳檔案的附加資訊，例如檔名、大小和內容類型等
+      const metadata = {
+        contentType: imageFile.type,
+      };
+      // 告訴電腦我們是要指向 storage 裡的哪個檔
+      const fileRef = ref(storage, 'post-images/' + docRef.id);
+
+      // 把圖片上傳並填入文章內容
+      uploadBytes(fileRef, imageFile, metadata).then(() => {
+        getDownloadURL(fileRef).then(async (imageUrl) => {
+          await updateDoc(docRef, {
+            title,
+            triviaContent,
+            imageUrl,
+          });
+        })
+
+        console.log('成功上傳檔案與文章內容，爽啦！');
+      });
+
       // 成功發文後導回首頁
       navigate('/')
     } catch (e) {
@@ -61,6 +85,7 @@ export default function PostTrivia() {
                     className="text-sm cursor-pointer w-36 hidden"
                     type="file"
                     multiple=""
+                    onChange={(e) => setImageFile(e.target.files[0])}
                   />
                   <div className="text bg-indigo-600 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-indigo-500">
                     Select

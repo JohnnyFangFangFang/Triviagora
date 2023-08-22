@@ -12,14 +12,12 @@ export default function TriviaCollection() {
   useEffect(() => {
     const getAllTriviaAsync = async () => {
       const querySnapshot = await getDocs(collection(db, "trivia"));
-      console.log("一開始拿到的回傳值：", querySnapshot)
       const allTrivia = querySnapshot.docs.map((doc) => {
         // 回傳原本資料，再加上文章 id
         return { id: doc.id, ...doc.data() };
       });
       // 將擷取到的資料整理好存放到 state 裡
       setAllTrivia(allTrivia);
-      console.log("現在的 allTrivia 是啥：", allTrivia)
     }
     // 執行函式
     getAllTriviaAsync()
