@@ -7,7 +7,6 @@ export default function TriviaCollection() {
   const [allTrivia, setAllTrivia] = useState([]);
 
 
-
   // 從 Firebase 拿所有 trivia 資料
   useEffect(() => {
     const getAllTriviaAsync = async () => {
@@ -30,24 +29,16 @@ export default function TriviaCollection() {
 
       {/* 測試用 */}
       <div className="border-t-r">
-        {allTrivia &&
-          allTrivia.map((trivia) => {
-            const { id, title, triviaContent } = trivia
+        {allTrivia.length !== 0 ?
+          (allTrivia.map((trivia) => {
             return (
-              <TriviaItem
-                key={id}
-                title={title}
-                triviaContent={triviaContent}
-              />
+              // 使用 Spread Attributes 寫法較簡潔
+              <TriviaItem key={trivia.id} {...trivia} />
             );
-          })
+          })) : <></>
         }
-
       </div>
 
-      <TriviaItem />
-      <TriviaItem />
-      <TriviaItem />
     </div>
   )
 }

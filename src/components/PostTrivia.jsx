@@ -3,7 +3,7 @@
 
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { collection, addDoc, updateDoc } from "firebase/firestore";
+import { collection, addDoc, updateDoc, Timestamp } from "firebase/firestore";
 import { db } from "@/utils/firebase"
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
@@ -13,43 +13,64 @@ export default function PostTrivia() {
   const [title, setTitle] = useState('')
   const [triviaContent, setTriviaContent] = useState('')
   const [imageFile, setImageFile] = useState(null)
+  const [imageTempUrl, setImageTempUrl] = useState('');
 
-  // Get a reference to the storage service, which is used to create references in your storage bucket
+  // 暫存圖片 => 拿到暫時的 url => 立即顯示在畫面
+  function handleImageFileChange(e) {
+    const file = e.target.files[0];
+    setImageFile(file);
+    const url = URL.createObjectURL(file);
+    setImageTempUrl(url); // 暫存 URL 到 state
+  }
+
+  // 指引到檔案庫，方便待會串資料
   const storage = getStorage();
 
   // 發文功能
   async function handlePostTriviaClick() {
     try {
-      // 先傳入空物件，目的是先取得文章 id 當作圖片標題，後面再把文章本身內容填入
+      // 上傳文章但先傳入空物件，目的是先取得文章 id 當作圖片標題，後面再把文章本身內容填入
       const docRef = await addDoc(collection(db, "trivia"), {});
-      console.log("成功發文，文章 ID: ", docRef.id)
 
-      // 上傳檔案的附加資訊，例如檔名、大小和內容類型等
+      // 圖片檔附加資訊，例如檔名、大小和內容類型等
+      // 若 imageFile 存在則 contentType 為 imageFile.type
       const metadata = {
-        contentType: imageFile.type,
+        contentType: imageFile?.type,
       };
       // 告訴電腦我們是要指向 storage 裡的哪個檔
       const fileRef = ref(storage, 'post-images/' + docRef.id);
 
-      // 把圖片上傳並填入文章內容
-      uploadBytes(fileRef, imageFile, metadata).then(() => {
-        getDownloadURL(fileRef).then(async (imageUrl) => {
-          await updateDoc(docRef, {
-            title,
-            triviaContent,
-            imageUrl,
-          });
-        })
+      // 上傳圖片 => 拿到圖片 url => 更新文章填入內容
+      if (imageFile) {
+        uploadBytes(fileRef, imageFile, metadata).then(() => {
+          getDownloadURL(fileRef).then(async (imageUrl) => {
+            await updateDoc(docRef, {
+              title,
+              triviaContent,
+              createdAt: Timestamp.now(),
+              imageUrl,
+            });
+            console.log('成功上傳檔案與文章內容，爽啦！文章 ID: ', docRef.id);
+          })
+        });
+      } else {
 
-        console.log('成功上傳檔案與文章內容，爽啦！');
-      });
+        await updateDoc(docRef, {
+          title,
+          triviaContent,
+          createdAt: Timestamp.now(),
+        });
+        console.log('成功上傳文章內容，爽啦！文章 ID: ', docRef.id);
 
+      }
       // 成功發文後導回首頁
       navigate('/')
-    } catch (e) {
+    }
+    catch (e) {
       console.error("Error adding document: ", e);
     }
   }
+
 
   return (
     <>
@@ -59,7 +80,10 @@ export default function PostTrivia() {
 
       <div className="grid grid-cols-3">
         {/* 上傳圖片鈕 */}
-        <div className=" col-span-1 h-full flex bg-black bg-opacity-60">
+        <div
+          className=" col-span-1 h-full flex bg-black bg-opacity-60 bg-cover bg-center border-t-r"
+          style={{ backgroundImage: `url(${imageTempUrl})` }}
+        >
           <div className="extraOutline p-4 bg-white w-max m-auto rounded-lg">
             <div
               className="file_upload p-5 relative border-4 border-dotted border-gray-300 rounded-lg"
@@ -85,7 +109,7 @@ export default function PostTrivia() {
                     className="text-sm cursor-pointer w-36 hidden"
                     type="file"
                     multiple=""
-                    onChange={(e) => setImageFile(e.target.files[0])}
+                    onChange={handleImageFileChange}
                   />
                   <div className="text bg-indigo-600 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-indigo-500">
                     Select
