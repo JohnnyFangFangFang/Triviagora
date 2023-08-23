@@ -5,23 +5,24 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/utils/firebase"
 import NavbarContainer from '@/components/NavbarContainer';
 import ReactTimeAgo from 'react-time-ago'
-import TriviaCommentItem from '../components/TriviaCommentItem';
+import CommentCollection from '@/components/CommentCollection';
+import PostCommentModal from '@/components/PostCommentModal';
 
 export default function TriviaItemPage() {
-  const { id } = useParams(); // 從 URL 中取得文章 ID
+  console.log("看到這個代表畫面重新渲染一次")
+  const triviaId = useParams().id; // 從 URL 中取得文章 ID
 
   const [isLoading, setIsLoading] = useState(true);
   const [trivia, setTrivia] = useState({});
 
-  const docRef = doc(db, "trivia", id);
+  const triviaRef = doc(db, "trivia", triviaId);
 
   // 從 Firebase 拿該筆 trivia 資料
   useEffect(() => {
     const getTriviaItemAsync = async () => {
       setIsLoading(true);
       // const querySnapshot = await getDocs(collection(db, "trivia"));
-      const docSnap = await getDoc(docRef);
-      console.log("docSnap.data() 是什麼：", docSnap.data())
+      const docSnap = await getDoc(triviaRef);
       // 將擷取到的資料整理好存放到 state 裡
       setTrivia(docSnap.data());
       setIsLoading(false);
@@ -34,12 +35,16 @@ export default function TriviaItemPage() {
 
   return (
     <NavbarContainer currentPage="TriviaItem">
-      <TriviaItemForPage {...trivia} />
+      <TriviaItemForPage
+        {...trivia}
+        triviaId={triviaId}
+      />
     </NavbarContainer>
   );
 }
 
-export function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl }) {
+export function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl, triviaId }) {
+
   return (
     <div className="flex items-center justify-center min-h-max mt-20 border-t-r">
       {/* trivia 卡片 */}
@@ -73,8 +78,8 @@ export function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl })
           <div className="mt-4 text-xl text-neutral-600">{triviaContent}</div>
         </div>
 
+        {/* 留言、按讚 icon 區 */}
         <div>
-          {/* 留言、按讚 icon 區 */}
           <div className="flex items-center justify-between text-slate-500 border-b pb-3">
             <div className="flex space-x-4 md:space-x-8">
               {/* 留言數 */}
@@ -114,16 +119,15 @@ export function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl })
                 <span>4</span>
               </div>
               {/* 留言功能 */}
-              <button className='rounded-full p-2 bg-red-200 hover:bg-slate-600 hover:text-white'>I wanna comment</button>
+              <PostCommentModal triviaId={triviaId} />
             </div>
           </div>
         </div>
         {/* 留言區 */}
         <div className='mt-3 text-3xl font-bold text-slate-400'>測試留言區</div>
-        <TriviaCommentItem />
-        <TriviaCommentItem />
-        <TriviaCommentItem />
+        <CommentCollection triviaId={triviaId} />
       </div>
+
     </div>
   )
 }
