@@ -5,6 +5,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/utils/firebase"
 import NavbarContainer from '@/components/NavbarContainer';
 import ReactTimeAgo from 'react-time-ago'
+import TriviaCommentItem from '../components/TriviaCommentItem';
 
 export default function TriviaItemPage() {
   const { id } = useParams(); // 從 URL 中取得文章 ID
@@ -76,7 +77,7 @@ export function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl })
           {/* 留言、按讚 icon 區 */}
           <div className="flex items-center justify-between text-slate-500 border-b pb-3">
             <div className="flex space-x-4 md:space-x-8">
-              {/* 留言 */}
+              {/* 留言數 */}
               <div className="flex cursor-pointer items-center transition hover:text-slate-600">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -112,11 +113,16 @@ export function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl })
                 </svg>
                 <span>4</span>
               </div>
+              {/* 留言功能 */}
+              <button className='rounded-full p-2 bg-red-200 hover:bg-slate-600 hover:text-white'>I wanna comment</button>
             </div>
           </div>
         </div>
         {/* 留言區 */}
         <div className='mt-3 text-3xl font-bold text-slate-400'>測試留言區</div>
+        <TriviaCommentItem />
+        <TriviaCommentItem />
+        <TriviaCommentItem />
       </div>
     </div>
   )
