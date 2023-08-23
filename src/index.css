@@ -14,6 +14,11 @@
   .border-t-g {
     border: 3px solid green;
   }
+  /* 高度為寬度 40% */
+  .heightToWidth-40 {
+    aspect-ratio: 100 / 40;
+    width: 100%;
+  }
 }
 
 /* 以下是原本啟動後的預設項目，可先註解掉 */

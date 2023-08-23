@@ -25,9 +25,9 @@ export default function TriviaCollection() {
     getAllTriviaAsync()
   }, []); // 注意，這裡的空陣列意味著 useEffect 只在組件掛載和卸載時運行。
 
-
+  // 如果還在 loading 那就顯示 Loading 字樣，loading 結束再渲染真正內容
   if (isLoading) return <div className="mt-24">Loading...</div>;
-  
+
   return (
     <div className="mt-24">
 

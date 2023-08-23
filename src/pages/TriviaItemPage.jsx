@@ -38,7 +38,7 @@ export default function TriviaItemPage() {
   );
 }
 
-export function TriviaItemForPage({ title, triviaContent, createdAt }) {
+export function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl }) {
   return (
     <div className="flex items-center justify-center min-h-max mt-20 border-t-r">
       {/* trivia 卡片 */}
@@ -49,24 +49,24 @@ export function TriviaItemForPage({ title, triviaContent, createdAt }) {
             <div className="text-3xl font-bold">{title}</div>
           </div>
           <div className="flex items-center space-x-8">
-            <button className="rounded-2xl border bg-neutral-100 px-3 py-1 text-xs font-semibold">
+            {/* 頭像與使用者名稱 */}
+            <div className="flex items-center space-x-3">
+              <div className="h-16 w-16 rounded-full bg-slate-400 bg-[url('https://i.pravatar.cc/32')]" />
+              <div className="text-lg font-bold text-slate-700">Joe Smith</div>
+            </div>
+            {/* 類別標籤，暫時省略 */}
+            {/* <button className="rounded-2xl border bg-neutral-100 px-3 py-1 text-xs font-semibold">
               Category
-            </button>
+            </button> */}
             <div className="text-lg text-neutral-500">
-              {/* 下個條件式，不然一開始資料還沒來，日期是 undefined */}
-              {createdAt ? (
-                <ReactTimeAgo date={createdAt?.toDate()} locale="en-US" timeStyle="twitter" />
-              ) : (
-                'No date available'
-              )}
+              <ReactTimeAgo date={createdAt?.toDate()} locale="en-US" timeStyle="twitter" />
             </div>
           </div>
         </div>
         <div className="mt-4 mb-6">
-          {/* 頭像與使用者名稱 */}
-          <div className="flex items-center space-x-3">
-            <div className="h-16 w-16 rounded-full bg-slate-400 bg-[url('https://i.pravatar.cc/32')]" />
-            <div className="text-lg font-bold text-slate-700">Joe Smith</div>
+          {/* 該篇 trivia 圖片，高度為寬度 40% */}
+          <div className="heightToWidth-40 flex justify-center">
+            <img src={imageUrl} alt="trivia image" className="object-cover h-full rounded-lg shadow-lg" />
           </div>
           {/* 內文 */}
           <div className="mt-4 text-xl text-neutral-600">{triviaContent}</div>
