@@ -9,6 +9,7 @@ import ReactTimeAgo from 'react-time-ago'
 export default function TriviaItemPage() {
   const { id } = useParams(); // 從 URL 中取得文章 ID
 
+  const [isLoading, setIsLoading] = useState(true);
   const [trivia, setTrivia] = useState({});
 
   const docRef = doc(db, "trivia", id);
@@ -16,15 +17,19 @@ export default function TriviaItemPage() {
   // 從 Firebase 拿該筆 trivia 資料
   useEffect(() => {
     const getTriviaItemAsync = async () => {
+      setIsLoading(true);
       // const querySnapshot = await getDocs(collection(db, "trivia"));
       const docSnap = await getDoc(docRef);
       console.log("docSnap.data() 是什麼：", docSnap.data())
       // 將擷取到的資料整理好存放到 state 裡
       setTrivia(docSnap.data());
+      setIsLoading(false);
     }
     // 執行函式
     getTriviaItemAsync()
   }, []); // 注意，這裡的空陣列意味著 useEffect 只在組件掛載和卸載時運行。
+
+  if (isLoading) return <div className="mt-24">Loading...</div>;
 
   return (
     <NavbarContainer currentPage="TriviaItem">
