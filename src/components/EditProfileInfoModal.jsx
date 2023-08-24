@@ -4,9 +4,9 @@
 import { useState } from 'react';
 // import { collection, addDoc, Timestamp } from "firebase/firestore";
 // import { db } from "@/utils/firebase"
-import { getAuth, updateProfile } from "firebase/auth";
+import { getAuth, updateProfile, updateEmail } from "firebase/auth";
 
-export default function EditProfileModal({ setDisplayName }) {
+export default function EditProfileInfoModal({ editContent, setDisplayName, setEmail }) {
   const [showModal, setShowModal] = useState(false);
   const [profileInfo, setProfileInfo] = useState('');
 
@@ -15,19 +15,41 @@ export default function EditProfileModal({ setDisplayName }) {
     setShowModal(!showModal);
   };
 
-  // 將留言送出到 Firebase
-  async function handleDoneClick() {
+  // 資料編輯完成後送出
+  function handleDoneClick() {
     const auth = getAuth();
-    updateProfile(auth.currentUser, {
-      displayName: profileInfo,
-    }).then(() => {
-      console.log("Profile updated!")
-      // 更改父層元件資訊並重新渲染頁面以顯示最新資訊
-      setDisplayName()
-      toggleModal()
-    }).catch((error) => {
-      console.log(error)
-    });
+
+    switch (editContent) {
+      // 更改使用者名稱
+      case 'displayName':
+        updateProfile(auth.currentUser, {
+          displayName: profileInfo,
+        }).then(() => {
+          console.log("displayName updated!")
+          // 更改父層元件資訊並重新渲染頁面以顯示最新資訊
+          setDisplayName()
+          toggleModal()
+        }).catch((error) => {
+          console.log(error)
+        });
+        break;
+      // 更改 email
+      case 'email':
+        updateEmail(auth.currentUser, profileInfo).then(() => {
+          console.log("email updated!")
+          // 更改父層元件資訊並重新渲染頁面以顯示最新資訊
+          setEmail()
+          toggleModal()
+        }).catch((error) => {
+          console.log(error)
+        });
+        break;
+      default:
+        console.log(`Sorry, we are out of ${editContent}.`);
+    }
+
+
+
   }
 
   return (

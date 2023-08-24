@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { app } from "@/utils/firebase"
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import LogoutBtn from './LogoutBtn';
-import EditProfileModal from './EditProfileModal';
+import EditProfileInfoModal from './EditProfileInfoModal';
 
 export default function Profile() {
   const navigate = useNavigate()
@@ -32,7 +32,7 @@ export default function Profile() {
       }
       setIsLoading(false);
     });
-  }, [displayName]); // 注意，這裡的空陣列意味著 useEffect 只在組件掛載和卸載時運行。
+  }, [displayName, email]);
 
 
   // 如果還在 loading 那就顯示 Loading 字樣，loading 結束再渲染真正內容
@@ -117,7 +117,10 @@ export default function Profile() {
                     <div className="grid grid-cols-3 my-1">
                       <div className="px-4 py-2 font-semibold">Display Name</div>
                       <div className="px-4 py-2">{displayName}</div>
-                      <EditProfileModal setDisplayName={setDisplayName} />
+                      <EditProfileInfoModal
+                        setDisplayName={setDisplayName}
+                        editContent="displayName"
+                      />
                     </div>
                     {/* 使用者 email */}
                     <div className="grid grid-cols-3 my-1">
@@ -125,13 +128,16 @@ export default function Profile() {
                       <div className="px-4 py-2">
                         <a className="text-blue-800" href="mailto:jane@example.com">{email}</a>
                       </div>
-                      <EditProfileModal />
+                      <EditProfileInfoModal
+                        setEmail={setEmail}
+                        editContent="email"
+                      />
                     </div>
                     {/* 使用者密碼 */}
                     <div className="grid grid-cols-3 my-1">
                       <div className="px-4 py-2 font-semibold">Password</div>
                       <div className="px-4 py-2">******</div>
-                      <EditProfileModal />
+                      <EditProfileInfoModal />
                     </div>
                   </div>
                 </div>

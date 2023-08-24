@@ -34,6 +34,14 @@ export default function Login() {
         const errorMessage = error.message;
         console.log("errorCode: ", errorCode)
         console.log("errorMessage: ", errorMessage)
+        // 帳號輸入錯誤提示
+        if (errorCode === "auth/user-not-found") {
+          confirm(`User is not found. Please check whether the email is correct or please register first.`)
+        }
+        // 密碼輸入錯誤提示
+        if (errorCode === "auth/wrong-password") {
+          confirm(`Wrong password, please check again.`)
+        }
       });
   }
 
