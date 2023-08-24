@@ -2,8 +2,6 @@
 // 使用的 UI 元件：https://tailwindcomponents.com/component/tailwind-css-modal
 
 import { useState } from 'react';
-// import { collection, addDoc, Timestamp } from "firebase/firestore";
-// import { db } from "@/utils/firebase"
 import { getAuth, updateProfile, updateEmail, updatePassword } from "firebase/auth";
 
 export default function EditProfileInfoModal({ editContent, setDisplayName, setEmail }) {
@@ -11,53 +9,61 @@ export default function EditProfileInfoModal({ editContent, setDisplayName, setE
   const [profileInfo, setProfileInfo] = useState('');
 
   // 控制彈跳視窗
-  const toggleModal = () => {
+  function toggleModal() {
     setShowModal(!showModal);
-  };
+  }
 
   // 資料編輯完成後送出
   function handleDoneClick() {
     const auth = getAuth();
 
-    switch (editContent) {
-      // 更改使用者名稱
-      case 'displayName':
-        updateProfile(auth.currentUser, {
-          displayName: profileInfo,
-        }).then(() => {
-          console.log("displayName updated!")
-          // 更改父層元件資訊並重新渲染頁面以顯示最新資訊
-          setDisplayName()
-          toggleModal()
-        }).catch((error) => {
-          console.log(error)
-        });
-        break;
-      // 更改 email
-      case 'email':
-        updateEmail(auth.currentUser, profileInfo).then(() => {
-          console.log("email updated!")
-          // 更改父層元件資訊並重新渲染頁面以顯示最新資訊
-          setEmail()
-          toggleModal()
-        }).catch((error) => {
-          console.log(error)
-        });
-        break;
-      // 更改密碼
-      case 'password':
-        updatePassword(auth.currentUser, profileInfo).then(() => {
-          console.log("password updated!")
-          confirm("password updated!")
-          // 不用更改父層元件因為密碼不會顯示
-          toggleModal()
-        }).catch((error) => {
-          confirm(error.message)
-        });
-        break;
-      default:
-        console.log(`Sorry, we are out of ${editContent}.`);
+    // 先加個條件式判斷使用者是否輸入東西，若沒輸入就想送出則跳提醒
+    if (profileInfo === '') {
+      confirm('You did not edit anything, please check again.')
+    } else {
+      // 若確定有輸入資料則馬上進行至尊對決，啊不是，是根據情境進行不同動作
+      switch (editContent) {
+        // 更改使用者名稱
+        case 'displayName':
+          updateProfile(auth.currentUser, {
+            displayName: profileInfo,
+          }).then(() => {
+            console.log("displayName updated!")
+            // 更改父層元件資訊並重新渲染頁面以顯示最新資訊
+            setDisplayName()
+            toggleModal()
+          }).catch((error) => {
+            console.log(error)
+          });
+          break;
+        // 更改 email
+        case 'email':
+          updateEmail(auth.currentUser, profileInfo).then(() => {
+            console.log("email updated!")
+            // 更改父層元件資訊並重新渲染頁面以顯示最新資訊
+            setEmail()
+            toggleModal()
+          }).catch((error) => {
+            console.log(error)
+          });
+          break;
+        // 更改密碼
+        case 'password':
+          updatePassword(auth.currentUser, profileInfo).then(() => {
+            console.log("password updated!")
+            confirm("password updated!")
+            // 不用更改父層元件因為密碼不會顯示
+            toggleModal()
+          }).catch((error) => {
+            confirm(error.message)
+          });
+          break;
+        default:
+          console.log(`Sorry, we are out of ${editContent}.`);
+      }
     }
+
+
 
 
 

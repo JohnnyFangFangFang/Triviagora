@@ -2,8 +2,6 @@
 // 使用的 UI 元件：https://tailwindcomponents.com/component/tailwind-css-modal
 
 import { useState } from 'react';
-// import { collection, addDoc, Timestamp } from "firebase/firestore";
-// import { db } from "@/utils/firebase"
 import { getAuth, updateProfile } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
@@ -34,7 +32,7 @@ export default function EditProfilePhotoModal({ userId, isPhotoChanged, setIsPho
       // 告訴電腦我們是要指向 storage 裡的哪個檔
       const fileRef = ref(storage, 'user-photos/' + userId);
 
-      // 上傳圖片 => 拿到圖片 url => 更新文章填入內容
+      // 上傳圖片 => 拿到圖片 url => 更新大頭照
       if (imageFile) {
         uploadBytes(fileRef, imageFile, metadata).then(() => {
           getDownloadURL(fileRef).then((imageUrl) => {
@@ -53,6 +51,7 @@ export default function EditProfilePhotoModal({ userId, isPhotoChanged, setIsPho
           })
         });
       } else {
+        // 如果沒上傳圖片就按送出會跳提醒
         confirm('Please check if you upload the photo successfully.')
       }
     }
@@ -62,16 +61,16 @@ export default function EditProfilePhotoModal({ userId, isPhotoChanged, setIsPho
   }
 
   // 控制彈跳視窗
-  const toggleModal = () => {
+  function toggleModal() {
     setShowModal(!showModal);
-  };
+  }
 
 
   return (
     <div className="max-w-2xl mx-auto">
       {/* Modal toggle */}
       <button
-        className="block absolute bottom-0 right-0 rounded-lg p-2 text-xs bg-gray-200 hover:bg-gray-600 hover:text-white focus:ring-4 focus:ring-orange-300 "
+        className="block absolute bottom-0 right-0 rounded-lg p-2 text-xs bg-gray-200 hover:bg-gray-600 hover:text-white focus:ring-4 focus:ring-orange-300 opacity-75"
         type="button"
         onClick={toggleModal}
       >

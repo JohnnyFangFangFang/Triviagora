@@ -46,7 +46,7 @@ export default function Profile() {
         <div className="container mx-auto my-5 p-5">
           <div className="md:flex no-wrap md:-mx-2 ">
             {/* Left Side */}
-            <div className="w-full md:w-3/12 md:mx-2">
+            <div className="w-full mx-2 md:w-3/12">
               {/* Profile Card */}
               <div className="bg-white p-3 border-t-4 border-green-400">
                 {/* 大頭照 */}
@@ -77,37 +77,39 @@ export default function Profile() {
                 </ul>
               </div>
               {/* End of profile card */}
-              <div className="my-4" />
-              {/* Friends card */}
-              <div className="bg-white p-3 hover:shadow">
-                <div className="flex items-center space-x-3 font-semibold text-gray-900 text-xl leading-8">
-                  <span className="text-green-500">
-                    <svg className="h-5 fill-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
-                  </span>
-                  <span>Similar Profiles</span>
+
+              {/* Friends card，暫時不會用到 */}
+              {/* <div className="my-4">
+                <div className="bg-white p-3 hover:shadow">
+                  <div className="flex items-center space-x-3 font-semibold text-gray-900 text-xl leading-8">
+                    <span className="text-green-500">
+                      <svg className="h-5 fill-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                      </svg>
+                    </span>
+                    <span>Similar Profiles</span>
+                  </div>
+                  <div className="grid grid-cols-3">
+                    <div className="text-center my-2">
+                      <img className="h-16 w-16 rounded-full mx-auto" src="https://cdn.australianageingagenda.com.au/wp-content/uploads/2015/06/28085920/Phil-Beckett-2-e1435107243361.jpg" alt="" />
+                      <a href="#" className="text-main-color">Kojstantin</a>
+                    </div>
+                    <div className="text-center my-2">
+                      <img className="h-16 w-16 rounded-full mx-auto" src="https://avatars2.githubusercontent.com/u/24622175?s=60&v=4" alt="" />
+                      <a href="#" className="text-main-color">James</a>
+                    </div>
+                    <div className="text-center my-2">
+                      <img className="h-16 w-16 rounded-full mx-auto" src="https://picsum.photos/500" alt="" />
+                      <a href="#" className="text-main-color">Natie</a>
+                    </div>
+                  </div>
                 </div>
-                <div className="grid grid-cols-3">
-                  <div className="text-center my-2">
-                    <img className="h-16 w-16 rounded-full mx-auto" src="https://cdn.australianageingagenda.com.au/wp-content/uploads/2015/06/28085920/Phil-Beckett-2-e1435107243361.jpg" alt="" />
-                    <a href="#" className="text-main-color">Kojstantin</a>
-                  </div>
-                  <div className="text-center my-2">
-                    <img className="h-16 w-16 rounded-full mx-auto" src="https://avatars2.githubusercontent.com/u/24622175?s=60&v=4" alt="" />
-                    <a href="#" className="text-main-color">James</a>
-                  </div>
-                  <div className="text-center my-2">
-                    <img className="h-16 w-16 rounded-full mx-auto" src="https://picsum.photos/500" alt="" />
-                    <a href="#" className="text-main-color">Natie</a>
-                  </div>
-                </div>
-              </div>
+              </div> */}
               {/* End of friends card */}
             </div>
 
             {/* Right Side */}
-            <div className="w-full md:w-9/12 mx-2 h-64">
+            <div className="w-full mx-2 h-64 md:w-9/12">
               {/* Profile tab */}
               {/* About Section */}
               <div className="bg-white p-3 shadow-sm rounded-sm">

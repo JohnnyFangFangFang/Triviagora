@@ -1,19 +1,23 @@
 // 使用的 UI 元件 post：https://tailwindcomponents.com/component/post-making-form
 // 使用的 UI 元件 upload：https://tailwindcomponents.com/component/uploader-template
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { collection, addDoc, updateDoc, Timestamp } from "firebase/firestore";
-import { db } from "@/utils/firebase"
+import { db, app } from "@/utils/firebase"
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default function PostTrivia() {
   const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(true);
 
   const [title, setTitle] = useState('')
   const [triviaContent, setTriviaContent] = useState('')
   const [imageFile, setImageFile] = useState(null)
   const [imageTempUrl, setImageTempUrl] = useState('');
+  const [userId, setUserId] = useState('');
+
 
   // 暫存圖片 => 拿到暫時的 url => 立即顯示在畫面
   function handleImageFileChange(e) {
@@ -45,6 +49,7 @@ export default function PostTrivia() {
         uploadBytes(fileRef, imageFile, metadata).then(() => {
           getDownloadURL(fileRef).then(async (imageUrl) => {
             await updateDoc(docRef, {
+              userId,
               title,
               triviaContent,
               createdAt: Timestamp.now(),
@@ -71,6 +76,23 @@ export default function PostTrivia() {
     }
   }
 
+  // 確認使用者登入狀態，以方便抓到發文者 ID
+  useEffect(() => {
+    const auth = getAuth(app);
+    onAuthStateChanged(auth, (user) => {
+      setIsLoading(true);
+      if (user) {
+        setUserId(user.uid)
+      } else {
+        // 若使用者登出則導回登入頁面
+        navigate('/login');
+      }
+      setIsLoading(false);
+    });
+  }, []);
+
+  // 如果還在 loading 那就顯示 Loading 字樣，loading 結束再渲染真正內容
+  if (isLoading) return <div className="mt-24">Loading...</div>;
 
   return (
     <>
