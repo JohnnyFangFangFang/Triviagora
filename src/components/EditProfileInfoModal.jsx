@@ -4,7 +4,7 @@
 import { useState } from 'react';
 // import { collection, addDoc, Timestamp } from "firebase/firestore";
 // import { db } from "@/utils/firebase"
-import { getAuth, updateProfile, updateEmail } from "firebase/auth";
+import { getAuth, updateProfile, updateEmail, updatePassword } from "firebase/auth";
 
 export default function EditProfileInfoModal({ editContent, setDisplayName, setEmail }) {
   const [showModal, setShowModal] = useState(false);
@@ -42,6 +42,17 @@ export default function EditProfileInfoModal({ editContent, setDisplayName, setE
           toggleModal()
         }).catch((error) => {
           console.log(error)
+        });
+        break;
+      // 更改密碼
+      case 'password':
+        updatePassword(auth.currentUser, profileInfo).then(() => {
+          console.log("password updated!")
+          confirm("password updated!")
+          // 不用更改父層元件因為密碼不會顯示
+          toggleModal()
+        }).catch((error) => {
+          confirm(error.message)
         });
         break;
       default:
