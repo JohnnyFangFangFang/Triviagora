@@ -8,8 +8,8 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 export default function Register() {
   const navigate = useNavigate()
 
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
+  // const [firstName, setFirstName] = useState('')
+  // const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -258,7 +258,8 @@ export default function Register() {
                 <p>Enter your information to register</p>
               </div>
               <div>
-                <div className="flex -mx-3">
+                {/* 姓名區，先省略 */}
+                {/* <div className="flex -mx-3 border-t-r">
                   <div className="w-1/2 px-3 mb-5">
                     <label htmlFor="" className="text-xs font-semibold px-1">
                       First name
@@ -271,7 +272,7 @@ export default function Register() {
                         type="text"
                         className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                         placeholder="Johnny"
-                        onChange={e => setFirstName(e.target.value)}
+                        // onChange={e => setFirstName(e.target.value)}
                       />
                     </div>
                   </div>
@@ -287,11 +288,11 @@ export default function Register() {
                         type="text"
                         className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                         placeholder="Fang"
-                        onChange={e => setLastName(e.target.value)}
+                        // onChange={e => setLastName(e.target.value)}
                       />
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="flex -mx-3">
                   <div className="w-full px-3 mb-5">
                     <label htmlFor="" className="text-xs font-semibold px-1">

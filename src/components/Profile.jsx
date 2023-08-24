@@ -4,66 +4,43 @@ import { useNavigate } from 'react-router-dom';
 import { app } from "@/utils/firebase"
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import LogoutBtn from './LogoutBtn';
+import EditProfileModal from './EditProfileModal';
 
 export default function Profile() {
   const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(true);
   const [email, setEmail] = useState('');
+  const [displayName, setDisplayName] = useState('');
+
+  // 修改使用者名稱
+  // function handleEditDisplayNameClick() {
+
+  // }
 
   // 確認使用者登入狀態
   useEffect(() => {
     const auth = getAuth(app);
     onAuthStateChanged(auth, (user) => {
+      setIsLoading(true);
       if (user) {
         setEmail(user.email);
-        console.log("使用者 ID：", user.uid)
-        console.log("使用者 email：", user.email);
+        setDisplayName(user.displayName || "Please edit your display name")
+
       } else {
         // 若使用者登出則導回登入頁面
         navigate('/login');
       }
+      setIsLoading(false);
     });
-  }, []); // 注意，這裡的空陣列意味著 useEffect 只在組件掛載和卸載時運行。
+  }, [displayName]); // 注意，這裡的空陣列意味著 useEffect 只在組件掛載和卸載時運行。
+
+
+  // 如果還在 loading 那就顯示 Loading 字樣，loading 結束再渲染真正內容
+  if (isLoading) return <div className="mt-24">Loading...</div>;
 
   return (
     <>
       <div className="bg-gray-100 mt-16">
-        {/* Navbar 先註解掉，用 NavbarContainer 來套 */}
-        {/* <div className="w-full text-white bg-blue-300">
-          <div className="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
-            <div className="p-4 flex flex-row items-center justify-between">
-              <a href="#" className="text-lg font-semibold tracking-widest uppercase rounded-lg focus:outline-none focus:shadow-outline">example
-                profile</a>
-              <button className="md:hidden rounded-lg focus:outline-none focus:shadow-outline" >
-                <svg fill="currentColor" viewBox="0 0 20 20" className="w-6 h-6">
-                  <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clipRule="evenodd" />
-                  <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
-              </button>
-            </div>
-            <nav className="flex-col flex-grow pb-4 md:pb-0 hidden md:flex md:justify-end md:flex-row">
-              <div className="relative">
-                <button className="flex flex-row items-center space-x-2 w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent hover:bg-blue-800 md:w-auto md:inline md:mt-0 md:ml-4 hover:bg-gray-200 focus:bg-blue-800 focus:outline-none focus:shadow-outline">
-                  <span>Jane Doe</span>
-                  <img className="inline h-6 rounded-full" src="https://avatars2.githubusercontent.com/u/24622175?s=60&v=4" />
-                  <svg fill="currentColor" viewBox="0 0 20 20" className="inline w-4 h-4 transition-transform duration-200 transform">
-                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </button>
-                {/* 彈出式選單，先不要 */}
-                {/* <div className="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg md:w-48">
-                  <div className="py-2 bg-white text-blue-800 text-sm rounded-sm border border-main-color shadow-sm">
-                    <a className="block px-4 py-2 mt-2 text-sm bg-white md:mt-0 focus:text-gray-900 hover:bg-indigo-100 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Settings</a>
-                    <a className="block px-4 py-2 mt-2 text-sm bg-white md:mt-0 focus:text-gray-900 hover:bg-indigo-100 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Help</a>
-                    <div className="border-b" />
-                    <a className="block px-4 py-2 mt-2 text-sm bg-white md:mt-0 focus:text-gray-900 hover:bg-indigo-100 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Logout</a>
-                  </div>
-                </div> */}
-              {/* </div>
-            </nav>
-          </div>
-        </div> */}
-        {/* End of Navbar */}
-
         {/* 主體 */}
         <div className="container mx-auto my-5 p-5">
           <div className="md:flex no-wrap md:-mx-2 ">
@@ -72,10 +49,10 @@ export default function Profile() {
               {/* Profile Card */}
               <div className="bg-white p-3 border-t-4 border-green-400">
                 {/* 大頭照 */}
-                <div className="image w-40 h-40 mx-auto rounded-full overflow-hidden border-2 border-solid border-red-500">
+                <div className="image w-40 h-40 mx-auto rounded-full overflow-hidden border-2 border-solid">
                   <img className="h-auto w-full mx-auto" src="https://picsum.photos/500" alt="" />
                 </div>
-                <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">Jane Doe</h1>
+                <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">{displayName}</h1>
                 <h3 className="text-gray-600 font-lg text-semibold leading-6">Owner at Her Company Inc.</h3>
                 <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">Lorem ipsum dolor sit amet
                   consectetur adipisicing elit.
@@ -135,45 +112,29 @@ export default function Profile() {
                   <span className="tracking-wide">About</span>
                 </div>
                 <div className="text-gray-700">
-                  <div className="grid md:grid-cols-2 text-sm">
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">First Name</div>
-                      <div className="px-4 py-2">Jane</div>
+                  <div className="text-sm">
+                    {/* 使用者名稱 */}
+                    <div className="grid grid-cols-3 my-1">
+                      <div className="px-4 py-2 font-semibold">Display Name</div>
+                      <div className="px-4 py-2">{displayName}</div>
+                      <EditProfileModal setDisplayName={setDisplayName} />
                     </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Last Name</div>
-                      <div className="px-4 py-2">Doe</div>
-                    </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Gender</div>
-                      <div className="px-4 py-2">Female</div>
-                    </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Contact No.</div>
-                      <div className="px-4 py-2">+11 998001001</div>
-                    </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Current Address</div>
-                      <div className="px-4 py-2">Beech Creek, PA, Pennsylvania</div>
-                    </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Permanant Address</div>
-                      <div className="px-4 py-2">Arlington Heights, IL, Illinois</div>
-                    </div>
-                    <div className="grid grid-cols-2">
+                    {/* 使用者 email */}
+                    <div className="grid grid-cols-3 my-1">
                       <div className="px-4 py-2 font-semibold">Email.</div>
                       <div className="px-4 py-2">
                         <a className="text-blue-800" href="mailto:jane@example.com">{email}</a>
                       </div>
+                      <EditProfileModal />
                     </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Birthday</div>
-                      <div className="px-4 py-2">Feb 06, 1998</div>
+                    {/* 使用者密碼 */}
+                    <div className="grid grid-cols-3 my-1">
+                      <div className="px-4 py-2 font-semibold">Password</div>
+                      <div className="px-4 py-2">******</div>
+                      <EditProfileModal />
                     </div>
                   </div>
                 </div>
-                <button className="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">Show
-                  Full Information</button>
               </div>
               {/* End of about section */}
               <div className="my-4" />
@@ -190,14 +151,6 @@ export default function Profile() {
                       <span className="tracking-wide">Experience</span>
                     </div>
                     <ul className="list-inside space-y-2">
-                      <li>
-                        <div className="text-teal-600">Owner at Her Company Inc.</div>
-                        <div className="text-gray-500 text-xs">March 2020 - Now</div>
-                      </li>
-                      <li>
-                        <div className="text-teal-600">Owner at Her Company Inc.</div>
-                        <div className="text-gray-500 text-xs">March 2020 - Now</div>
-                      </li>
                       <li>
                         <div className="text-teal-600">Owner at Her Company Inc.</div>
                         <div className="text-gray-500 text-xs">March 2020 - Now</div>
@@ -225,7 +178,7 @@ export default function Profile() {
                         <div className="text-gray-500 text-xs">March 2020 - Now</div>
                       </li>
                       <li>
-                        <div className="text-teal-600">Bachelors Degreen in LPU</div>
+                        <div className="text-teal-600">Bachelors Degree in LPU</div>
                         <div className="text-gray-500 text-xs">March 2020 - Now</div>
                       </li>
                     </ul>
