@@ -5,17 +5,17 @@ import { app } from "@/utils/firebase"
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import LogoutBtn from './LogoutBtn';
 import EditProfileInfoModal from './EditProfileInfoModal';
+import EditProfilePhotoModal from './EditProfilePhotoModal';
 
 export default function Profile() {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(true);
   const [email, setEmail] = useState('');
   const [displayName, setDisplayName] = useState('');
+  const [userId, setUserId] = useState('');
+  const [photoUrl, setPhotoUrl] = useState('');
+  const [isPhotoChanged, setIsPhotoChanged] = useState(false);
 
-  // 修改使用者名稱
-  // function handleEditDisplayNameClick() {
-
-  // }
 
   // 確認使用者登入狀態
   useEffect(() => {
@@ -23,16 +23,17 @@ export default function Profile() {
     onAuthStateChanged(auth, (user) => {
       setIsLoading(true);
       if (user) {
+        setUserId(user.uid)
         setEmail(user.email);
         setDisplayName(user.displayName || "Please edit your display name")
-
+        setPhotoUrl(user.photoURL)
       } else {
         // 若使用者登出則導回登入頁面
         navigate('/login');
       }
       setIsLoading(false);
     });
-  }, [displayName, email]);
+  }, [displayName, email, isPhotoChanged]);
 
 
   // 如果還在 loading 那就顯示 Loading 字樣，loading 結束再渲染真正內容
@@ -49,8 +50,15 @@ export default function Profile() {
               {/* Profile Card */}
               <div className="bg-white p-3 border-t-4 border-green-400">
                 {/* 大頭照 */}
-                <div className="image w-40 h-40 mx-auto rounded-full overflow-hidden border-2 border-solid">
-                  <img className="h-auto w-full mx-auto" src="https://picsum.photos/500" alt="" />
+                <div className='relative'>
+                  <div className="image w-40 h-40 mx-auto rounded-full overflow-hidden border-2 border-solid">
+                    <img className="h-auto w-full mx-auto" src={photoUrl} alt="" />
+                  </div>
+                  <EditProfilePhotoModal
+                    userId={userId}
+                    isPhotoChanged={isPhotoChanged}
+                    setIsPhotoChanged={setIsPhotoChanged}
+                  />
                 </div>
                 <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">{displayName}</h1>
                 <h3 className="text-gray-600 font-lg text-semibold leading-6">Owner at Her Company Inc.</h3>
