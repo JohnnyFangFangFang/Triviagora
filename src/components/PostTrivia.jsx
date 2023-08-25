@@ -60,6 +60,8 @@ export default function PostTrivia() {
               }
             });
             console.log('成功上傳檔案與文章內容，爽啦！文章 ID: ', docRef.id);
+            // 成功發文後導回首頁
+            navigate('/')
           })
         });
       } else {
@@ -74,10 +76,9 @@ export default function PostTrivia() {
           }
         });
         console.log('成功上傳文章內容，爽啦！文章 ID: ', docRef.id);
-
+        // 成功發文後導回首頁
+        navigate('/')
       }
-      // 成功發文後導回首頁
-      navigate('/')
     }
     catch (e) {
       console.error("Error adding document: ", e);
@@ -112,10 +113,11 @@ export default function PostTrivia() {
       <div className="grid grid-cols-3">
         {/* 上傳圖片鈕 */}
         <div
-          className=" col-span-1 h-full flex bg-black bg-opacity-60 bg-cover bg-center border-t-r"
+          className=" col-span-1 h-full flex bg-black bg-opacity-60 bg-cover bg-center"
           style={{ backgroundImage: `url(${imageTempUrl})` }}
         >
-          <div className="extraOutline p-4 bg-white w-max m-auto rounded-lg">
+          {/* 上傳卡片樣式 */}
+          <div className="p-4 bg-white w-max m-auto rounded-lg bg-opacity-70">
             <div
               className="file_upload p-5 relative border-4 border-dotted border-gray-300 rounded-lg"
             // style={{ width: 450 }}
@@ -146,9 +148,6 @@ export default function PostTrivia() {
                     Select
                   </div>
                 </label>
-                <div className="title text-indigo-500 uppercase">
-                  or drop files here
-                </div>
               </div>
             </div>
           </div>

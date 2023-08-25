@@ -18,8 +18,8 @@ export default function Register() {
     const auth = getAuth(app);
     createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
-        // 註冊後把使用者導向首頁
-        navigate('/');
+        // 註冊後把使用者導向個人頁面
+        navigate('/profile');
         // const user = userCredential.user;
         // ...
       })
@@ -331,16 +331,16 @@ export default function Register() {
                   {/* 註冊鈕 */}
                   <div className="w-full px-3 mb-5">
                     <button
-                      className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"
+                      className="block w-full max-w-xs mx-auto text-white rounded-lg px-3 py-3 font-semibold bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700"
                       onClick={onSubmit}>
                       REGISTER NOW
                     </button>
                   </div>
                   {/* 導向註冊頁面 */}
-                  <div className="mt-4 flex px-3 justify-center text-lg text-black">
+                  <div className="w-full flex px-3 justify-center text-lg text-black">
                     <button
                       type="button"
-                      className="w-full rounded-3xl bg-gray-500 bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-gray-700"
+                      className="w-full max-w-xs mx-auto rounded-3xl bg-gray-500 bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-gray-700"
                       onClick={() => navigate('/login')}
                     >
                       Have an account?<br />
