@@ -101,10 +101,10 @@ export default function Login() {
                 </button>
               </div>
               {/* 導向註冊頁面 */}
-              <div className="mt-4 flex justify-center text-lg text-black">
+              <div className="mt-4 flex justify-center text-sm text-black">
                 <button
                   type="button"
-                  className="rounded-3xl bg-gray-400 bg-opacity-20 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-gray-300 hover:text-black"
+                  className="rounded-3xl bg-gray-400 bg-opacity-20 px-10 py-2 text-gray-300 shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-gray-300 hover:text-black"
                   onClick={() => navigate('/register')}
                 >
                   Does not have an account?<br />

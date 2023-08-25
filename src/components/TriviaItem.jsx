@@ -22,7 +22,7 @@ export default function TriviaItem({ id, title, triviaContent, createdAt, imageU
       >
         {/* 左側圖片區，該篇 trivia 圖片，高度為寬度 40% */}
         <div className="w-1/4 flex justify-center">
-          <img src={imageUrl} alt="trivia image" className="object-contain h-full rounded-xl shadow-xl" />
+          <img src={imageUrl} alt="trivia image" className="object-cover h-full rounded-xl shadow-xl" />
         </div>
 
         {/* 間隔區塊 */}
@@ -33,7 +33,9 @@ export default function TriviaItem({ id, title, triviaContent, createdAt, imageU
           <div className="flex w-full items-center justify-between border-b pb-3">
             {/* 頭像與名稱 */}
             <div className="flex items-center space-x-3">
-              <div className="h-8 w-8 rounded-full bg-slate-400 bg-[url('https://i.pravatar.cc/32')]" />
+              <div className='h-8 w-8 rounded-full bg-slate-400'>
+                <img src={author.userPhotoUrl || 'https://thumbs.dreamstime.com/z/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg?w=768'} alt="user photo" className="object-cover h-8 w-8 rounded-full shadow-xl" />
+              </div>
               <div className="text-lg font-bold text-slate-700">{author.displayName}</div>
             </div>
             {/* 類別與發文時間 */}
@@ -54,8 +56,8 @@ export default function TriviaItem({ id, title, triviaContent, createdAt, imageU
           <div className="mt-4 mb-6">
             {/* 標題 */}
             <div className="mb-3 text-xl font-bold">{title}</div>
-            {/* 內文 */}
-            <div className="text-sm text-neutral-600">{triviaContent}</div>
+            {/* 內文，將字數限制在最多 3 行 */}
+            <div className="text-sm text-neutral-600 line-clamp-[3]">{triviaContent}</div>
           </div>
           <div>
             {/* 留言數與按讚數 */}
