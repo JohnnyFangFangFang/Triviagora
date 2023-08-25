@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 // 使用的 UI 元件：https://tailwindcomponents.com/component/simple-registersign-up-form
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
@@ -8,8 +9,6 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 export default function Register() {
   const navigate = useNavigate()
 
-  // const [firstName, setFirstName] = useState('')
-  // const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -56,7 +55,6 @@ export default function Register() {
                 data-name="Layer 1"
                 xmlns="http://www.w3.org/2000/svg"
                 width="100%"
-                height="auto"
                 viewBox="0 0 744.84799 747.07702"
               >
                 <path
@@ -329,12 +327,24 @@ export default function Register() {
                     </div>
                   </div>
                 </div>
-                <div className="flex -mx-3">
+                <div className="-mx-3">
+                  {/* 註冊鈕 */}
                   <div className="w-full px-3 mb-5">
                     <button
                       className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"
                       onClick={onSubmit}>
                       REGISTER NOW
+                    </button>
+                  </div>
+                  {/* 導向註冊頁面 */}
+                  <div className="mt-4 flex px-3 justify-center text-lg text-black">
+                    <button
+                      type="button"
+                      className="w-full rounded-3xl bg-gray-500 bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-gray-700"
+                      onClick={() => navigate('/login')}
+                    >
+                      Have an account?<br />
+                      Let's go login!
                     </button>
                   </div>
                 </div>

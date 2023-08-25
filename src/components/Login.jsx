@@ -69,9 +69,9 @@ export default function Login() {
               <h1 className="mb-2 text-2xl">Triviagora</h1>
               <span className="text-gray-300">Enter Login Details</span>
             </div>
-            <form action="#">
+            <form className='flex flex-col items-center' action="#">
+              {/* 輸入帳號 */}
               <div className="mb-4 text-lg">
-                {/* 輸入帳號 */}
                 <input
                   className="rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
                   type="text"
@@ -80,8 +80,8 @@ export default function Login() {
                   onChange={e => setEmail(e.target.value.trim())}
                 />
               </div>
+              {/* 輸入密碼 */}
               <div className="mb-4 text-lg">
-                {/* 輸入密碼 */}
                 <input
                   className="rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
                   type="Password"
@@ -90,14 +90,25 @@ export default function Login() {
                   onChange={e => setPassword(e.target.value)}
                 />
               </div>
+              {/* 登入鈕 */}
               <div className="mt-8 flex justify-center text-lg text-black">
-                {/* 登入鈕 */}
                 <button
                   type="button"
                   className="rounded-3xl bg-yellow-400 bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600"
                   onClick={handleLoginClick}
                 >
                   Login
+                </button>
+              </div>
+              {/* 導向註冊頁面 */}
+              <div className="mt-4 flex justify-center text-lg text-black">
+                <button
+                  type="button"
+                  className="rounded-3xl bg-gray-400 bg-opacity-20 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-gray-300 hover:text-black"
+                  onClick={() => navigate('/register')}
+                >
+                  Does not have an account?<br />
+                  Welcome to register!
                 </button>
               </div>
             </form>

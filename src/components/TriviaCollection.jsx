@@ -32,7 +32,7 @@ export default function TriviaCollection() {
     <div className="mt-24">
 
       {/* 測試用 */}
-      <div className="border-t-r">
+      <div className="">
         {allTrivia.length !== 0 ?
           (allTrivia.map((trivia) => {
             return (
