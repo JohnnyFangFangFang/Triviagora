@@ -17,8 +17,6 @@ export default function PostTrivia() {
   const [imageFile, setImageFile] = useState(null)
   const [imageTempUrl, setImageTempUrl] = useState('');
   const [userId, setUserId] = useState('');
-  const [displayName, setDisplayName] = useState('');
-  const [userPhotoUrl, setUserPhotoUrl] = useState('');
 
 
   // 暫存圖片 => 拿到暫時的 url => 立即顯示在畫面
@@ -55,11 +53,7 @@ export default function PostTrivia() {
               triviaContent,
               createdAt: Timestamp.now(),
               imageUrl,
-              author: {
-                userId,
-                displayName,
-                userPhotoUrl
-              }
+              authorUid: userId
             });
             console.log('成功上傳檔案與文章內容，爽啦！文章 ID: ', docRef.id);
             // 成功發文後導回首頁
@@ -72,11 +66,7 @@ export default function PostTrivia() {
           title,
           triviaContent,
           createdAt: Timestamp.now(),
-          author: {
-            userId,
-            displayName,
-            userPhotoUrl
-          }
+          authorUid: userId
         });
         console.log('成功上傳文章內容，爽啦！文章 ID: ', docRef.id);
         // 成功發文後導回首頁
@@ -95,8 +85,6 @@ export default function PostTrivia() {
       setIsLoading(true);
       if (user) {
         setUserId(user.uid)
-        setDisplayName(user.displayName || "anonymous")
-        setUserPhotoUrl(user.photoURL)
       } else {
         // 若使用者登出則導回登入頁面
         navigate('/login');

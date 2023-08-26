@@ -5,8 +5,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 // 不用把 auth 從 firebase.js 引入嗎？
-import { app } from "@/utils/firebase"
+import { app, db } from "@/utils/firebase"
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { doc, updateDoc } from "firebase/firestore";
 
 
 export default function Login() {
@@ -22,25 +23,29 @@ export default function Login() {
 
     const auth = getAuth(app);
     signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
+      .then(async (userCredential) => {
+        const user = userCredential.user;
+        const userRef = doc(db, "users", user.uid);
+        // 更新資料庫裡的 userLastSignInTime
+        await updateDoc(userRef, {
+          userLastSignInTime: user.metadata.lastSignInTime
+        });
         // 登入後把使用者導向個人頁面
         console.log("成功登入耶耶耶")
         navigate('/profile');
-        // const user = userCredential.user;
-        // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log("errorCode: ", errorCode)
-        console.log("errorMessage: ", errorMessage)
+        alert("errorMessage: ", errorMessage)
         // 帳號輸入錯誤提示
         if (errorCode === "auth/user-not-found") {
-          confirm(`User is not found. Please check whether the email is correct or please register first.`)
+          alert(`User is not found. Please check whether the email is correct or please register first.`)
         }
         // 密碼輸入錯誤提示
         if (errorCode === "auth/wrong-password") {
-          confirm(`Wrong password, please check again.`)
+          alert(`Wrong password, please check again.`)
         }
       });
   }

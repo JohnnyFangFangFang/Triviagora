@@ -1,11 +1,13 @@
 /* eslint-disable react/prop-types */
 // 使用的 UI 元件：https://tailwindcomponents.com/component/sidebar-with-navbar-and-breadcrumb
 // UI 元件備案：https://tailwindcomponents.com/component/sticky-navbar-component
-
+import { useNavigate } from 'react-router-dom';
 
 import { useEffect } from 'react';
 
 export default function NavbarContainer({ children, currentPage }) {
+  const navigate = useNavigate()
+
   // 在 DOM 生成後用選取元素的方式去操作側邊欄收合
   useEffect(() => {
     const navbar = document.getElementById("navbar");
@@ -109,26 +111,32 @@ export default function NavbarContainer({ children, currentPage }) {
                 Main
               </h3>
               <ul className="mb-8 text-sm font-medium">
+                {/* 首頁 */}
                 <li>
                   <a
-                    className={` ${currentPage === 'HomePage' ? 'active' : ''} flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600`}
-                    href="/"
+                    className={` ${currentPage === 'HomePage' ? 'active' : ''} flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600 cursor-pointer`}
+                    // href="/"
+                    onClick={() => navigate('/')}
                   >
                     <span className="select-none">HomePage</span>
                   </a>
                 </li>
+                {/* 個人頁面 */}
                 <li>
                   <a
-                    className={` ${currentPage === 'Profile' ? 'active' : ''} flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600`}
-                    href="profile"
+                    className={` ${currentPage === 'Profile' ? 'active' : ''} flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600 cursor-pointer`}
+                    // href="profile"
+                    onClick={() => navigate('/profile')}
                   >
                     <span className="select-none">Profile</span>
                   </a>
                 </li>
+                {/* 發文頁面 */}
                 <li>
                   <a
-                    className={` ${currentPage === 'PostTrivia' ? 'active' : ''} flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600`}
-                    href="posttrivia"
+                    className={` ${currentPage === 'PostTrivia' ? 'active' : ''} flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600 cursor-pointer`}
+                    // href="posttrivia"
+                    onClick={() => navigate('/posttrivia')}
                   >
                     <span className="select-none">Post Trivia</span>
                   </a>

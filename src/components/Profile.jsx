@@ -17,6 +17,8 @@ export default function Profile() {
   const [userId, setUserId] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
   const [isPhotoChanged, setIsPhotoChanged] = useState(false);
+  const [userCreationTime, setUserCreationTime] = useState('no record');
+  const [userLastSignInTime, setUserLastSignInTime] = useState('no record');
 
   // 另外從資料庫拿 introduction
   async function getUserIntroduction() {
@@ -44,6 +46,16 @@ export default function Profile() {
         setEmail(user.email);
         setDisplayName(user.displayName || "Please edit your display name")
         setPhotoUrl(user.photoURL)
+
+        // 轉換帳號註冊、上次上線時間的資料格式
+        const creationTime = new Date(user.metadata.creationTime);
+        const lastSignInTime = new Date(user.metadata.lastSignInTime);
+        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+        const formattedCreationTime = creationTime.toLocaleDateString('en-GB', options);
+        const formattedLastSignInTime = lastSignInTime.toLocaleDateString('en-GB', options);
+        setUserCreationTime(formattedCreationTime) // 輸出應為 "26 Aug 2023"
+        setUserLastSignInTime(formattedLastSignInTime)
+
         getUserIntroduction()
       } else {
         // 若使用者登出則導回登入頁面
@@ -92,12 +104,12 @@ export default function Profile() {
 
                 <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                   <li className="flex items-center py-3">
-                    <span>Status</span>
-                    <span className="ml-auto"><span className="bg-green-500 py-1 px-2 rounded text-white text-sm">Active</span></span>
+                    <span>Member since</span>
+                    <span className="ml-auto">{userCreationTime}</span>
                   </li>
                   <li className="flex items-center py-3">
-                    <span>Member since</span>
-                    <span className="ml-auto">Nov 07, 2016</span>
+                    <span>Last sign in</span>
+                    <span className="ml-auto">{userLastSignInTime}</span>
                   </li>
                 </ul>
               </div>

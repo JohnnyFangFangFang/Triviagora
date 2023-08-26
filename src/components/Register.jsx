@@ -22,7 +22,9 @@ export default function Register() {
       .then(async (userCredential) => {
         // 先到一般資料庫建立使用者資料，目前先放空陣列，之後 profile 再讓使用者編輯
         const user = userCredential.user;
-        await setDoc(doc(db, "users", user.uid), {});
+        await setDoc(doc(db, "users", user.uid), {
+          userCreationTime: user.metadata.creationTime
+        });
         // 註冊後把使用者導向個人頁面
         navigate('/profile');
         // const user = userCredential.user;

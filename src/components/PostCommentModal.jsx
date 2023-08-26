@@ -1,14 +1,18 @@
 /* eslint-disable react/prop-types */
 // 使用的 UI 元件：https://tailwindcomponents.com/component/tailwind-css-modal
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { collection, addDoc, Timestamp } from "firebase/firestore";
-import { db } from "@/utils/firebase"
+import { db, app } from "@/utils/firebase"
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default function PostCommentModal({ triviaId }) {
-  console.log("PostCommentModal 裡的 triviaId:", triviaId)
+  const navigate = useNavigate()
   const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [comment, setComment] = useState('');
+  const [userId, setUserId] = useState('');
 
   // 控制彈跳視窗
   const toggleModal = () => {
@@ -21,11 +25,30 @@ export default function PostCommentModal({ triviaId }) {
     const commentRef = await addDoc(collection(db, "trivia", triviaId, "comments"), {
       comment,
       createdAt: Timestamp.now(),
+      authorUid: userId
     });
     console.log('成功留言，爽啦！該則留言 ID: ', commentRef.id);
     // 留言完把 modal 關掉
     toggleModal()
   }
+
+  // 確認使用者登入狀態，以方便抓到發文者 ID
+  useEffect(() => {
+    const auth = getAuth(app);
+    onAuthStateChanged(auth, (user) => {
+      setIsLoading(true);
+      if (user) {
+        setUserId(user.uid)
+      } else {
+        // 若使用者登出則導回登入頁面
+        navigate('/login');
+      }
+      setIsLoading(false);
+    });
+  }, []);
+
+  // 如果還在 loading 那就顯示 Loading 字樣，loading 結束再渲染真正內容
+  if (isLoading) return <div className="mt-24">Loading...</div>;
 
   return (
     <div className="max-w-2xl mx-auto">
