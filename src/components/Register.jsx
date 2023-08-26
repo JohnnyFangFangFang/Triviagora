@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 // 不用把 auth 從 firebase.js 引入嗎？
 import { app } from "@/utils/firebase"
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { db } from "@/utils/firebase"
+import { doc, setDoc } from "firebase/firestore";
 
 export default function Register() {
   const navigate = useNavigate()
@@ -17,7 +19,10 @@ export default function Register() {
   function onSubmit() {
     const auth = getAuth(app);
     createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
+      .then(async (userCredential) => {
+        // 先到一般資料庫建立使用者資料，目前先放空陣列，之後 profile 再讓使用者編輯
+        const user = userCredential.user;
+        await setDoc(doc(db, "users", user.uid), {});
         // 註冊後把使用者導向個人頁面
         navigate('/profile');
         // const user = userCredential.user;

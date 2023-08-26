@@ -4,6 +4,8 @@
 import { useState } from 'react';
 import { getAuth, updateProfile } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "@/utils/firebase"
 
 export default function EditProfilePhotoModal({ userId, isPhotoChanged, setIsPhotoChanged }) {
   const [showModal, setShowModal] = useState(false);
@@ -40,8 +42,14 @@ export default function EditProfilePhotoModal({ userId, isPhotoChanged, setIsPho
 
             updateProfile(auth.currentUser, {
               photoURL: imageUrl,
-            }).then(() => {
-              console.log("Photo updated!")
+            }).then(async () => {
+              // 更新資料庫裡的大頭照網址
+              // 先提供使用者資料指引，方便後面資料操作
+              const userRef = doc(db, "users", userId);
+              await updateDoc(userRef, {
+                photoURL: imageUrl
+              });
+              alert("Photo updated!")
               // 更改父層元件資訊並重新渲染頁面以顯示最新資訊
               setIsPhotoChanged(!isPhotoChanged)
               toggleModal()

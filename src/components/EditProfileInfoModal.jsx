@@ -3,8 +3,10 @@
 
 import { useState } from 'react';
 import { getAuth, updateProfile, updateEmail, updatePassword } from "firebase/auth";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "@/utils/firebase"
 
-export default function EditProfileInfoModal({ editContent, setDisplayName, setEmail }) {
+export default function EditProfileInfoModal({ userId, editContent, setDisplayName, setEmail, setIntroduction }) {
   const [showModal, setShowModal] = useState(false);
   const [profileInfo, setProfileInfo] = useState('');
 
@@ -13,13 +15,27 @@ export default function EditProfileInfoModal({ editContent, setDisplayName, setE
     setShowModal(!showModal);
   }
 
+  async function updateIntroduction() {
+    // 更新資料庫裡的自介
+    // 先提供使用者資料指引，方便後面資料操作
+    const userRef = doc(db, "users", userId);
+    await updateDoc(userRef, {
+      introduction: profileInfo
+    });
+    setIntroduction(profileInfo)
+    alert('Introduction updated!')
+    toggleModal()
+  }
+
   // 資料編輯完成後送出
   function handleDoneClick() {
     const auth = getAuth();
+    // 先提供使用者資料指引，方便後面資料操作
+    const userRef = doc(db, "users", userId);
 
     // 先加個條件式判斷使用者是否輸入東西，若沒輸入就想送出則跳提醒
     if (profileInfo === '') {
-      confirm('You did not edit anything, please check again.')
+      alert('You did not edit anything, please check again.')
     } else {
       // 若確定有輸入資料則馬上進行至尊對決，啊不是，是根據情境進行不同動作
       switch (editContent) {
@@ -27,10 +43,14 @@ export default function EditProfileInfoModal({ editContent, setDisplayName, setE
         case 'displayName':
           updateProfile(auth.currentUser, {
             displayName: profileInfo,
-          }).then(() => {
-            console.log("displayName updated!")
+          }).then(async () => {
+            // 更新資料庫裡的 displayName
+            await updateDoc(userRef, {
+              displayName: profileInfo
+            });
             // 更改父層元件資訊並重新渲染頁面以顯示最新資訊
-            setDisplayName()
+            setDisplayName(profileInfo)
+            alert("displayName updated!")
             toggleModal()
           }).catch((error) => {
             console.log(error)
@@ -39,9 +59,9 @@ export default function EditProfileInfoModal({ editContent, setDisplayName, setE
         // 更改 email
         case 'email':
           updateEmail(auth.currentUser, profileInfo).then(() => {
-            console.log("email updated!")
             // 更改父層元件資訊並重新渲染頁面以顯示最新資訊
-            setEmail()
+            alert("email updated!")
+            setEmail(profileInfo)
             toggleModal()
           }).catch((error) => {
             console.log(error)
@@ -50,27 +70,25 @@ export default function EditProfileInfoModal({ editContent, setDisplayName, setE
         // 更改密碼
         case 'password':
           updatePassword(auth.currentUser, profileInfo).then(() => {
-            console.log("password updated!")
-            confirm("password updated!")
+            alert("password updated!")
             // 不用更改父層元件因為密碼不會顯示
             toggleModal()
           }).catch((error) => {
-            confirm(error.message)
+            alert(error.message)
           });
+          break;
+        // 更改自介
+        case 'introduction':
+          updateIntroduction()
           break;
         default:
           console.log(`Sorry, we are out of ${editContent}.`);
       }
     }
-
-
-
-
-
   }
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-2xl ml-4">
       {/* Modal toggle */}
       <button
         className="block rounded-lg p-2 bg-gray-200 hover:bg-gray-600 hover:text-white focus:ring-4 focus:ring-orange-300"

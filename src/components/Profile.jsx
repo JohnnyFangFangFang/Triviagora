@@ -1,7 +1,8 @@
 // 使用的 UI 元件：https://tailwindcomponents.com/component/profile-page
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { app } from "@/utils/firebase"
+import { app, db } from "@/utils/firebase"
+import { doc, getDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import LogoutBtn from './LogoutBtn';
 import EditProfileInfoModal from './EditProfileInfoModal';
@@ -12,12 +13,28 @@ export default function Profile() {
   const [isLoading, setIsLoading] = useState(true);
   const [email, setEmail] = useState('');
   const [displayName, setDisplayName] = useState('');
+  const [introduction, setIntroduction] = useState('');
   const [userId, setUserId] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
   const [isPhotoChanged, setIsPhotoChanged] = useState(false);
 
+  // 另外從資料庫拿 introduction
+  async function getUserIntroduction() {
+    if (userId !== '') {
+      const docRef = doc(db, "users", userId); // 創建一個文件參考
+      const docSnapshot = await getDoc(docRef); // 獲取文件快照
 
-  // 確認使用者登入狀態
+      if (docSnapshot.exists()) { // 檢查文件是否存在
+        const data = docSnapshot.data(); // 獲取文件的全部資料
+        const introduction = data.introduction; // 獲取 introduction 字段
+        setIntroduction(introduction); // 更新 state
+      } else {
+        console.log("No such document!"); // 如果文件不存在，則輸出錯誤訊息
+      }
+    }
+  }
+
+  // 確認使用者登入狀態並從一般資料庫撈取資料
   useEffect(() => {
     const auth = getAuth(app);
     onAuthStateChanged(auth, (user) => {
@@ -27,13 +44,14 @@ export default function Profile() {
         setEmail(user.email);
         setDisplayName(user.displayName || "Please edit your display name")
         setPhotoUrl(user.photoURL)
+        getUserIntroduction()
       } else {
         // 若使用者登出則導回登入頁面
         navigate('/login');
       }
       setIsLoading(false);
     });
-  }, [displayName, email, isPhotoChanged]);
+  }, [displayName, email, isPhotoChanged, introduction]);
 
 
   // 如果還在 loading 那就顯示 Loading 字樣，loading 結束再渲染真正內容
@@ -61,10 +79,17 @@ export default function Profile() {
                   />
                 </div>
                 <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">{displayName}</h1>
-                <h3 className="text-gray-600 font-lg text-semibold leading-6">Owner at Her Company Inc.</h3>
-                <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">Lorem ipsum dolor sit amet
-                  consectetur adipisicing elit.
-                  Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt</p>
+                {/* 自介 */}
+                <div className='flex items-center'>
+                  <div className="text-gray-600 text-lg font-semibold">Introduction</div>
+                  <EditProfileInfoModal
+                    userId={userId}
+                    setIntroduction={setIntroduction}
+                    editContent="introduction"
+                  />
+                </div>
+                <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">{introduction}</p>
+
                 <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                   <li className="flex items-center py-3">
                     <span>Status</span>
@@ -128,6 +153,7 @@ export default function Profile() {
                       <div className="px-4 py-2 font-semibold">Display Name</div>
                       <div className="px-4 py-2">{displayName}</div>
                       <EditProfileInfoModal
+                        userId={userId}
                         setDisplayName={setDisplayName}
                         editContent="displayName"
                       />
