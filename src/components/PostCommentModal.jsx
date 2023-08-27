@@ -54,7 +54,7 @@ export default function PostCommentModal({ triviaId }) {
     <div className="max-w-2xl mx-auto">
       {/* Modal toggle */}
       <button
-        className="block rounded-full p-2 bg-gray-200 border-2 border-gray-400 hover:bg-slate-600 hover:text-white focus:ring-4 focus:ring-orange-300 "
+        className="block rounded-full shadow-md p-2 bg-gray-200 border-2 border-gray-400 hover:bg-slate-600 hover:text-white focus:ring-4 focus:ring-orange-300 "
         type="button"
         onClick={toggleModal}
       >

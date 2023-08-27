@@ -5,18 +5,24 @@ import ReactTimeAgo from 'react-time-ago'
 import CommentCollection from '@/components/CommentCollection';
 import PostCommentModal from '@/components/PostCommentModal';
 import { db } from "@/utils/firebase"
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 export function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl, authorUid, triviaId }) {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(true);
   const [author, setAuthor] = useState({});
+  const [isTriviaSaved, setIsTriviaSaved] = useState(false);
+
+  // 這段是要先拿取使用者資料
+  const auth = getAuth();
+  const user = auth.currentUser;
+  // 先提供使用者資料指引，方便後面資料操作
+  const userRef = doc(db, "users", user.uid);
+
 
   // 看作者細節
   function handleAvatarClick() {
-    const auth = getAuth();
-    const user = auth.currentUser;
     // 如果作者是自己，那就回到自己的 profile 頁面
     if (user.uid === authorUid) {
       navigate(`/profile`)
@@ -27,14 +33,42 @@ export function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl, a
   }
 
 
+  // 文章收藏功能
+  async function handleSaveClick() {
+    // 依 isTriviaSaved 判斷是否已收藏文章
+    // 沒收藏任何文章 => 代表 savedTriviaId 陣列不存在 => 創建它並加入該文 ID
+    if (isTriviaSaved === 'no bookmarks') {
+      await updateDoc(userRef, {
+        savedTriviaId: [triviaId]
+      });
+      setIsTriviaSaved(true)
+      alert('Save the trivia successfully!');
+      // 判斷是否已收藏本文
+    } else if (isTriviaSaved) {
+      // 已收藏則取消收藏
+      await updateDoc(userRef, {
+        savedTriviaId: arrayRemove(triviaId)
+      });
+      setIsTriviaSaved(false)
+    } else {
+      // 若未收藏則收藏
+      await updateDoc(userRef, {
+        savedTriviaId: arrayUnion(triviaId)
+      });
+      setIsTriviaSaved(true)
+      alert('Save the trivia successfully!');
+    }
+  }
+
+
   // 從 Firebase 拿作者資料
   useEffect(() => {
+    // 拿文章作者最新資料
     const getAuthorAsync = async () => {
       setIsLoading(true);
       if (authorUid !== '') {
         const docRef = doc(db, "users", authorUid); // 創建一個文件參考
         const docSnapshot = await getDoc(docRef); // 獲取文件快照
-
         if (docSnapshot.exists()) { // 檢查文件是否存在
           const data = docSnapshot.data(); // 獲取文件的全部資料
           setAuthor(data); // 更新 state
@@ -44,8 +78,28 @@ export function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl, a
       }
       setIsLoading(false);
     }
+    // 判斷使用者是否已收藏本文
+    const getIsTriviaSavedAsync = async () => {
+      // 讀取使用者資料
+      const userDoc = await getDoc(userRef);
+      const userData = userDoc.data();
+      // 若有 savedTriviaId 則取屬性
+      let savedTriviaId = userData?.savedTriviaId
+      // 有資料則判斷是否已收藏本文
+      if (savedTriviaId) {
+        if (savedTriviaId.includes(triviaId)) {
+          setIsTriviaSaved(true)
+        } else {
+          setIsTriviaSaved(false)
+        }
+        // 沒資料代表還沒收藏任何文章
+      } else {
+        setIsTriviaSaved('no bookmarks')
+      }
+    }
     // 執行函式
     getAuthorAsync()
+    getIsTriviaSavedAsync()
   }, []); // 注意，這裡的空陣列意味著 useEffect 只在組件掛載和卸載時運行。
 
   // 如果還在 loading 那就顯示 Loading 字樣，loading 結束再渲染真正內容
@@ -112,7 +166,10 @@ export function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl, a
                 <span>125</span>
               </div>
               {/* 按讚與收藏 */}
-              <div className="flex cursor-pointer items-center transition hover:text-slate-600">
+              <div
+                className="flex cursor-pointer items-center transition hover:text-slate-600"
+                onClick={handleSaveClick}
+              >
                 {/* 按讚，先不用 */}
                 {/* <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -129,7 +186,11 @@ export function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl, a
                   />
                 </svg> */}
                 {/* 收藏 */}
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="mr-1.5 h-5 w-5" viewBox="0 0 16 16"> <path d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4zm2-1a1 1 0 0 0-1 1v10.566l3.723-2.482a.5.5 0 0 1 .554 0L11 14.566V4a1 1 0 0 0-1-1H4z" /> <path d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1z" /> </svg>
+                <svg xmlns="http://www.w3.org/2000/svg"
+                  fill={isTriviaSaved ? 'orange' : 'gray'}
+                  className="mr-1.5 h-5 w-5"
+                  viewBox="0 0 16 16"> <path d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4z" /> <path d="M4.268 1A2 2 0 0 1 6 0h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L13 13.768V2a1 1 0 0 0-1-1H4.268z" />
+                </svg>
                 <span>Save</span>
               </div>
               {/* 留言功能 */}
