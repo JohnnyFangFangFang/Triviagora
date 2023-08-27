@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { app, db } from "@/utils/firebase"
 import { doc, getDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import LogoutBtn from './LogoutBtn';
 import EditProfileInfoModal from './EditProfileInfoModal';
 import EditProfilePhotoModal from './EditProfilePhotoModal';
 
@@ -82,7 +81,7 @@ export default function Profile() {
                 {/* 大頭照 */}
                 <div className='relative'>
                   <div className="image w-40 h-40 mx-auto rounded-full overflow-hidden border-2 border-solid">
-                    <img className="h-auto w-full mx-auto" src={photoUrl} alt="" />
+                    <img className="h-auto w-full mx-auto" src={photoUrl || 'https://thumbs.dreamstime.com/z/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg?w=768'} alt="" />
                   </div>
                   <EditProfilePhotoModal
                     userId={userId}
@@ -245,9 +244,6 @@ export default function Profile() {
               {/* End of profile tab */}
             </div>
           </div>
-
-          {/* 登出鈕 */}
-          <LogoutBtn otherClass="mt-4" />
         </div>
       </div>
     </>

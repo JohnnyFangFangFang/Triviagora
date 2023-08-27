@@ -3,13 +3,27 @@
 // UI 元件備案：https://tailwindcomponents.com/component/sticky-navbar-component
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { getAuth } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 
 export default function NavbarContainer({ children, currentPage }) {
   const navigate = useNavigate()
 
   const auth = getAuth();
   const user = auth.currentUser;
+
+  // 登出功能
+  function handleLogoutClick() {
+    const auth = getAuth();
+    signOut(auth).then(() => {
+      // Sign-out successful.
+      // 若使用者登出則導回登入頁面
+      console.log("成功登出")
+      navigate('/login');
+    }).catch((error) => {
+      // An error happened.
+      console.log("error: ", error)
+    });
+  }
 
   // 在 DOM 生成後用選取元素的方式去操作側邊欄收合
   useEffect(() => {
@@ -114,16 +128,16 @@ export default function NavbarContainer({ children, currentPage }) {
             id="sidebar"
             className="fixed left-0 bottom-0 flex w-3/4 -translate-x-full flex-col overflow-y-auto bg-gray-700 pt-6 pb-8 sm:max-w-xs lg:w-80"
           >
-            {/* one category / navigation group */}
+            {/* 主要功能區 */}
             <div className="px-4 pb-6">
-              <h3 className="mb-2 text-xs font-medium uppercase text-gray-500">
+              <h3 className="mb-2 text-xs font-medium uppercase text-gray-300">
                 Main
               </h3>
               <ul className="mb-8 text-sm font-medium">
                 {/* 首頁 */}
                 <li>
                   <a
-                    className={` ${currentPage === 'HomePage' ? 'active' : ''} flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600 cursor-pointer`}
+                    className={` ${currentPage === 'HomePage' ? 'active' : ''} flex items-center rounded py-3 pl-3 pr-4 text-white hover:bg-gray-600 cursor-pointer`}
                     // href="/"
                     onClick={() => navigate('/')}
                   >
@@ -133,17 +147,17 @@ export default function NavbarContainer({ children, currentPage }) {
                 {/* 個人頁面 */}
                 <li>
                   <a
-                    className={` ${currentPage === 'Profile' ? 'active' : ''} flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600 cursor-pointer`}
+                    className={` ${currentPage === 'Profile' ? 'active' : ''} flex items-center rounded py-3 pl-3 pr-4 text-white hover:bg-gray-600 cursor-pointer`}
                     // href="profile"
                     onClick={() => navigate('/profile')}
                   >
-                    <span className="select-none">Profile</span>
+                    <span className="select-none">Profile & Settings</span>
                   </a>
                 </li>
                 {/* 發文頁面 */}
                 <li>
                   <a
-                    className={` ${currentPage === 'PostTrivia' ? 'active' : ''} flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600 cursor-pointer`}
+                    className={` ${currentPage === 'PostTrivia' ? 'active' : ''} flex items-center rounded py-3 pl-3 pr-4 text-white hover:bg-gray-600 cursor-pointer`}
                     // href="posttrivia"
                     onClick={() => navigate('/posttrivia')}
                   >
@@ -152,11 +166,12 @@ export default function NavbarContainer({ children, currentPage }) {
                 </li>
               </ul>
             </div>
-            {/* navigation group end*/}
-            {/* example copies start */}
+            {/* 主要功能區 end*/}
+
+            {/* 第二區 */}
             <div className="px-4 pb-6">
-              <h3 className="mb-2 text-xs font-medium uppercase text-gray-500">
-                Legal
+              <h3 className="mb-2 text-xs font-medium uppercase text-gray-300">
+                Others
               </h3>
               <ul className="mb-8 text-sm font-medium">
                 <li>
@@ -164,7 +179,7 @@ export default function NavbarContainer({ children, currentPage }) {
                     className="flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600"
                     href="#tc"
                   >
-                    <span className="select-none">Terms and Condition</span>
+                    <span className="select-none">About</span>
                   </a>
                 </li>
                 <li>
@@ -172,7 +187,7 @@ export default function NavbarContainer({ children, currentPage }) {
                     className="flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600"
                     href="#privacy"
                   >
-                    <span className="select-none">Privacy policy</span>
+                    <span className="select-none">to be done</span>
                   </a>
                 </li>
                 <li>
@@ -180,35 +195,30 @@ export default function NavbarContainer({ children, currentPage }) {
                     className="flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600"
                     href="#imprint"
                   >
-                    <span className="select-none">Imprint</span>
+                    <span className="select-none">to be done</span>
                   </a>
                 </li>
               </ul>
             </div>
+            {/* 第二區 end */}
+
+            {/* 第三區 */}
             <div className="px-4 pb-6">
-              <h3 className="mb-2 text-xs font-medium uppercase text-gray-500">
+              <h3 className="mb-2 text-xs font-medium uppercase text-gray-300">
                 Others
               </h3>
               <ul className="mb-8 text-sm font-medium">
                 <li>
-                  <a
-                    className="flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600"
-                    href="#ex1"
+                  <div
+                    className="flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600 cursor-pointer"
+                    onClick={handleLogoutClick}
                   >
-                    <span className="select-none">...</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600"
-                    href="#ex2"
-                  >
-                    <span className="select-none">...</span>
-                  </a>
+                    <span className="select-none">Log out</span>
+                  </div>
                 </li>
               </ul>
             </div>
-            {/* example copies end */}
+            {/* 第三區 end */}
           </nav>
         </div>
         <div className="mx-auto lg:ml-80" />

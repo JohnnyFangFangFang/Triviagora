@@ -4,7 +4,7 @@ import Profile from '@/components/Profile.jsx'
 export default function ProfilePage() {
 
   return (
-    <NavbarContainer currentPage="Profile">
+    <NavbarContainer currentPage="Profile & Settings">
       <Profile />
     </NavbarContainer>
   )
