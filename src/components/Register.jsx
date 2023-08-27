@@ -27,8 +27,8 @@ export default function Register() {
         });
         // 註冊後把使用者導向個人頁面
         navigate('/profile');
-        // const user = userCredential.user;
-        // ...
+        // 請使用者先編輯 profile
+        alert('Let\'s edit your profile!')
       })
       .catch((error) => {
         const errorCode = error.code;

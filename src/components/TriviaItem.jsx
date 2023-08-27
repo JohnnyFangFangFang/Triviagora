@@ -28,7 +28,6 @@ export default function TriviaItem({ id, title, triviaContent, createdAt, imageU
 
         if (docSnapshot.exists()) { // 檢查文件是否存在
           const data = docSnapshot.data(); // 獲取文件的全部資料
-          console.log("data 是啥：", data)
           setAuthor(data); // 更新 state
         } else {
           console.log("No such user!"); // 如果 user 不存在，則輸出錯誤訊息
