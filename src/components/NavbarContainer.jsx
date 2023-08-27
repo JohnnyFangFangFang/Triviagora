@@ -2,14 +2,13 @@
 // 使用的 UI 元件：https://tailwindcomponents.com/component/sidebar-with-navbar-and-breadcrumb
 // UI 元件備案：https://tailwindcomponents.com/component/sticky-navbar-component
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { getAuth, signOut } from "firebase/auth";
+import { app } from "@/utils/firebase"
+import { useState, useEffect } from 'react';
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 export default function NavbarContainer({ children, currentPage }) {
   const navigate = useNavigate()
-
-  const auth = getAuth();
-  const user = auth.currentUser;
+  const [userPhoto, setUserPhoto] = useState('')
 
   // 登出功能
   function handleLogoutClick() {
@@ -24,6 +23,17 @@ export default function NavbarContainer({ children, currentPage }) {
       console.log("error: ", error)
     });
   }
+
+  // 撈使用者頭像
+  const auth = getAuth(app);
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setUserPhoto(user.photoURL)
+    } else {
+      // 若使用者登出則導回登入頁面
+      navigate('/login');
+    }
+  });
 
   // 在 DOM 生成後用選取元素的方式去操作側邊欄收合
   useEffect(() => {
@@ -46,6 +56,7 @@ export default function NavbarContainer({ children, currentPage }) {
     // 在元件卸載時移除監聽事件
     return () => btnSidebarToggler.removeEventListener("click", handleToggle);
   }, []);
+
 
   return (
 
@@ -114,7 +125,7 @@ export default function NavbarContainer({ children, currentPage }) {
         </ul>
         {/* 使用者頭像 */}
         <img
-          src={user.photoURL || 'https://thumbs.dreamstime.com/z/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg?w=768'}
+          src={userPhoto || 'https://thumbs.dreamstime.com/z/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg?w=768'}
           alt="user photo"
           className="absolute top-2 right-4 object-cover h-12 w-12 rounded-full shadow-xl"
         />
