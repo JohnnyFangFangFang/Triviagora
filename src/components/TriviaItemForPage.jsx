@@ -13,6 +13,7 @@ export function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl, a
   const [isLoading, setIsLoading] = useState(true);
   const [author, setAuthor] = useState({});
   const [isTriviaSaved, setIsTriviaSaved] = useState(false);
+  const [commentsQuantity, setCommentsQuantity] = useState(0);
 
   // 這段是要先拿取使用者資料
   const auth = getAuth();
@@ -163,7 +164,7 @@ export function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl, a
                     d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
                   />
                 </svg>
-                <span>125</span>
+                <span>{commentsQuantity || ''}</span>
               </div>
               {/* 按讚與收藏 */}
               <div
@@ -200,7 +201,10 @@ export function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl, a
         </div>
         {/* 留言區 */}
         <div className='mt-3 text-3xl font-bold text-slate-400'>測試留言區</div>
-        <CommentCollection triviaId={triviaId} />
+        <CommentCollection
+          triviaId={triviaId}
+          setCommentsQuantity={setCommentsQuantity}
+        />
       </div>
 
     </div>

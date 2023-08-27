@@ -4,7 +4,7 @@ import CommentItem from './CommentItem';
 import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import { db } from "@/utils/firebase"
 
-export default function CommentCollection({ triviaId }) {
+export default function CommentCollection({ triviaId, setCommentsQuantity }) {
   const [isLoading, setIsLoading] = useState(true);
   const [allComments, setAllComment] = useState([]);
 
@@ -25,6 +25,8 @@ export default function CommentCollection({ triviaId }) {
       });
       // 將擷取到的資料整理好存放到 state 裡
       setAllComment(allComments);
+      // 儲存 comments 數量
+      setCommentsQuantity(allComments.length)
       setIsLoading(false);
     });
 
