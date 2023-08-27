@@ -5,12 +5,13 @@ import { useState, useEffect } from 'react'
 import ReactTimeAgo from 'react-time-ago'
 import { useNavigate } from 'react-router-dom';
 import { db } from "@/utils/firebase"
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, collection, query, orderBy, onSnapshot } from "firebase/firestore";
 
 export default function TriviaItem({ id, title, triviaContent, createdAt, imageUrl, authorUid }) {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(true);
   const [author, setAuthor] = useState({});
+  const [commentsQuantity, setCommentsQuantity] = useState(0);
 
   // 看單則 trivia 細節
   function handleTriviaDetailClick() {
@@ -18,14 +19,14 @@ export default function TriviaItem({ id, title, triviaContent, createdAt, imageU
     navigate(`/trivia/${id}`)
   }
 
-  // 從 Firebase 拿作者資料
+  // 從 Firebase 拿作者資料與留言數量
   useEffect(() => {
+    // 拿作者資料
     const getAuthorAsync = async () => {
       setIsLoading(true);
       if (authorUid !== '') {
         const docRef = doc(db, "users", authorUid); // 創建一個文件參考
         const docSnapshot = await getDoc(docRef); // 獲取文件快照
-
         if (docSnapshot.exists()) { // 檢查文件是否存在
           const data = docSnapshot.data(); // 獲取文件的全部資料
           setAuthor(data); // 更新 state
@@ -35,8 +36,33 @@ export default function TriviaItem({ id, title, triviaContent, createdAt, imageU
       }
       setIsLoading(false);
     }
+    // 拿留言數量
+    const getCommentsQuantity = () => {
+      // 取得 comments 子集合參考，讓電腦知道位置在哪
+      const commentsCollectionRef = collection(db, "trivia", id, "comments");
+      // 建立查詢條件，意思是查詢該集合所有項目，並按照創建時間降冪排列
+      const commentsQuery = query(commentsCollectionRef, orderBy("createdAt", "desc"));
+
+      // 使用 onSnapshot 監聽資料變化
+      const unsubscribe = onSnapshot(commentsQuery, (querySnapshot) => {
+        // 把回傳結果變成可以用的陣列並稍作整理
+        const allComments = querySnapshot.docs.map((doc) => {
+          // 回傳原本資料，再加上文章 id
+          return { id: doc.id, ...doc.data() };
+        });
+        // 儲存 comments 數量
+        setCommentsQuantity(allComments.length)
+        setIsLoading(false);
+      });
+
+      // 返回一個清理函式，在組件卸載時停止監聽，即 onSnapshot() 給你用的監聽停止器
+      return () => {
+        unsubscribe();
+      };
+    }
     // 執行函式
     getAuthorAsync()
+    getCommentsQuantity()
   }, []); // 注意，這裡的空陣列意味著 useEffect 只在組件掛載和卸載時運行。
 
   // 如果還在 loading 那就顯示 Loading 字樣，loading 結束再渲染真正內容
@@ -107,9 +133,10 @@ export default function TriviaItem({ id, title, triviaContent, createdAt, imageU
                       d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
                     />
                   </svg>
-                  <span>125</span>
+                  <span>{commentsQuantity}</span>
                 </div>
-                <div className="flex cursor-pointer items-center transition hover:text-slate-600">
+                {/* 按讚數，先不用 */}
+                {/* <div className="flex cursor-pointer items-center transition hover:text-slate-600">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="mr-1.5 h-5 w-5"
@@ -125,7 +152,7 @@ export default function TriviaItem({ id, title, triviaContent, createdAt, imageU
                     />
                   </svg>
                   <span>4</span>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
