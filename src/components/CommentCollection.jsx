@@ -42,7 +42,7 @@ export default function CommentCollection({ triviaId }) {
     <div className="mt-2">
 
       {/* 測試用 */}
-      <div className="border-t-r">
+      <div className="">
         {allComments.length !== 0 ?
           (allComments.map((comment) => {
             return (

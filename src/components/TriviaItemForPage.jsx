@@ -52,7 +52,7 @@ export function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl, a
   if (isLoading) return <div className="mt-24">Loading...</div>;
 
   return (
-    <div className="flex items-center justify-center min-h-max mt-20 border-t-r">
+    <div className="flex items-center justify-center min-h-max mt-20 mb-4">
       {/* trivia 卡片 */}
       <div className="rounded-xl border p-5 shadow-md w-10/12 bg-white">
         <div className="flex w-full items-center justify-between border-b pb-3">
@@ -111,9 +111,10 @@ export function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl, a
                 </svg>
                 <span>125</span>
               </div>
-              {/* 按讚 */}
+              {/* 按讚與收藏 */}
               <div className="flex cursor-pointer items-center transition hover:text-slate-600">
-                <svg
+                {/* 按讚，先不用 */}
+                {/* <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="mr-1.5 h-5 w-5"
                   fill="none"
@@ -126,8 +127,10 @@ export function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl, a
                     strokeLinejoin="round"
                     d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
                   />
-                </svg>
-                <span>4</span>
+                </svg> */}
+                {/* 收藏 */}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="mr-1.5 h-5 w-5" viewBox="0 0 16 16"> <path d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4zm2-1a1 1 0 0 0-1 1v10.566l3.723-2.482a.5.5 0 0 1 .554 0L11 14.566V4a1 1 0 0 0-1-1H4z" /> <path d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1z" /> </svg>
+                <span>Save</span>
               </div>
               {/* 留言功能 */}
               <PostCommentModal triviaId={triviaId} />

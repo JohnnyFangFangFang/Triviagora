@@ -2,13 +2,29 @@
 // 使用的 UI 元件：https://tailwindcomponents.com/component/user-post-card
 // UI 元件備案：https://tailwindcomponents.com/component/maede
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import ReactTimeAgo from 'react-time-ago'
 import { db } from "@/utils/firebase"
 import { doc, getDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 export default function CommentItem({ comment, createdAt, authorUid }) {
+  const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(true);
   const [author, setAuthor] = useState({});
+
+  // 看留言者細節
+  function handleAvatarClick() {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    // 如果作者是自己，那就回到自己的 profile 頁面
+    if (user.uid === authorUid) {
+      navigate(`/profile`)
+    } else {
+      // 若為別人則點擊後導向該作者 profile 頁面
+      navigate(`/profile/${authorUid}`)
+    }
+  }
 
   // 從 Firebase 拿作者資料
   useEffect(() => {
@@ -40,7 +56,10 @@ export default function CommentItem({ comment, createdAt, authorUid }) {
       <div className="w-full rounded-xl border p-5 shadow-md bg-slate-50">
         <div className="flex w-full items-center justify-between border-b pb-3">
           {/* 頭像與名稱 */}
-          <div className="flex items-center space-x-3">
+          <div
+            className="flex items-center space-x-3 p-1 rounded-lg border-2 border-slate-200 cursor-pointer hover:bg-slate-300"
+            onClick={handleAvatarClick}
+          >
             <div className='h-8 w-8 rounded-full bg-slate-400'>
               <img src={author.photoURL || 'https://thumbs.dreamstime.com/z/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg?w=768'} alt="user photo" className="object-cover h-8 w-8 rounded-full shadow-xl" />
             </div>
