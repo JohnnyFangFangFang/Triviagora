@@ -2,11 +2,14 @@
 // 使用的 UI 元件：https://tailwindcomponents.com/component/sidebar-with-navbar-and-breadcrumb
 // UI 元件備案：https://tailwindcomponents.com/component/sticky-navbar-component
 import { useNavigate } from 'react-router-dom';
-
 import { useEffect } from 'react';
+import { getAuth } from "firebase/auth";
 
 export default function NavbarContainer({ children, currentPage }) {
   const navigate = useNavigate()
+
+  const auth = getAuth();
+  const user = auth.currentUser;
 
   // 在 DOM 生成後用選取元素的方式去操作側邊欄收合
   useEffect(() => {
@@ -95,6 +98,12 @@ export default function NavbarContainer({ children, currentPage }) {
             <span>{currentPage}</span>
           </li>
         </ul>
+        {/* 使用者頭像 */}
+        <img
+          src={user.photoURL || 'https://thumbs.dreamstime.com/z/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg?w=768'}
+          alt="user photo"
+          className="absolute top-2 right-4 object-cover h-12 w-12 rounded-full shadow-xl"
+        />
       </nav>
       {/* Navbar end */}
 
