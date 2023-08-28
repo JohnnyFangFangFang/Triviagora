@@ -7,8 +7,8 @@ import TriviaCollection from "@/components/TriviaCollection";
 export default function HomePage() {
   return (
     <NavbarContainer currentPage="HomePage">
-      <div className="relative">
-        <TriviaCollection />
+      <div className="relative pt-24">
+        <TriviaCollection page={'homepage'} />
       </div>
     </NavbarContainer>
 

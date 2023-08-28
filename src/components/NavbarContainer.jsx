@@ -117,7 +117,7 @@ export default function NavbarContainer({ children, currentPage }) {
         {/* 現在頁面指引 */}
         <ul className="breadcrumb hidden flex-row items-center py-4 text-lg text-white sm:flex ml-4">
           <li className="inline">
-            <a href="#">Triviagora</a>
+            <span>Triviagora</span>
           </li>
           <li className="inline">
             <span>{currentPage}</span>
@@ -237,7 +237,7 @@ export default function NavbarContainer({ children, currentPage }) {
       {/* Sidebar end */}
 
       {/* 包含內容 */}
-      <main>
+      <main className=''>
         {children}
       </main>
     </>

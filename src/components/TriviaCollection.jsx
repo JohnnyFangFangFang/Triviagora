@@ -1,9 +1,11 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react'
 import TriviaItem from "./TriviaItem";
-import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
+import TriviaItemForProfile from './TriviaItemForProfile';
+import { collection, query, where, orderBy, onSnapshot } from "firebase/firestore";
 import { db } from "@/utils/firebase"
 
-export default function TriviaCollection() {
+export default function TriviaCollection({ page, userId }) {
   const [isLoading, setIsLoading] = useState(true);
   const [allTrivia, setAllTrivia] = useState([]);
 
@@ -11,7 +13,13 @@ export default function TriviaCollection() {
     // 取得 trivia 集合參考，讓電腦知道位置在哪
     const triviaCollectionRef = collection(db, "trivia");
     // 建立查詢條件，意思是查詢該集合所有項目，並按照創建時間降冪排列
-    const triviaQuery = query(triviaCollectionRef, orderBy("createdAt", "desc"));
+    let triviaQuery = query(triviaCollectionRef, orderBy("createdAt", "desc"));
+
+    // 如果是 profile 頁面則用 Uid 篩選出使用者發的文
+    // 因為是複合查詢所以當時已在 FireStore 的索引頁面建立索引
+    if (page === 'profile') {
+      triviaQuery = query(triviaCollectionRef, where("authorUid", "==", userId), orderBy("createdAt", "desc"));
+    }
 
     // 使用 onSnapshot 監聽資料變化
     const unsubscribe = onSnapshot(triviaQuery, (querySnapshot) => {
@@ -37,16 +45,22 @@ export default function TriviaCollection() {
   if (isLoading) return <div className="mt-24">Loading...</div>;
 
   return (
-    <div className="mt-24">
+    <div className="">
 
       {/* 測試用 */}
       <div className="">
         {allTrivia.length !== 0 ?
           (allTrivia.map((trivia) => {
-            return (
-              // 使用 Spread Attributes 寫法較簡潔
-              <TriviaItem key={trivia.id} {...trivia} />
-            );
+            // 首頁跟 profile 頁面渲染的元件不同
+            if (page === 'homepage') {
+              return (
+                <TriviaItem key={trivia.id} {...trivia} />
+              )
+            } else if (page === 'profile') {
+              return (
+                <TriviaItemForProfile key={trivia.id} {...trivia} />
+              )
+            }
           })) : <></>
         }
       </div>

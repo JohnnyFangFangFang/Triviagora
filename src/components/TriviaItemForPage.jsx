@@ -144,7 +144,7 @@ export function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl, a
           <div className="mt-4 text-xl text-neutral-600">{triviaContent}</div>
         </div>
 
-        {/* 留言、按讚 icon 區 */}
+        {/* 留言、收藏 icon 區 */}
         <div>
           <div className="flex items-center justify-between text-slate-500 border-b pb-3">
             <div className="flex space-x-4 md:space-x-8">
@@ -188,7 +188,8 @@ export function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl, a
                 </svg> */}
                 {/* 收藏 */}
                 <svg xmlns="http://www.w3.org/2000/svg"
-                  fill={isTriviaSaved ? 'orange' : 'gray'}
+                  // 若 isTriviaSaved 有東西要檢查一下是有收藏還是字串 no bookmarks
+                  fill={isTriviaSaved ? isTriviaSaved === "no bookmarks" ? 'gray': 'orange' : 'gray'}
                   className="mr-1.5 h-5 w-5"
                   viewBox="0 0 16 16"> <path d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4z" /> <path d="M4.268 1A2 2 0 0 1 6 0h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L13 13.768V2a1 1 0 0 0-1-1H4.268z" />
                 </svg>

@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { db } from "@/utils/firebase"
 import { doc, getDoc, collection, query, orderBy, onSnapshot } from "firebase/firestore";
 
-export default function TriviaItem({ id, title, triviaContent, createdAt, imageUrl, authorUid }) {
+export default function TriviaItem({ id, title, triviaContent, createdAt, authorUid }) {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(true);
   const [author, setAuthor] = useState({});
@@ -69,32 +69,25 @@ export default function TriviaItem({ id, title, triviaContent, createdAt, imageU
   if (isLoading) return <div className="mt-24">Loading...</div>;
 
   return (
-    <div className="flex items-center justify-center min-h-max my-4">
+    <div className=" flex items-center justify-center min-h-max my-4">
       {/* trivia 卡片 */}
       <div
-        className="flex rounded-xl border p-5 shadow-md w-9/12 bg-white cursor-pointer hover:bg-slate-100"
+        className=" flex rounded-xl border p-2 shadow-md w-10/12 bg-white cursor-pointer hover:bg-slate-100"
         onClick={handleTriviaDetailClick}
       >
         {/* 左側圖片區，該篇 trivia 圖片，高度為寬度 40% */}
-        <div className="w-1/4 flex justify-center">
+        {/* <div className="w-1/4 flex justify-center">
           <img src={imageUrl} alt="trivia image" className="object-cover h-full rounded-xl shadow-xl" />
-        </div>
+        </div> */}
 
         {/* 間隔區塊 */}
         <div className="w-[3%] lg:w-[6%]"></div>
 
         {/* 右側卡片資訊 */}
-        <div className='w-3/4'>
+        <div className='w-full'>
           <div className="flex w-full items-center justify-between border-b pb-3">
-            {/* 頭像與名稱 */}
-            <div className="flex items-center space-x-3">
-              <div className='h-8 w-8 rounded-full bg-slate-400'>
-                <img src={author.photoURL || 'https://thumbs.dreamstime.com/z/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg?w=768'} alt="user photo" className="object-cover h-8 w-8 rounded-full shadow-xl" />
-              </div>
-              <div className="text-lg font-bold text-slate-700">{author.displayName || 'author'}</div>
-            </div>
             {/* 類別與發文時間 */}
-            <div className="flex items-center space-x-8">
+            <div className="flex items-center space-x-1">
               {/* 類別標籤，先不用 */}
               {/* <button className="rounded-2xl border bg-neutral-100 px-3 py-1 text-xs font-semibold">
                 Category
@@ -111,11 +104,12 @@ export default function TriviaItem({ id, title, triviaContent, createdAt, imageU
               </div>
             </div>
           </div>
-          <div className="mt-4 mb-6">
+
+          <div className="w-full my-2">
             {/* 標題 */}
-            <div className="mb-3 text-xl font-bold">{title}</div>
+            <div className="mb-1 text-base font-bold">{title}</div>
             {/* 內文，將字數限制在最多 3 行 */}
-            <div className="text-sm text-neutral-600 line-clamp-[3]">{triviaContent}</div>
+            <div className="text-sm text-neutral-600 line-clamp-[1]">{triviaContent}</div>
           </div>
           <div>
             {/* 留言數與按讚數 */}
