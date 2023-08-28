@@ -76,7 +76,7 @@ export default function TriviaItem({ id, title, triviaContent, createdAt, imageU
         onClick={handleTriviaDetailClick}
       >
         {/* 左側圖片區，該篇 trivia 圖片，高度為寬度 40% */}
-        <div className="w-1/4 flex justify-center">
+        <div className="w-1/4 hidden sm:flex justify-center">
           <img src={imageUrl} alt="trivia image" className="object-cover h-full rounded-xl shadow-xl" />
         </div>
 
@@ -84,7 +84,7 @@ export default function TriviaItem({ id, title, triviaContent, createdAt, imageU
         <div className="w-[3%] lg:w-[6%]"></div>
 
         {/* 右側卡片資訊 */}
-        <div className='w-3/4'>
+        <div className='w-full sm:w-3/4'>
           <div className="flex w-full items-center justify-between border-b pb-3">
             {/* 頭像與名稱 */}
             <div className="flex items-center space-x-3">
@@ -101,7 +101,7 @@ export default function TriviaItem({ id, title, triviaContent, createdAt, imageU
               </button> */}
               {/* 發文時間 */}
               <div className="text-xs text-neutral-500">
-                <span>created at </span>
+                <span className='hidden sm:inline'>created at </span>
                 {/* 下個條件式，不然一開始資料還沒來，日期是 undefined */}
                 {createdAt ? (
                   <ReactTimeAgo date={createdAt?.toDate()} locale="en-US" timeStyle="twitter" />
@@ -115,7 +115,7 @@ export default function TriviaItem({ id, title, triviaContent, createdAt, imageU
             {/* 標題 */}
             <div className="mb-3 text-xl font-bold">{title}</div>
             {/* 內文，將字數限制在最多 3 行 */}
-            <div className="text-sm text-neutral-600 line-clamp-[3]">{triviaContent}</div>
+            <div className="text-sm text-neutral-600 line-clamp-[1] sm:line-clamp-[3]">{triviaContent}</div>
           </div>
           <div>
             {/* 留言數與按讚數 */}
