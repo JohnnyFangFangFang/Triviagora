@@ -42,8 +42,6 @@ export default function CommentCollection({ triviaId, setCommentsQuantity }) {
 
   return (
     <div className="mt-2">
-
-      {/* 測試用 */}
       <div className="">
         {allComments.length !== 0 ?
           (allComments.map((comment) => {
@@ -51,10 +49,9 @@ export default function CommentCollection({ triviaId, setCommentsQuantity }) {
               // 使用 Spread Attributes 寫法較簡潔
               <CommentItem key={comment.id} {...comment} />
             );
-          })) : <></>
+          })) : <div className='text-center'>No comment yet.</div>
         }
       </div>
-
     </div>
   )
 }

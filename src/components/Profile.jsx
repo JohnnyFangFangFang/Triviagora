@@ -7,6 +7,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import EditProfileInfoModal from './EditProfileInfoModal';
 import EditProfilePhotoModal from './EditProfilePhotoModal';
 import TriviaCollection from './TriviaCollection';
+import SavedTriviaCollection from './SavedTriviaCollection';
 
 export default function Profile() {
   const navigate = useNavigate()
@@ -19,6 +20,7 @@ export default function Profile() {
   const [isPhotoChanged, setIsPhotoChanged] = useState(false);
   const [userCreationTime, setUserCreationTime] = useState('no record');
   const [userLastSignInTime, setUserLastSignInTime] = useState('no record');
+  console.log("畫面重新渲染")
 
   // 另外從資料庫拿 introduction
   async function getUserIntroduction() {
@@ -77,7 +79,7 @@ export default function Profile() {
           {/* Left Side */}
           <div className="w-full mx-2 md:w-3/12">
             {/* Profile Card */}
-            <div className="bg-white p-3 border-t-4 border-green-400">
+            <div className="bg-white p-3 rounded-xl border-t-4 border-green-400">
               {/* 大頭照 */}
               <div className='relative'>
                 <div className="image w-40 h-40 mx-auto rounded-full overflow-hidden border-2 border-solid">
@@ -199,7 +201,7 @@ export default function Profile() {
               <div className="grid grid-cols-2">
                 {/* 發文列表 */}
                 <div>
-                  <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
+                  <div className="flex items-center ml-3 mb-3 space-x-2 font-semibold text-gray-900 leading-8 border-b-2">
                     <svg className="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="blue">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
@@ -207,26 +209,17 @@ export default function Profile() {
                   </div>
                   <TriviaCollection page={'profile'} userId={userId} />
                 </div>
-                {/* 收藏文章 */}
+                {/* 收藏文章列表 */}
                 <div>
-                  <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
+                  <div className="flex ml-3 mb-3 items-center space-x-2 font-semibold text-gray-900 leading-8 border-b-2">
                     <svg xmlns="http://www.w3.org/2000/svg"
                       fill='orange'
-                      className="mr-1.5 h-5 w-5"
+                      className="h-5 w-5"
                       viewBox="0 0 16 16"> <path d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4z" /> <path d="M4.268 1A2 2 0 0 1 6 0h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L13 13.768V2a1 1 0 0 0-1-1H4.268z" />
                     </svg>
                     <span className="tracking-wide">Trivia Saved</span>
                   </div>
-                  <ul className="list-inside space-y-2">
-                    <li>
-                      <div className="text-teal-600">Masters Degree in Oxford</div>
-                      <div className="text-gray-500 text-xs">March 2020 - Now</div>
-                    </li>
-                    <li>
-                      <div className="text-teal-600">Bachelors Degree in LPU</div>
-                      <div className="text-gray-500 text-xs">March 2020 - Now</div>
-                    </li>
-                  </ul>
+                  <SavedTriviaCollection userId={userId} />
                 </div>
               </div>
               {/* End of Experience and education grid */}

@@ -8,6 +8,7 @@ import { db } from "@/utils/firebase"
 export default function TriviaCollection({ page, userId }) {
   const [isLoading, setIsLoading] = useState(true);
   const [allTrivia, setAllTrivia] = useState([]);
+  console.log("畫面重新渲染")
 
   useEffect(() => {
     // 取得 trivia 集合參考，讓電腦知道位置在哪
@@ -46,8 +47,6 @@ export default function TriviaCollection({ page, userId }) {
 
   return (
     <div className="">
-
-      {/* 測試用 */}
       <div className="">
         {allTrivia.length !== 0 ?
           (allTrivia.map((trivia) => {
@@ -61,10 +60,9 @@ export default function TriviaCollection({ page, userId }) {
                 <TriviaItemForProfile key={trivia.id} {...trivia} />
               )
             }
-          })) : <></>
+          })) : <div className='text-center'>You have not posted any trivia.</div>
         }
       </div>
-
     </div>
   )
 }

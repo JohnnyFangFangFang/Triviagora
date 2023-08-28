@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 // 使用的 UI 元件 post：https://tailwindcomponents.com/component/post-making-form
 // 使用的 UI 元件 upload：https://tailwindcomponents.com/component/uploader-template
 
@@ -97,15 +98,15 @@ export default function PostTrivia() {
   if (isLoading) return <div className="mt-24">Loading...</div>;
 
   return (
-    <>
+    <div className='mt-24'>
       <div className="heading text-center font-bold text-2xl m-5 text-gray-800">
-        New Post
+        Let's share a new post, happy trivia!
       </div>
 
-      <div className="grid grid-cols-3">
+      <div className="grid grid-cols-3 mt-10 px-10">
         {/* 上傳圖片鈕 */}
         <div
-          className=" col-span-1 h-full flex bg-black bg-opacity-60 bg-cover bg-center"
+          className=" col-span-1 h-full flex bg-black bg-opacity-60 bg-cover bg-center shadow-lg rounded-l-xl"
           style={{ backgroundImage: `url(${imageTempUrl})` }}
         >
           {/* 上傳卡片樣式 */}
@@ -146,7 +147,7 @@ export default function PostTrivia() {
         </div>
 
         {/* 右側發文區 */}
-        <div className="editor col-span-2 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg">
+        <div className="editor col-span-2 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg rounded-r-xl">
           {/* 標題 */}
           <input
             className="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none"
@@ -163,8 +164,8 @@ export default function PostTrivia() {
             defaultValue={""}
             onChange={e => setTriviaContent(e.target.value)}
           />
-          {/* icons */}
-          <div className="icons flex text-gray-500 m-2">
+          {/* icons 與字數限制，暫時不用 */}
+          {/* <div className="icons flex text-gray-500 m-2">
             <svg
               className="mr-2 cursor-pointer hover:text-gray-700 border rounded-full p-1 h-7"
               xmlns="http://www.w3.org/2000/svg"
@@ -216,14 +217,14 @@ export default function PostTrivia() {
             <div className="count ml-auto text-gray-400 text-xs font-semibold">
               0/300
             </div>
-          </div>
+          </div> */}
           {/* buttons */}
-          <div className="buttons flex">
-            <div className="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 ml-auto">
+          <div className="flex mt-4">
+            <div className="ml-auto border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 rounded-xl hover:bg-red-400 hover:text-white">
               Cancel
             </div>
             <div
-              className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500"
+              className="ml-2 border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 bg-indigo-600 rounded-xl hover:bg-indigo-400 "
               onClick={handlePostTriviaClick}
             >
               Post
@@ -232,7 +233,7 @@ export default function PostTrivia() {
         </div>
 
       </div>
-    </>
 
+    </div>
   )
 }

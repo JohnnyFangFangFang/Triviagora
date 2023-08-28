@@ -14,6 +14,7 @@ export function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl, a
   const [author, setAuthor] = useState({});
   const [isTriviaSaved, setIsTriviaSaved] = useState(false);
   const [commentsQuantity, setCommentsQuantity] = useState(0);
+  console.log("畫面重新渲染")
 
   // 這段是要先拿取使用者資料
   const auth = getAuth();
