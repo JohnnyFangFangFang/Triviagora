@@ -57,7 +57,7 @@ export default function TriviaItemForPage({ title, triviaContent, createdAt, ima
         savedTriviaId: arrayUnion(triviaId)
       });
       setIsTriviaSaved(true)
-      alert('Save the trivia successfully!');
+      console.log('Save the trivia successfully!');
     }
   }
 

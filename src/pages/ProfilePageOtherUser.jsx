@@ -8,7 +8,6 @@ import { ProfileOtherUser } from '@/components/profile';
 export default function ProfilePageOtherUser() {
   console.log("看到這個代表畫面重新渲染一次")
   const authorUid = useParams().id; // 從 URL 中取得作者 UID
-
   const [isLoading, setIsLoading] = useState(true);
   const [author, setAuthor] = useState({});
 
@@ -38,7 +37,7 @@ export default function ProfilePageOtherUser() {
 
   return (
     <NavbarContainer currentPage="Profile">
-      <ProfileOtherUser {...author} />
+      <ProfileOtherUser {...author} authorUid={authorUid} />
     </NavbarContainer>
   )
 }
