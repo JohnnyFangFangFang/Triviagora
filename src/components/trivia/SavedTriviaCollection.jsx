@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react'
-import TriviaItemForProfile from './TriviaItemForProfile';
 import { collection, query, orderBy, onSnapshot, doc, getDoc } from "firebase/firestore";
 import { db } from "@/utils/firebase"
+import TriviaItemForProfile from './TriviaItemForProfile';
 
 export default function SavedTriviaCollection({ userId }) {
   const [isLoading, setIsLoading] = useState(true);

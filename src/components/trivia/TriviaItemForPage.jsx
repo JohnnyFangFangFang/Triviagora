@@ -2,13 +2,12 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import ReactTimeAgo from 'react-time-ago'
-import CommentCollection from '@/components/CommentCollection';
-import PostCommentModal from '@/components/PostCommentModal';
 import { db } from "@/utils/firebase"
 import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { CommentCollection, PostCommentModal } from '@/components/comment';
 
-export function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl, authorUid, triviaId }) {
+export default function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl, authorUid, triviaId }) {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(true);
   const [author, setAuthor] = useState({});
@@ -190,7 +189,7 @@ export function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl, a
                 {/* 收藏 */}
                 <svg xmlns="http://www.w3.org/2000/svg"
                   // 若 isTriviaSaved 有東西要檢查一下是有收藏還是字串 no bookmarks
-                  fill={isTriviaSaved ? isTriviaSaved === "no bookmarks" ? 'gray': 'orange' : 'gray'}
+                  fill={isTriviaSaved ? isTriviaSaved === "no bookmarks" ? 'gray' : 'orange' : 'gray'}
                   className="mr-1.5 h-5 w-5"
                   viewBox="0 0 16 16"> <path d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4z" /> <path d="M4.268 1A2 2 0 0 1 6 0h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L13 13.768V2a1 1 0 0 0-1-1H4.268z" />
                 </svg>

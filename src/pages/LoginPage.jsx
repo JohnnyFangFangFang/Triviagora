@@ -1,7 +1,6 @@
-import Login from '@/components/Login.jsx'
+import { Login } from '@/components/userBehavior'
 
 export default function LoginPage() {
-
   return (
     <Login />
   )

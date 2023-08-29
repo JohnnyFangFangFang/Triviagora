@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/utils/firebase"
-import NavbarContainer from '@/components/NavbarContainer';
-import { TriviaItemForPage } from '@/components/TriviaItemForPage';
+import { NavbarContainer } from '@/components/other';
+import { TriviaItemForPage } from '@/components/trivia';
 
 export default function TriviaItemPage() {
   console.log("看到這個代表畫面重新渲染一次")

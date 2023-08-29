@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 // 使用的 UI 元件：https://tailwindcomponents.com/component/sidebar-with-navbar-and-breadcrumb
 // UI 元件備案：https://tailwindcomponents.com/component/sticky-navbar-component
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { app } from "@/utils/firebase"
-import { useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 export default function NavbarContainer({ children, currentPage }) {

@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 // import { app, db } from "@/utils/firebase"
 // import { doc, getDoc } from "firebase/firestore";
 // import { getAuth, onAuthStateChanged } from "firebase/auth";
-import LogoutBtn from './LogoutBtn';
+import { LogoutBtn } from '@/components/userBehavior';
 
 export default function ProfileOtherUser({ displayName, photoURL, introduction, userCreationTime, userLastSignInTime }) {
   // const navigate = useNavigate()

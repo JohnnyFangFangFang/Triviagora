@@ -1,8 +1,8 @@
 
 // 記得做分頁功能或無限捲軸
 
-import NavbarContainer from '@/components/NavbarContainer';
-import TriviaCollection from "@/components/TriviaCollection";
+import { NavbarContainer } from '@/components/other';
+import { TriviaCollection } from "@/components/trivia";
 
 export default function HomePage() {
   return (

@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react'
-import CommentItem from './CommentItem';
 import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import { db } from "@/utils/firebase"
+import CommentItem from './CommentItem';
 
 export default function CommentCollection({ triviaId, setCommentsQuantity }) {
   const [isLoading, setIsLoading] = useState(true);

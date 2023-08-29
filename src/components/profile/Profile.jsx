@@ -6,8 +6,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import EditProfileInfoModal from './EditProfileInfoModal';
 import EditProfilePhotoModal from './EditProfilePhotoModal';
-import TriviaCollection from './TriviaCollection';
-import SavedTriviaCollection from './SavedTriviaCollection';
+import { TriviaCollection, SavedTriviaCollection } from '@/components/trivia';
 
 export default function Profile() {
   const navigate = useNavigate()

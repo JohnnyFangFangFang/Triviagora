@@ -1,9 +1,9 @@
-import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom';
 import { db } from "@/utils/firebase"
 import { doc, getDoc } from "firebase/firestore";
-import NavbarContainer from '@/components/NavbarContainer';
-import ProfileOtherUser from '@/components/ProfileOtherUser';
+import { NavbarContainer } from '@/components/other';
+import { ProfileOtherUser } from '@/components/profile';
 
 export default function ProfilePageOtherUser() {
   console.log("看到這個代表畫面重新渲染一次")

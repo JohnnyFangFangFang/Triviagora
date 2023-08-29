@@ -2,15 +2,15 @@
 // 使用的 UI 元件：https://tailwindcomponents.com/component/user-post-card
 // UI 元件備案：https://tailwindcomponents.com/component/maede
 import { useState, useEffect } from 'react'
-import ReactTimeAgo from 'react-time-ago'
 import { useNavigate } from 'react-router-dom';
+import ReactTimeAgo from 'react-time-ago'
 import { db } from "@/utils/firebase"
 import { doc, getDoc, collection, query, orderBy, onSnapshot } from "firebase/firestore";
 
-export default function TriviaItem({ id, title, triviaContent, createdAt, imageUrl, authorUid }) {
+export default function TriviaItemForProfile({ id, title, triviaContent, createdAt, authorUid }) {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(true);
-  const [author, setAuthor] = useState({});
+  // const [author, setAuthor] = useState({});
   const [commentsQuantity, setCommentsQuantity] = useState(0);
 
   // 看單則 trivia 細節
@@ -21,21 +21,21 @@ export default function TriviaItem({ id, title, triviaContent, createdAt, imageU
 
   // 從 Firebase 拿作者資料與留言數量
   useEffect(() => {
-    // 拿作者資料
-    const getAuthorAsync = async () => {
-      setIsLoading(true);
-      if (authorUid !== '') {
-        const docRef = doc(db, "users", authorUid); // 創建一個文件參考
-        const docSnapshot = await getDoc(docRef); // 獲取文件快照
-        if (docSnapshot.exists()) { // 檢查文件是否存在
-          const data = docSnapshot.data(); // 獲取文件的全部資料
-          setAuthor(data); // 更新 state
-        } else {
-          console.log("No such user!"); // 如果 user 不存在，則輸出錯誤訊息
-        }
-      }
-      setIsLoading(false);
-    }
+    // 拿作者資料，暫時不需要
+    // const getAuthorAsync = async () => {
+    //   setIsLoading(true);
+    //   if (authorUid !== '') {
+    //     const docRef = doc(db, "users", authorUid); // 創建一個文件參考
+    //     const docSnapshot = await getDoc(docRef); // 獲取文件快照
+    //     if (docSnapshot.exists()) { // 檢查文件是否存在
+    //       const data = docSnapshot.data(); // 獲取文件的全部資料
+    //       setAuthor(data); // 更新 state
+    //     } else {
+    //       console.log("No such user!"); // 如果 user 不存在，則輸出錯誤訊息
+    //     }
+    //   }
+    //   setIsLoading(false);
+    // }
     // 拿留言數量
     const getCommentsQuantity = () => {
       // 取得 comments 子集合參考，讓電腦知道位置在哪
@@ -61,7 +61,7 @@ export default function TriviaItem({ id, title, triviaContent, createdAt, imageU
       };
     }
     // 執行函式
-    getAuthorAsync()
+    // getAuthorAsync()
     getCommentsQuantity()
   }, []); // 注意，這裡的空陣列意味著 useEffect 只在組件掛載和卸載時運行。
 
@@ -69,39 +69,32 @@ export default function TriviaItem({ id, title, triviaContent, createdAt, imageU
   if (isLoading) return <div className="mt-24">Loading...</div>;
 
   return (
-    <div className="flex items-center justify-center min-h-max my-4">
+    <div className=" flex items-center justify-center min-h-max my-4">
       {/* trivia 卡片 */}
       <div
-        className="flex rounded-xl border p-5 shadow-md w-9/12 bg-white cursor-pointer hover:bg-slate-100"
+        className=" flex rounded-xl border p-2 shadow-md w-10/12 bg-white cursor-pointer hover:bg-slate-100"
         onClick={handleTriviaDetailClick}
       >
         {/* 左側圖片區，該篇 trivia 圖片，高度為寬度 40% */}
-        <div className="w-1/4 hidden sm:flex justify-center">
+        {/* <div className="w-1/4 flex justify-center">
           <img src={imageUrl} alt="trivia image" className="object-cover h-full rounded-xl shadow-xl" />
-        </div>
+        </div> */}
 
         {/* 間隔區塊 */}
         <div className="w-[3%] lg:w-[6%]"></div>
 
         {/* 右側卡片資訊 */}
-        <div className='w-full sm:w-3/4'>
+        <div className='w-full'>
           <div className="flex w-full items-center justify-between border-b pb-3">
-            {/* 頭像與名稱 */}
-            <div className="flex items-center space-x-3">
-              <div className='h-8 w-8 rounded-full bg-slate-400'>
-                <img src={author.photoURL || 'https://thumbs.dreamstime.com/z/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg?w=768'} alt="user photo" className="object-cover h-8 w-8 rounded-full shadow-xl" />
-              </div>
-              <div className="text-lg font-bold text-slate-700">{author.displayName || 'author'}</div>
-            </div>
             {/* 類別與發文時間 */}
-            <div className="flex items-center space-x-8">
+            <div className="flex items-center space-x-1">
               {/* 類別標籤，先不用 */}
               {/* <button className="rounded-2xl border bg-neutral-100 px-3 py-1 text-xs font-semibold">
                 Category
               </button> */}
               {/* 發文時間 */}
               <div className="text-xs text-neutral-500">
-                <span className='hidden sm:inline'>created at </span>
+                <span>created at </span>
                 {/* 下個條件式，不然一開始資料還沒來，日期是 undefined */}
                 {createdAt ? (
                   <ReactTimeAgo date={createdAt?.toDate()} locale="en-US" timeStyle="twitter" />
@@ -111,11 +104,12 @@ export default function TriviaItem({ id, title, triviaContent, createdAt, imageU
               </div>
             </div>
           </div>
-          <div className="mt-4 mb-6">
+
+          <div className="w-full my-2">
             {/* 標題 */}
-            <div className="mb-3 text-xl font-bold">{title}</div>
+            <div className="mb-1 text-base font-bold">{title}</div>
             {/* 內文，將字數限制在最多 3 行 */}
-            <div className="text-sm text-neutral-600 line-clamp-[1] sm:line-clamp-[3]">{triviaContent}</div>
+            <div className="text-sm text-neutral-600 line-clamp-[1]">{triviaContent}</div>
           </div>
           <div>
             {/* 留言數與按讚數 */}

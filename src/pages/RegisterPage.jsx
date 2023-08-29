@@ -1,7 +1,6 @@
-import Register from '@/components/Register.jsx'
+import { Register } from '@/components/userBehavior'
 
 export default function RegisterPage() {
-
   return (
     <Register />
   )
