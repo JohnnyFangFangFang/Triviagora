@@ -84,6 +84,11 @@ export default function PostTrivia() {
     }
   }
 
+  // 取消發文，導回首頁
+  function handleCancelTriviaClick() {
+    navigate('/')
+  }
+
   // 確認使用者登入狀態，以方便抓到發文者 ID
   useEffect(() => {
     const auth = getAuth(app);
@@ -222,7 +227,8 @@ export default function PostTrivia() {
           </div> */}
           {/* buttons */}
           <div className="flex mt-4">
-            <div className="ml-auto border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 rounded-xl hover:bg-red-400 hover:text-white">
+            <div className="ml-auto border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 rounded-xl hover:bg-red-400 hover:text-white"
+              onClick={handleCancelTriviaClick}>
               Cancel
             </div>
             <div
