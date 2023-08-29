@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { app } from "@/utils/firebase"
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { DEFAULT_AVATAR_SVG } from '@/constants';
+import { RiGithubFill } from 'react-icons/ri'
 
 export default function NavbarContainer({ children, currentPage }) {
   const navigate = useNavigate()
@@ -73,16 +74,16 @@ export default function NavbarContainer({ children, currentPage }) {
         }}
       />
 
-      {/* Navbar start */}
+      {/* Navbar start、原背景色 bg-gray-700 */}
       <nav
         id="navbar"
-        className="fixed top-0 z-40 flex w-full justify-center bg-gray-700 px-4 sm:justify-start"
+        className="fixed h-12 top-0 z-40 flex w-full justify-center bg-water-blue px-4 sm:justify-start"
       >
         {/* 漢堡排 */}
         <button
           id="btnSidebarToggler"
           type="button"
-          className="py-4 text-2xl text-white hover:text-gray-200"
+          className="py-2 text-2xl text-white hover:text-gray-200"
         >
           <svg
             id="navClosed"
@@ -125,30 +126,29 @@ export default function NavbarContainer({ children, currentPage }) {
           </li>
         </ul>
         {/* 使用者頭像 */}
-        <div className='absolute top-2 right-4 object-cover h-12 w-12 rounded-full shadow-xl'>
+        <div className='absolute top-1 right-4 object-cover h-10 w-10 rounded-full shadow-xl'>
           {userPhoto ? <img src={userPhoto} alt="user photo" className="object-cover h-full w-full rounded-full shadow-xl" /> : DEFAULT_AVATAR_SVG}
         </div>
       </nav>
       {/* Navbar end */}
 
-      {/* Sidebar start*/}
+      {/* 可收合側邊欄 Sidebar start*/}
       <div id="containerSidebar" className="z-40">
-        <div className="navbar-menu relative z-40">
+        <div className="relative z-40">
           <nav
             id="sidebar"
-            className="fixed left-0 bottom-0 flex w-3/4 -translate-x-full flex-col overflow-y-auto bg-gray-700 pt-6 pb-8 sm:max-w-xs lg:w-80"
+            className="fixed left-0 mt-6 min-h-fit pt-3 pb-1 flex flex-col w-2/4 sm:w-44 -translate-x-full overflow-y-auto bg-water-blue rounded-r-2xl"
           >
             {/* 主要功能區 */}
-            <div className="px-4 pb-6">
-              <h3 className="mb-2 text-xs font-medium uppercase text-gray-300">
+            <div className="px-4 pb-1 text-white font-bold">
+              <h3 className="mb-2 text-xl uppercase">
                 Main
               </h3>
               <ul className="mb-8 text-sm font-medium">
                 {/* 首頁 */}
                 <li>
                   <a
-                    className={` ${currentPage === 'HomePage' ? 'active' : ''} flex items-center rounded py-3 pl-3 pr-4 text-white hover:bg-gray-600 cursor-pointer`}
-                    // href="/"
+                    className={` ${currentPage === 'HomePage' ? 'active' : ''} flex items-center rounded py-3 pl-3 pr-4 hover:bg-gray-600 cursor-pointer`}
                     onClick={() => navigate('/')}
                   >
                     <span className="select-none">HomePage</span>
@@ -157,7 +157,7 @@ export default function NavbarContainer({ children, currentPage }) {
                 {/* 個人頁面 */}
                 <li>
                   <a
-                    className={` ${currentPage === 'Profile' ? 'active' : ''} flex items-center rounded py-3 pl-3 pr-4 text-white hover:bg-gray-600 cursor-pointer`}
+                    className={` ${currentPage === 'Profile' ? 'active' : ''} flex items-center rounded py-3 pl-3 pr-4 hover:bg-gray-600 cursor-pointer`}
                     // href="profile"
                     onClick={() => navigate('/profile')}
                   >
@@ -167,7 +167,7 @@ export default function NavbarContainer({ children, currentPage }) {
                 {/* 發文頁面 */}
                 <li>
                   <a
-                    className={` ${currentPage === 'PostTrivia' ? 'active' : ''} flex items-center rounded py-3 pl-3 pr-4 text-white hover:bg-gray-600 cursor-pointer`}
+                    className={` ${currentPage === 'PostTrivia' ? 'active' : ''} flex items-center rounded py-3 pl-3 pr-4 hover:bg-gray-600 cursor-pointer`}
                     // href="posttrivia"
                     onClick={() => navigate('/posttrivia')}
                   >
@@ -179,14 +179,14 @@ export default function NavbarContainer({ children, currentPage }) {
             {/* 主要功能區 end*/}
 
             {/* 第二區 */}
-            <div className="px-4 pb-6">
-              <h3 className="mb-2 text-xs font-medium uppercase text-gray-300">
+            <div className="px-4 pb-1 text-white font-bold">
+              <h3 className="mb-2 text-xl uppercase">
                 Others
               </h3>
               <ul className="mb-8 text-sm font-medium">
                 <li>
                   <a
-                    className="flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600"
+                    className="flex items-center rounded py-3 pl-3 pr-4 hover:bg-gray-600"
                     href="#tc"
                   >
                     <span className="select-none">About</span>
@@ -194,16 +194,16 @@ export default function NavbarContainer({ children, currentPage }) {
                 </li>
                 <li>
                   <a
-                    className="flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600"
-                    href="#privacy"
+                    className="flex items-center rounded py-3 pl-3 pr-4 hover:bg-gray-600"
+                    href="#"
                   >
                     <span className="select-none">to be done</span>
                   </a>
                 </li>
                 <li>
                   <a
-                    className="flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600"
-                    href="#imprint"
+                    className="flex items-center rounded py-3 pl-3 pr-4 hover:bg-gray-600"
+                    href="#"
                   >
                     <span className="select-none">to be done</span>
                   </a>
@@ -213,14 +213,14 @@ export default function NavbarContainer({ children, currentPage }) {
             {/* 第二區 end */}
 
             {/* 第三區 */}
-            <div className="px-4 pb-6">
-              <h3 className="mb-2 text-xs font-medium uppercase text-gray-300">
+            <div className="px-4 pb-1 text-white font-bold">
+              <h3 className="mb-2 text-xl uppercase">
                 Others
               </h3>
               <ul className="mb-8 text-sm font-medium">
                 <li>
                   <div
-                    className="flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600 cursor-pointer"
+                    className="flex items-center rounded py-3 pl-3 pr-4 hover:bg-gray-600 cursor-pointer"
                     onClick={handleLogoutClick}
                   >
                     <span className="select-none">Log out</span>
@@ -231,7 +231,6 @@ export default function NavbarContainer({ children, currentPage }) {
             {/* 第三區 end */}
           </nav>
         </div>
-        <div className="mx-auto lg:ml-80" />
       </div>
       {/* Sidebar end */}
 
@@ -239,6 +238,20 @@ export default function NavbarContainer({ children, currentPage }) {
       <main className=''>
         {children}
       </main>
+
+      {/* Footer */}
+      <footer className="py-1 bg-water-blue text-white lg:flex lg:justify-center lg:gap-10">
+        <p className="w-fit mx-auto lg:mx-0 font-bold text-xl">
+          Triviagora
+        </p>
+        <p className="flex w-fit mx-auto items-center lg:mx-0 text-lg">
+          Copyright © 2023
+          <a href="https://github.com/JohnnyFangFangFang" className="ml-3 underline">
+            Johnny Fang
+            <RiGithubFill className="ml-1 mb-0.5 inline-block text-2xl" />
+          </a>
+        </p>
+      </footer>
     </>
   )
 }
