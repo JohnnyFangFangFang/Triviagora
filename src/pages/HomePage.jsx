@@ -1,4 +1,3 @@
-
 // 記得做分頁功能或無限捲軸
 
 import { NavbarContainer } from '@/components/other';
@@ -11,6 +10,5 @@ export default function HomePage() {
         <TriviaCollection page={'homepage'} />
       </div>
     </NavbarContainer>
-
   )
 }

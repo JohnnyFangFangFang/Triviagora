@@ -5,10 +5,11 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { app } from "@/utils/firebase"
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { DEFAULT_AVATAR_SVG } from '@/constants';
 
 export default function NavbarContainer({ children, currentPage }) {
   const navigate = useNavigate()
-  const [userPhoto, setUserPhoto] = useState('')
+  const [userPhoto, setUserPhoto] = useState(null)
 
   // 登出功能
   function handleLogoutClick() {
@@ -124,11 +125,9 @@ export default function NavbarContainer({ children, currentPage }) {
           </li>
         </ul>
         {/* 使用者頭像 */}
-        <img
-          src={userPhoto || 'https://thumbs.dreamstime.com/z/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg?w=768'}
-          alt="user photo"
-          className="absolute top-2 right-4 object-cover h-12 w-12 rounded-full shadow-xl"
-        />
+        <div className='absolute top-2 right-4 object-cover h-12 w-12 rounded-full shadow-xl'>
+          {userPhoto ? <img src={userPhoto} alt="user photo" className="object-cover h-full w-full rounded-full shadow-xl" /> : DEFAULT_AVATAR_SVG}
+        </div>
       </nav>
       {/* Navbar end */}
 

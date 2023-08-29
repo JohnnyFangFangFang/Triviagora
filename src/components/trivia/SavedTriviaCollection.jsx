@@ -76,7 +76,7 @@ export default function SavedTriviaCollection({ userId }) {
             return (
               <TriviaItemForProfile key={trivia.id} {...trivia} />
             )
-          })) : <div className='text-center'>You have not saved any trivia.</div>
+          })) : <div className='text-center'>Have not saved any trivia.</div>
         }
       </div>
     </div>

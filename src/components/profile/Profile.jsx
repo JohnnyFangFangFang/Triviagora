@@ -7,6 +7,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import EditProfileInfoModal from './EditProfileInfoModal';
 import EditProfilePhotoModal from './EditProfilePhotoModal';
 import { TriviaCollection, SavedTriviaCollection } from '@/components/trivia';
+import { DEFAULT_AVATAR_SVG } from '@/constants';
 
 export default function Profile() {
   const navigate = useNavigate()
@@ -15,7 +16,7 @@ export default function Profile() {
   const [displayName, setDisplayName] = useState('');
   const [introduction, setIntroduction] = useState('');
   const [userId, setUserId] = useState('');
-  const [photoUrl, setPhotoUrl] = useState('');
+  const [photoURL, setPhotoURL] = useState('');
   const [isPhotoChanged, setIsPhotoChanged] = useState(false);
   const [userCreationTime, setUserCreationTime] = useState('no record');
   const [userLastSignInTime, setUserLastSignInTime] = useState('no record');
@@ -46,7 +47,7 @@ export default function Profile() {
         setUserId(user.uid)
         setEmail(user.email);
         setDisplayName(user.displayName || "Please edit your display name")
-        setPhotoUrl(user.photoURL)
+        setPhotoURL(user.photoURL)
 
         // 轉換帳號註冊、上次上線時間的資料格式
         const creationTime = new Date(user.metadata.creationTime);
@@ -82,7 +83,8 @@ export default function Profile() {
               {/* 大頭照 */}
               <div className='relative'>
                 <div className="image w-40 h-40 mx-auto rounded-full overflow-hidden border-2 border-solid">
-                  <img className="h-auto w-full mx-auto" src={photoUrl || 'https://thumbs.dreamstime.com/z/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg?w=768'} alt="" />
+                  {/* 若還沒設定則使用預設頭像 */}
+                  {photoURL ? <img src={photoURL} alt="user photo" className="h-auto w-full mx-auto" /> : DEFAULT_AVATAR_SVG}
                 </div>
                 <EditProfilePhotoModal
                   userId={userId}

@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 // import { doc, getDoc } from "firebase/firestore";
 // import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { TriviaCollection, SavedTriviaCollection } from '@/components/trivia';
+import { DEFAULT_AVATAR_SVG } from '@/constants';
 
 export default function ProfileOtherUser({ displayName, photoURL, introduction, userCreationTime, userLastSignInTime, authorUid }) {
   // const navigate = useNavigate()
@@ -42,7 +43,8 @@ export default function ProfileOtherUser({ displayName, photoURL, introduction, 
               {/* 大頭照 */}
               <div className='relative'>
                 <div className="image w-40 h-40 mx-auto rounded-full overflow-hidden border-2 border-solid">
-                  <img className="h-auto w-full mx-auto" src={photoURL} alt="" />
+                  {/* 若還沒設定則使用預設頭像 */}
+                  {photoURL ? <img src={photoURL} alt="user photo" className="h-auto w-full mx-auto" /> : DEFAULT_AVATAR_SVG}
                 </div>
               </div>
               <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">{displayName}</h1>

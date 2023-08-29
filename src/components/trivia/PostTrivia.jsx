@@ -34,44 +34,49 @@ export default function PostTrivia() {
   // 發文功能
   async function handlePostTriviaClick() {
     try {
-      // 上傳文章但先傳入空物件，目的是先取得文章 id 當作圖片標題，後面再把文章本身內容填入
-      const docRef = await addDoc(collection(db, "trivia"), {});
-
-      // 圖片檔附加資訊，例如檔名、大小和內容類型等
-      // 若 imageFile 存在則 contentType 為 imageFile.type
-      const metadata = {
-        contentType: imageFile?.type,
-      };
-      // 告訴電腦我們是要指向 storage 裡的哪個檔
-      const fileRef = ref(storage, 'post-images/' + docRef.id);
-
-      // 上傳圖片 => 拿到圖片 url => 更新文章填入內容
-      if (imageFile) {
-        uploadBytes(fileRef, imageFile, metadata).then(() => {
-          getDownloadURL(fileRef).then(async (imageUrl) => {
-            await updateDoc(docRef, {
-              title,
-              triviaContent,
-              createdAt: Timestamp.now(),
-              imageUrl,
-              authorUid: userId
-            });
-            console.log('成功上傳檔案與文章內容，爽啦！文章 ID: ', docRef.id);
-            // 成功發文後導回首頁
-            navigate('/')
-          })
-        });
+      // 先判斷標題或內容是否空白
+      if (title.trim() === '' || triviaContent.trim() === '') {
+        alert('Please do not leave title or content empty.')
       } else {
+        // 上傳文章但先傳入空物件，目的是先取得文章 id 當作圖片標題，後面再把文章本身內容填入
+        const docRef = await addDoc(collection(db, "trivia"), {});
 
-        await updateDoc(docRef, {
-          title,
-          triviaContent,
-          createdAt: Timestamp.now(),
-          authorUid: userId
-        });
-        console.log('成功上傳文章內容，爽啦！文章 ID: ', docRef.id);
-        // 成功發文後導回首頁
-        navigate('/')
+        // 圖片檔附加資訊，例如檔名、大小和內容類型等
+        // 若 imageFile 存在則 contentType 為 imageFile.type
+        const metadata = {
+          contentType: imageFile?.type,
+        };
+        // 告訴電腦我們是要指向 storage 裡的哪個檔
+        const fileRef = ref(storage, 'post-images/' + docRef.id);
+
+        // 上傳圖片 => 拿到圖片 url => 更新文章填入內容
+        if (imageFile) {
+          uploadBytes(fileRef, imageFile, metadata).then(() => {
+            getDownloadURL(fileRef).then(async (imageUrl) => {
+              await updateDoc(docRef, {
+                title,
+                triviaContent,
+                createdAt: Timestamp.now(),
+                imageUrl,
+                authorUid: userId
+              });
+              console.log('成功上傳檔案與文章內容，爽啦！文章 ID: ', docRef.id);
+              // 成功發文後導回首頁
+              navigate('/')
+            })
+          });
+        } else {
+
+          await updateDoc(docRef, {
+            title,
+            triviaContent,
+            createdAt: Timestamp.now(),
+            authorUid: userId
+          });
+          console.log('成功上傳文章內容，爽啦！文章 ID: ', docRef.id);
+          // 成功發文後導回首頁
+          navigate('/')
+        }
       }
     }
     catch (e) {

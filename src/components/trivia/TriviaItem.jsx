@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import ReactTimeAgo from 'react-time-ago'
 import { db } from "@/utils/firebase"
 import { doc, getDoc, collection, query, orderBy, onSnapshot } from "firebase/firestore";
+import { DEFAULT_AVATAR_SVG } from '@/constants';
 
 export default function TriviaItem({ id, title, triviaContent, createdAt, imageUrl, authorUid }) {
   const navigate = useNavigate()
@@ -89,7 +90,8 @@ export default function TriviaItem({ id, title, triviaContent, createdAt, imageU
             {/* 頭像與名稱 */}
             <div className="flex items-center space-x-3">
               <div className='h-8 w-8 rounded-full bg-slate-400'>
-                <img src={author.photoURL || 'https://thumbs.dreamstime.com/z/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg?w=768'} alt="user photo" className="object-cover h-8 w-8 rounded-full shadow-xl" />
+                {/* 若還沒設定則使用預設頭像 */}
+                {author.photoURL ? <img src={author.photoURL} alt="user photo" className="object-cover h-full w-full rounded-full shadow-xl" /> : DEFAULT_AVATAR_SVG}
               </div>
               <div className="text-lg font-bold text-slate-700">{author.displayName || 'author'}</div>
             </div>

@@ -6,6 +6,7 @@ import { db } from "@/utils/firebase"
 import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { CommentCollection, PostCommentModal } from '@/components/comment';
+import { DEFAULT_AVATAR_SVG } from '@/constants';
 
 export default function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl, authorUid, triviaId }) {
   const navigate = useNavigate()
@@ -122,7 +123,7 @@ export default function TriviaItemForPage({ title, triviaContent, createdAt, ima
               onClick={handleAvatarClick}
             >
               <div className='h-16 w-16 rounded-full bg-slate-400'>
-                <img src={author.photoURL || 'https://thumbs.dreamstime.com/z/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg?w=768'} alt="user photo" className="object-cover h-16 w-16 rounded-full shadow-xl" />
+                {author.photoURL ? <img src={author.photoURL} alt="user photo" className="object-cover h-full w-full rounded-full shadow-xl" /> : DEFAULT_AVATAR_SVG}
               </div>
               <div className="text-lg font-bold text-slate-700">{author.displayName || 'author'}</div>
             </div>

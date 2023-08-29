@@ -21,15 +21,20 @@ export default function PostCommentModal({ triviaId }) {
 
   // 將留言送出到 Firebase
   async function handlePostClick() {
-    // 到 db => trivia => 這篇 trivia => comments 子集合，再新增這筆 comment
-    const commentRef = await addDoc(collection(db, "trivia", triviaId, "comments"), {
-      comment,
-      createdAt: Timestamp.now(),
-      authorUid: userId
-    });
-    console.log('成功留言，爽啦！該則留言 ID: ', commentRef.id);
-    // 留言完把 modal 關掉
-    toggleModal()
+    // 先判斷留言是否空白
+    if (comment.trim() === '') {
+      alert('Please do not leave comment empty.')
+    } else {
+      // 到 db => trivia => 這篇 trivia => comments 子集合，再新增這筆 comment
+      const commentRef = await addDoc(collection(db, "trivia", triviaId, "comments"), {
+        comment,
+        createdAt: Timestamp.now(),
+        authorUid: userId
+      });
+      console.log('成功留言，爽啦！該則留言 ID: ', commentRef.id);
+      // 留言完把 modal 關掉
+      toggleModal()
+    }
   }
 
   // 確認使用者登入狀態，以方便抓到發文者 ID
