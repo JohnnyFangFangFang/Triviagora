@@ -62,7 +62,7 @@ export default function NavbarContainer({ children, currentPage }) {
 
   return (
 
-    <>
+    <div className='relative min-h-screen'>
       {/*Change class "fixed" to "sticky" in "navbar" (l. 33) so the navbar doesn't hide any of your page content!*/}
       {/* 
       使用React中的dangerouslySetInnerHTML屬性來插入一段內嵌的CSS樣式，不過需要謹慎使用，因為如果不正確地處理，可能會導致跨站腳本攻擊（XSS）的風險。下面這段定義了漢堡排中每個項目之間的分隔符號、側邊欄的轉場效果和顯示狀態、側邊欄中活躍連結的背景顏色。 
@@ -122,7 +122,7 @@ export default function NavbarContainer({ children, currentPage }) {
             <span>Triviagora</span>
           </li>
           <li className="inline">
-            <span>{currentPage}</span>
+            <span className='ml-1'>{currentPage}</span>
           </li>
         </ul>
         {/* 使用者頭像 */}
@@ -148,7 +148,7 @@ export default function NavbarContainer({ children, currentPage }) {
                 {/* 首頁 */}
                 <li>
                   <a
-                    className={` ${currentPage === 'HomePage' ? 'active' : ''} flex items-center rounded py-3 pl-3 pr-4 hover:bg-gray-600 cursor-pointer`}
+                    className={` ${currentPage === 'HomePage' ? 'bg-gray-800/50' : ''} flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer`}
                     onClick={() => navigate('/')}
                   >
                     <span className="select-none">HomePage</span>
@@ -157,7 +157,7 @@ export default function NavbarContainer({ children, currentPage }) {
                 {/* 個人頁面 */}
                 <li>
                   <a
-                    className={` ${currentPage === 'Profile' ? 'active' : ''} flex items-center rounded py-3 pl-3 pr-4 hover:bg-gray-600 cursor-pointer`}
+                    className={` ${currentPage === 'Profile & Settings' ? 'bg-gray-800/50' : ''} flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer`}
                     // href="profile"
                     onClick={() => navigate('/profile')}
                   >
@@ -167,7 +167,7 @@ export default function NavbarContainer({ children, currentPage }) {
                 {/* 發文頁面 */}
                 <li>
                   <a
-                    className={` ${currentPage === 'PostTrivia' ? 'active' : ''} flex items-center rounded py-3 pl-3 pr-4 hover:bg-gray-600 cursor-pointer`}
+                    className={` ${currentPage === 'PostTrivia' ? 'bg-gray-800/50' : ''} flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer`}
                     // href="posttrivia"
                     onClick={() => navigate('/posttrivia')}
                   >
@@ -186,7 +186,7 @@ export default function NavbarContainer({ children, currentPage }) {
               <ul className="mb-8 text-sm font-medium">
                 <li>
                   <a
-                    className="flex items-center rounded py-3 pl-3 pr-4 hover:bg-gray-600"
+                    className="flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50"
                     href="#tc"
                   >
                     <span className="select-none">About</span>
@@ -194,7 +194,7 @@ export default function NavbarContainer({ children, currentPage }) {
                 </li>
                 <li>
                   <a
-                    className="flex items-center rounded py-3 pl-3 pr-4 hover:bg-gray-600"
+                    className="flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50"
                     href="#"
                   >
                     <span className="select-none">to be done</span>
@@ -202,7 +202,7 @@ export default function NavbarContainer({ children, currentPage }) {
                 </li>
                 <li>
                   <a
-                    className="flex items-center rounded py-3 pl-3 pr-4 hover:bg-gray-600"
+                    className="flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50"
                     href="#"
                   >
                     <span className="select-none">to be done</span>
@@ -220,7 +220,7 @@ export default function NavbarContainer({ children, currentPage }) {
               <ul className="mb-8 text-sm font-medium">
                 <li>
                   <div
-                    className="flex items-center rounded py-3 pl-3 pr-4 hover:bg-gray-600 cursor-pointer"
+                    className="flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer"
                     onClick={handleLogoutClick}
                   >
                     <span className="select-none">Log out</span>
@@ -240,7 +240,7 @@ export default function NavbarContainer({ children, currentPage }) {
       </main>
 
       {/* Footer */}
-      <footer className="py-1 bg-water-blue text-white lg:flex lg:justify-center lg:gap-10">
+      <footer className="fixed bottom-0 w-full py-1 bg-water-blue text-white lg:flex lg:justify-center lg:gap-10">
         <p className="w-fit mx-auto lg:mx-0 font-bold text-xl">
           Triviagora
         </p>
@@ -252,6 +252,6 @@ export default function NavbarContainer({ children, currentPage }) {
           </a>
         </p>
       </footer>
-    </>
+    </div>
   )
 }

@@ -72,9 +72,9 @@ export default function Profile() {
   if (isLoading) return <div className="mt-24">Loading...</div>;
 
   return (
-    <div className=" min-h-screen max-h-max bg-gray-100">
+    <div className="bg-gray-100">
       {/* 主體 */}
-      <div className="container mx-auto pt-28 pb-5 px-5">
+      <div className="container mx-auto pt-28 pb-14 px-5">
         <div className="md:flex no-wrap md:-mx-2 ">
           {/* Left Side */}
           <div className="w-full mx-2 md:w-3/12">

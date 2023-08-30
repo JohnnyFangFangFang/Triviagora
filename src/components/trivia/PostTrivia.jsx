@@ -108,7 +108,7 @@ export default function PostTrivia() {
   if (isLoading) return <div className="mt-24">Loading...</div>;
 
   return (
-    <div className='mt-24'>
+    <div className='pt-20'>
       <div className="heading text-center font-bold text-2xl m-5 text-gray-800">
         Let's share a new post, happy trivia!
       </div>

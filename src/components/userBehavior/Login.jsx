@@ -1,6 +1,5 @@
 // 使用的 UI 元件：https://tailwindcomponents.com/component/login-page-glass-effect-and-background-image
-
-// 之後要記得改 logo 圖與背景
+// 背景圖來源：https://fineartamerica.com/featured/reconstruction-of-the-agora-main-mary-evans-picture-library.html
 
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { app, db } from "@/utils/firebase"
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
+import triviagora_logo_blue from "@/assets/triviagora_logo_blue.png"
+import login_bg from "@/assets/login_bg.jpg"
 
 
 export default function Login() {
@@ -51,26 +52,21 @@ export default function Login() {
   }
 
   return (
-    <>
+    <div>
       {/* 最外層 container，負責背景圖 */}
       <div
-        className="flex h-screen w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat"
-        style={{
-          backgroundImage:
-            'url("https://images.unsplash.com/photo-1499123785106-343e69e68db1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1748&q=80")'
-        }}
+        className="flex h-screen w-full items-center justify-center bg-cover bg-center bg-no-repeat z-0"
+        style={{ backgroundImage: `url(${login_bg})` }}
       >
+        {/* 讓背景圖有透明效果 */}
+        <div className='absolute h-full w-full bg-gray-300/[0.7] z-10'></div>
+
         {/* 登入框 */}
-        <div className="rounded-xl bg-gray-800 bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
+        <div className="rounded-xl bg-gray-800 bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-sm max-sm:px-8 z-20">
           <div className="text-white">
             <div className="mb-8 flex flex-col items-center">
               {/* 放 logo 圖 */}
-              <img
-                src="https://www.logo.wine/a/logo/Instagram/Instagram-Glyph-Color-Logo.wine.svg"
-                width={150}
-                alt=""
-                srcSet=""
-              />
+              <img src={triviagora_logo_blue} alt="logo" width={150} />
               <h1 className="mb-2 text-2xl">Triviagora</h1>
               <span className="text-gray-300">Enter Login Details</span>
             </div>
@@ -78,7 +74,7 @@ export default function Login() {
               {/* 輸入帳號 */}
               <div className="mb-4 text-lg">
                 <input
-                  className="rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
+                  className="rounded-3xl border-none bg-water-blue bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md hover:bg-yellow-600"
                   type="text"
                   name="name"
                   placeholder="id@email.com"
@@ -88,7 +84,7 @@ export default function Login() {
               {/* 輸入密碼 */}
               <div className="mb-4 text-lg">
                 <input
-                  className="rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
+                  className="rounded-3xl border-none bg-water-blue bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md hover:bg-yellow-600"
                   type="Password"
                   name="name"
                   placeholder="*********"
@@ -99,7 +95,7 @@ export default function Login() {
               <div className="mt-8 flex justify-center text-lg text-black">
                 <button
                   type="button"
-                  className="rounded-3xl bg-yellow-400 bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600"
+                  className="rounded-3xl bg-water-blue bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600"
                   onClick={handleLoginClick}
                 >
                   Login
@@ -119,7 +115,9 @@ export default function Login() {
             </form>
           </div>
         </div>
+
+
       </div>
-    </>
+    </div>
   )
 }

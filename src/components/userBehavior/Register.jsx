@@ -1,5 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 // 使用的 UI 元件：https://tailwindcomponents.com/component/simple-registersign-up-form
+// 背景圖來源：https://fineartamerica.com/featured/reconstruction-of-the-agora-main-mary-evans-picture-library.html
+
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 // 不用把 auth 從 firebase.js 引入嗎？
@@ -7,6 +9,8 @@ import { app } from "@/utils/firebase"
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { db } from "@/utils/firebase"
 import { doc, setDoc } from "firebase/firestore";
+import triviagora_logo_blue from "@/assets/triviagora_logo_blue.png"
+import login_bg from "@/assets/login_bg.jpg"
 
 export default function Register() {
   const navigate = useNavigate()
@@ -48,14 +52,20 @@ export default function Register() {
         }}
       />
       {/* 最外層 container */}
-      <div className="w-screen h-screen bg-white flex items-center justify-center px-5 py-5">
+      <div className="w-screen h-screen bg-white flex items-center justify-center px-5 py-5 bg-cover bg-center bg-no-repeat z-0"
+        style={{ backgroundImage: `url(${login_bg})` }}
+      >
+
+        {/* 讓背景圖有透明效果 */}
+        <div className='absolute h-full w-full bg-gray-300/[0.7] z-10'></div>
+
         {/* 登入元件外層 container */}
         <div
-          className="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden"
+          className="bg-gray-100/50 backdrop-blur-sm text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden z-20"
           style={{ maxWidth: 1000 }}
         >
           <div className="md:flex w-full">
-            <div className="hidden md:block w-1/2 bg-indigo-500 py-10 px-10">
+            <div className="hidden md:block w-1/2 bg-water-blue/25 py-10 px-10">
               {/* svg 檔圖形設定，為 UI 元件原本內容 */}
               <svg
                 id="a87032b8-5b37-4b7e-a4d9-4dbfbe394641"
@@ -64,6 +74,7 @@ export default function Register() {
                 width="100%"
                 viewBox="0 0 744.84799 747.07702"
               >
+                {/* 左邊第一片葉子 */}
                 <path
                   id="fa3b9e12-7275-481e-bee9-64fd9595a50d"
                   data-name="Path 1"
@@ -71,6 +82,7 @@ export default function Register() {
                   transform="translate(-227.576 -76.46149)"
                   fill="#f2f2f2"
                 />
+                {/* 左邊第二片葉子 */}
                 <path
                   id="bde08021-c30f-4979-a9d8-cb90b72b5ca2"
                   data-name="Path 2"
@@ -78,6 +90,7 @@ export default function Register() {
                   transform="translate(-227.576 -76.46149)"
                   fill="#f2f2f2"
                 />
+                {/* 手機外框 */}
                 <path
                   id="b3ac2088-de9b-4f7f-bc99-0ed9705c1a9d"
                   data-name="Path 22"
@@ -85,6 +98,7 @@ export default function Register() {
                   transform="translate(-227.576 -76.46149)"
                   fill="#e6e6e6"
                 />
+                {/* 手機螢幕 */}
                 <path
                   id="b2715b96-3117-487c-acc0-20904544b5b7"
                   data-name="Path 23"
@@ -92,6 +106,7 @@ export default function Register() {
                   transform="translate(-227.576 -76.46149)"
                   fill="#fff"
                 />
+                {/* 手機螢幕第一個點 */}
                 <path
                   id="b06d66ec-6c84-45dd-8c27-1263a6253192"
                   data-name="Path 6"
@@ -99,6 +114,7 @@ export default function Register() {
                   transform="translate(-227.576 -76.46149)"
                   fill="#ccc"
                 />
+                {/* 手機螢幕第二個點 */}
                 <path
                   id="e73810fe-4cf4-40cc-8c7c-ca544ce30bd4"
                   data-name="Path 7"
@@ -106,14 +122,16 @@ export default function Register() {
                   transform="translate(-227.576 -76.46149)"
                   fill="#ccc"
                 />
+                {/* 手機螢幕第三個點 */}
                 <circle
                   id="a4813fcf-056e-4514-bb8b-e6506f49341f"
                   data-name="Ellipse 1"
                   cx="364.43401"
                   cy="261.50202"
                   r="24.45"
-                  fill="#6c63ff"
+                  fill="#57b6d0"
                 />
+                {/* 三顆點的外框 */}
                 <path
                   id="bbe451c3-febc-41ba-8083-4c8307a2e73e"
                   data-name="Path 8"
@@ -121,6 +139,7 @@ export default function Register() {
                   transform="translate(-227.576 -76.46149)"
                   fill="#ccc"
                 />
+                {/* 輸入欄 1 的底線 */}
                 <rect
                   id="bb28937d-932f-4fdf-befe-f406e51091fe"
                   data-name="Rectangle 1"
@@ -130,14 +149,16 @@ export default function Register() {
                   height="2.047"
                   fill="#ccc"
                 />
+                {/* 輸入欄 1 的第一個點 */}
                 <circle
                   id="fcef55fc-4968-45b2-93bb-1a1080c85fc7"
                   data-name="Ellipse 2"
                   cx="225.46401"
                   cy="427.41999"
                   r="6.902"
-                  fill="#6c63ff"
+                  fill="#57b6d0"
                 />
+                {/* 輸入欄 2 的底線 */}
                 <rect
                   id="ff33d889-4c74-4b91-85ef-b4882cc8fe76"
                   data-name="Rectangle 2"
@@ -147,51 +168,58 @@ export default function Register() {
                   height="2.047"
                   fill="#ccc"
                 />
+                {/* 輸入欄 2 的第一個點 */}
                 <circle
                   id="e8fa0310-b872-4adf-aedd-0c6eda09f3b8"
                   data-name="Ellipse 3"
                   cx="225.46401"
                   cy="496.43702"
                   r="6.902"
-                  fill="#6c63ff"
+                  fill="#57b6d0"
                 />
+                {/* 手機右下角按鈕 */}
                 <path
                   d="M660.69043,671.17188H591.62207a4.50493,4.50493,0,0,1-4.5-4.5v-24.208a4.50492,4.50492,0,0,1,4.5-4.5h69.06836a4.50491,4.50491,0,0,1,4.5,4.5v24.208A4.50492,4.50492,0,0,1,660.69043,671.17188Z"
                   transform="translate(-227.576 -76.46149)"
-                  fill="#6c63ff"
+                  fill="#57b6d0"
                 />
+                {/* 輸入欄 1 的第二個點 */}
                 <circle
                   id="e12ee00d-aa4a-4413-a013-11d20b7f97f7"
                   data-name="Ellipse 7"
                   cx="247.97799"
                   cy="427.41999"
                   r="6.902"
-                  fill="#6c63ff"
+                  fill="orange"
                 />
+                {/* 輸入欄 1 的第三個點 */}
                 <circle
                   id="f58f497e-6949-45c8-be5f-eee2aa0f6586"
                   data-name="Ellipse 8"
                   cx="270.492"
                   cy="427.41999"
                   r="6.902"
-                  fill="#6c63ff"
+                  fill="red"
                 />
+                {/* 輸入欄 2 的第二個點 */}
                 <circle
                   id="b4d4939a-c6e6-4f4d-ba6c-e8b05485017d"
                   data-name="Ellipse 9"
                   cx="247.97799"
                   cy="496.43702"
                   r="6.902"
-                  fill="#6c63ff"
+                  fill="orange"
                 />
+                {/* 輸入欄 2 的第三個點 */}
                 <circle
                   id="aff120b1-519b-4e96-ac87-836aa55663de"
                   data-name="Ellipse 10"
                   cx="270.492"
                   cy="496.43702"
                   r="6.902"
-                  fill="#6c63ff"
+                  fill="red"
                 />
+                {/* 底線 */}
                 <path
                   id="f1094013-1297-477a-ac57-08eac07c4bd5"
                   data-name="Path 88"
@@ -199,34 +227,42 @@ export default function Register() {
                   transform="translate(-227.576 -76.46149)"
                   fill="#3f3d56"
                 />
+                {/* 右手 */}
                 <path
                   d="M792.25256,565.92292a10.09371,10.09371,0,0,1,1.41075.78731l44.8523-19.14319,1.60093-11.81526,17.92157-.10956-1.05873,27.0982-59.19987,15.65584a10.60791,10.60791,0,0,1-.44749,1.20835,10.2346,10.2346,0,1,1-5.07946-13.68169Z"
                   transform="translate(-227.576 -76.46149)"
                   fill="#ffb8b8"
                 />
+                {/* 右腳踝 */}
                 <polygon
                   points="636.98 735.021 624.72 735.021 618.888 687.733 636.982 687.734 636.98 735.021"
                   fill="#ffb8b8"
                 />
+                {/* 右鞋 */}
                 <path
                   d="M615.96281,731.51778h23.64387a0,0,0,0,1,0,0v14.88687a0,0,0,0,1,0,0H601.076a0,0,0,0,1,0,0v0A14.88686,14.88686,0,0,1,615.96281,731.51778Z"
                   fill="#2f2e41"
                 />
+                {/* 左腳踝 */}
                 <polygon
                   points="684.66 731.557 672.459 732.759 662.018 686.271 680.025 684.497 684.66 731.557"
                   fill="#ffb8b8"
                 />
+                {/* 左鞋 */}
                 <path
                   d="M891.68576,806.12757h23.64387a0,0,0,0,1,0,0v14.88687a0,0,0,0,1,0,0H876.7989a0,0,0,0,1,0,0v0A14.88686,14.88686,0,0,1,891.68576,806.12757Z"
                   transform="translate(-303.00873 15.2906) rotate(-5.62529)"
                   fill="#2f2e41"
                 />
+                {/* 臉 */}
                 <circle cx="640.3925" cy="384.57375" r="24.56103" fill="#ffb8b8" />
+                {/* 褲子 */}
                 <path
                   d="M849.55636,801.91945a4.47086,4.47086,0,0,1-4.415-3.69726c-6.34571-35.22559-27.08789-150.40528-27.584-153.59571a1.42684,1.42684,0,0,1-.01562-.22168v-8.58789a1.489,1.489,0,0,1,.27929-.87207l2.74024-3.83789a1.47845,1.47845,0,0,1,1.14355-.625c15.62207-.73242,66.78418-2.8789,69.25586.209h0c2.48242,3.10351,1.60547,12.50683,1.4043,14.36035l.00977.19336,22.98535,146.99512a4.51238,4.51238,0,0,1-3.71485,5.13476l-14.35644,2.36524a4.52127,4.52127,0,0,1-5.02539-3.09278c-4.44043-14.18847-19.3291-61.918-24.48926-80.38672a.49922.49922,0,0,0-.98047.13868c.25781,17.60546.88086,62.52343,1.0957,78.0371l.02344,1.6709a4.51811,4.51811,0,0,1-4.09277,4.53614l-13.84375,1.25781C849.83565,801.91359,849.695,801.91945,849.55636,801.91945Z"
                   transform="translate(-227.576 -76.46149)"
                   fill="#2f2e41"
                 />
+                {/* 上衣 */}
                 <path
                   id="ae7af94f-88d7-4204-9f07-e3651de85c05"
                   data-name="Path 99"
@@ -234,11 +270,13 @@ export default function Register() {
                   transform="translate(-227.576 -76.46149)"
                   fill="#ffffff"
                 />
+                {/* 左手 */}
                 <path
                   d="M846.12661,580.70047a10.52561,10.52561,0,0,1,1.50061.70389l44.34832-22.1972.736-12.02551,18.2938-1.26127.98041,27.4126L852.7199,592.93235a10.4958,10.4958,0,1,1-6.59329-12.23188Z"
                   transform="translate(-227.576 -76.46149)"
                   fill="#ffb8b8"
                 />
+                {/* 左袖子 */}
                 <path
                   id="a6768b0e-63d0-4b31-8462-9b2e0b00f0fd"
                   data-name="Path 101"
@@ -246,6 +284,7 @@ export default function Register() {
                   transform="translate(-227.576 -76.46149)"
                   fill="#ffffff"
                 />
+                {/* 頭髮 */}
                 <path
                   id="bfd7963f-0cf8-4885-9d3a-2c00bccda2e3"
                   data-name="Path 102"
@@ -258,10 +297,21 @@ export default function Register() {
 
             {/* 右側輸入框 */}
             <div className="w-full md:w-1/2 py-10 px-5 md:px-10">
-              <div className="text-center mb-10">
+              
+              {/* 放 logo 與 slogan */}
+              <div className='flex justify-center'>
+                <img src={triviagora_logo_blue} alt="logo" width={100} />
+                <div className='pt-5 pl-3'>
+                  <p className='text-2xl'>Triviagora</p>
+                  <p className='text-2xl'>where trivia gather</p>
+                </div>
+              </div>
+
+              <div className="text-center mt-10 mb-2">
                 <h1 className="font-bold text-3xl text-gray-900">REGISTER</h1>
                 <p>Enter your information to register</p>
               </div>
+
               <div>
                 {/* 姓名區，先省略 */}
                 {/* <div className="flex -mx-3 border-t-r">
@@ -338,7 +388,7 @@ export default function Register() {
                   {/* 註冊鈕 */}
                   <div className="w-full px-3 mb-5">
                     <button
-                      className="block w-full max-w-xs mx-auto text-white rounded-lg px-3 py-3 font-semibold bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700"
+                      className="block w-full max-w-xs mx-auto text-white rounded-lg px-3 py-3 font-semibold bg-water-blue hover:bg-yellow-600 focus:bg-sky-700"
                       onClick={onSubmit}>
                       REGISTER NOW
                     </button>

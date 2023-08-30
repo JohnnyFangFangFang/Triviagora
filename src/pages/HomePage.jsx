@@ -6,7 +6,7 @@ import { TriviaCollection } from "@/components/trivia";
 export default function HomePage() {
   return (
     <NavbarContainer currentPage="HomePage">
-      <div className="relative pt-24">
+      <div className="relative pt-24 pb-12">
         <TriviaCollection page={'homepage'} />
       </div>
     </NavbarContainer>
