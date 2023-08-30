@@ -246,7 +246,8 @@ export default function NavbarContainer({ children, currentPage }) {
         </p>
         <p className="flex w-fit mx-auto items-center lg:mx-0 text-lg">
           Copyright © 2023
-          <a href="https://github.com/JohnnyFangFangFang" className="ml-3 underline">
+          {/* 資安考量：noopener 會阻止新開啟的分頁存取原始頁面的 window 物件，而 noreferrer 會隱藏來源網站的信息 */}
+          <a href="https://github.com/JohnnyFangFangFang" target="_blank" rel="noopener noreferrer" className="ml-3 underline hover:text-yellow-300">
             Johnny Fang
             <RiGithubFill className="ml-1 mb-0.5 inline-block text-2xl" />
           </a>

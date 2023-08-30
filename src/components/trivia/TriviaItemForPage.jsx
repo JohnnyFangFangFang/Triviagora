@@ -7,6 +7,7 @@ import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firest
 import { getAuth } from "firebase/auth";
 import { CommentCollection, PostCommentModal } from '@/components/comment';
 import { DEFAULT_AVATAR_SVG } from '@/constants';
+import earth_light_blue from "@/assets/earth_light_blue.png"
 
 export default function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl, authorUid, triviaId }) {
   const navigate = useNavigate()
@@ -139,7 +140,8 @@ export default function TriviaItemForPage({ title, triviaContent, createdAt, ima
         <div className="mt-4 mb-6">
           {/* 該篇 trivia 圖片，高度為寬度 40% */}
           <div className="heightToWidth-40 flex justify-center">
-            <img src={imageUrl} alt="trivia image" className="object-cover h-full rounded-lg shadow-lg" />
+            {/* 若沒圖則使用預設圖片 */}
+            <img src={imageUrl ? imageUrl : earth_light_blue} alt="trivia image" className="object-cover h-full rounded-xl shadow-xl" />
           </div>
           {/* 內文 */}
           <div className="mt-4 text-xl text-neutral-600">{triviaContent}</div>

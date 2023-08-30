@@ -7,6 +7,7 @@ import ReactTimeAgo from 'react-time-ago'
 import { db } from "@/utils/firebase"
 import { doc, getDoc, collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import { DEFAULT_AVATAR_SVG } from '@/constants';
+import earth_light_blue from "@/assets/earth_light_blue.png"
 
 export default function TriviaItem({ id, title, triviaContent, createdAt, imageUrl, authorUid }) {
   const navigate = useNavigate()
@@ -78,7 +79,8 @@ export default function TriviaItem({ id, title, triviaContent, createdAt, imageU
       >
         {/* 左側圖片區，該篇 trivia 圖片，高度為寬度 40% */}
         <div className="w-1/4 hidden sm:flex justify-center">
-          <img src={imageUrl} alt="trivia image" className="object-cover h-full rounded-xl shadow-xl" />
+          {/* 若沒圖則使用預設圖片 */}
+          <img src={imageUrl ? imageUrl : earth_light_blue} alt="trivia image" className="object-cover h-full rounded-xl shadow-xl" />
         </div>
 
         {/* 間隔區塊 */}

@@ -55,13 +55,13 @@ export default function ProfileOtherUser({ displayName, photoURL, introduction, 
               <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">{introduction}</p>
 
               <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
-                <li className="flex items-center py-3">
-                  <span>Member since</span>
-                  <span className="ml-auto">{formattedCreationTime}</span>
+                <li className="flex md:block lg:flex items-center py-3">
+                  <p>Registered</p>
+                  <p className="ml-auto">{formattedCreationTime}</p>
                 </li>
-                <li className="flex items-center py-3">
-                  <span>Last sign in</span>
-                  <span className="ml-auto">{formattedLastSignInTime}</span>
+                <li className="flex md:block lg:flex items-center py-3">
+                  <p>Last sign in</p>
+                  <p className="ml-auto">{formattedLastSignInTime}</p>
                 </li>
               </ul>
             </div>
