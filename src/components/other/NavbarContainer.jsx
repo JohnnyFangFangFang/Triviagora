@@ -186,8 +186,8 @@ export default function NavbarContainer({ children, currentPage }) {
               <ul className="mb-8 text-sm font-medium">
                 <li>
                   <a
-                    className="flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50"
-                    href="#tc"
+                    className={`${currentPage === 'about' ? 'bg-gray-800/50' : ''} flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer`}
+                    onClick={() => navigate('/about')}
                   >
                     <span className="select-none">About</span>
                   </a>

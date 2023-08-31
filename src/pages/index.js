@@ -5,6 +5,7 @@ import ProfilePage from "./ProfilePage";
 import PostTriviaPage from "./PostTriviaPage";
 import TriviaItemPage from "./TriviaItemPage";
 import ProfilePageOtherUser from "./ProfilePageOtherUser";
+import AboutPage from "./AboutPage";
 
 export {
   HomePage,
@@ -14,4 +15,5 @@ export {
   PostTriviaPage,
   TriviaItemPage,
   ProfilePageOtherUser,
+  AboutPage,
 };
