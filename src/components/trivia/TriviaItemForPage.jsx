@@ -8,6 +8,8 @@ import { getAuth } from "firebase/auth";
 import { CommentCollection, PostCommentModal } from '@/components/comment';
 import { DEFAULT_AVATAR_SVG } from '@/constants';
 import earth_light_blue from "@/assets/earth_light_blue.png"
+import DeleteTrivia from "./DeleteTrivia"
+
 
 export default function TriviaItemForPage({ title, triviaContent, createdAt, imageUrl, authorUid, triviaId }) {
   const navigate = useNavigate()
@@ -15,7 +17,6 @@ export default function TriviaItemForPage({ title, triviaContent, createdAt, ima
   const [author, setAuthor] = useState({});
   const [isTriviaSaved, setIsTriviaSaved] = useState(false);
   const [commentsQuantity, setCommentsQuantity] = useState(0);
-  console.log("畫面重新渲染")
 
   // 這段是要先拿取使用者資料
   const auth = getAuth();
@@ -109,9 +110,9 @@ export default function TriviaItemForPage({ title, triviaContent, createdAt, ima
   if (isLoading) return <div className="mt-24">Loading...</div>;
 
   return (
-    <div className="flex items-center justify-center min-h-max mt-20 mb-4">
+    <div className="flex items-center justify-center min-h-max pt-28 pb-24">
       {/* trivia 卡片 */}
-      <div className="rounded-xl border p-5 shadow-md w-10/12 bg-white">
+      <div className="relative rounded-xl border p-5 shadow-md w-10/12 bg-white">
         <div className="flex w-full items-center justify-between border-b pb-3">
           {/* 標題 */}
           <div className="flex items-center space-x-3">
@@ -132,9 +133,12 @@ export default function TriviaItemForPage({ title, triviaContent, createdAt, ima
             {/* <button className="rounded-2xl border bg-neutral-100 px-3 py-1 text-xs font-semibold">
               Category
             </button> */}
+            {/* 時間戳記 */}
             <div className="text-lg text-neutral-500">
               <ReactTimeAgo date={createdAt?.toDate()} locale="en-US" timeStyle="twitter" />
             </div>
+            {/* 如果是自己的貼文才會出現刪除鈕 */}
+            {user.uid === authorUid && <DeleteTrivia triviaId={triviaId} />}
           </div>
         </div>
         <div className="mt-4 mb-6">

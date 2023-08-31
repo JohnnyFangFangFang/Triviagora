@@ -6,10 +6,10 @@ import { NavbarContainer } from '@/components/other';
 import { ProfileOtherUser } from '@/components/profile';
 
 export default function ProfilePageOtherUser() {
-  console.log("看到這個代表畫面重新渲染一次")
   const authorUid = useParams().id; // 從 URL 中取得作者 UID
   const [isLoading, setIsLoading] = useState(true);
   const [author, setAuthor] = useState({});
+  console.log("畫面重新渲染")
 
   // 從 Firebase 拿作者資料
   useEffect(() => {

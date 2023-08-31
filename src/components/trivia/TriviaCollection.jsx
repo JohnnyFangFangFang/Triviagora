@@ -8,7 +8,6 @@ import TriviaItemForProfile from './TriviaItemForProfile';
 export default function TriviaCollection({ page, userId }) {
   const [isLoading, setIsLoading] = useState(true);
   const [allTrivia, setAllTrivia] = useState([]);
-  console.log("畫面重新渲染")
 
   useEffect(() => {
     // 取得 trivia 集合參考，讓電腦知道位置在哪

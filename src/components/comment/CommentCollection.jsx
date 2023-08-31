@@ -47,7 +47,7 @@ export default function CommentCollection({ triviaId, setCommentsQuantity }) {
           (allComments.map((comment) => {
             return (
               // 使用 Spread Attributes 寫法較簡潔
-              <CommentItem key={comment.id} {...comment} />
+              <CommentItem key={comment.id} {...comment} triviaId={triviaId} commentId={comment.id} />
             );
           })) : <div className='text-center'>No comment yet.</div>
         }

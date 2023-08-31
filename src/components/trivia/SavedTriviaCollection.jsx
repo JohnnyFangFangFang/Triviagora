@@ -8,7 +8,6 @@ export default function SavedTriviaCollection({ userId }) {
   const [isLoading, setIsLoading] = useState(true);
   const [savedTriviaId, setSavedTriviaId] = useState([]);
   const [allTrivia, setAllTrivia] = useState([]);
-  console.log("畫面重新渲染")
 
   // 另外從資料庫拿使用者儲存的文章 ID
   async function getUserSavedTriviaId() {

@@ -20,7 +20,6 @@ export default function Profile() {
   const [isPhotoChanged, setIsPhotoChanged] = useState(false);
   const [userCreationTime, setUserCreationTime] = useState('no record');
   const [userLastSignInTime, setUserLastSignInTime] = useState('no record');
-  console.log("畫面重新渲染")
 
   // 另外從資料庫拿 introduction
   async function getUserIntroduction() {
@@ -74,7 +73,7 @@ export default function Profile() {
   return (
     <div className="bg-gray-100">
       {/* 主體 */}
-      <div className="container mx-auto pt-28 pb-14 px-5">
+      <div className="container mx-auto pt-28 pb-24 px-5">
         <div className="md:flex no-wrap md:-mx-2 ">
           {/* Left Side */}
           <div className="w-full mx-2 md:w-3/12">

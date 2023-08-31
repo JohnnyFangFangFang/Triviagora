@@ -65,7 +65,7 @@ export default function Register() {
           style={{ maxWidth: 1000 }}
         >
           <div className="md:flex w-full">
-            <div className="hidden md:block w-1/2 bg-water-blue/25 py-10 px-10">
+            <div className="hidden md:flex w-1/2 bg-water-blue/25 px-10">
               {/* svg 檔圖形設定，為 UI 元件原本內容 */}
               <svg
                 id="a87032b8-5b37-4b7e-a4d9-4dbfbe394641"
@@ -73,6 +73,7 @@ export default function Register() {
                 xmlns="http://www.w3.org/2000/svg"
                 width="100%"
                 viewBox="0 0 744.84799 747.07702"
+                className='my-auto'
               >
                 {/* 左邊第一片葉子 */}
                 <path
@@ -297,13 +298,13 @@ export default function Register() {
 
             {/* 右側輸入框 */}
             <div className="w-full md:w-1/2 py-10 px-5 md:px-10">
-              
+
               {/* 放 logo 與 slogan */}
-              <div className='flex justify-center'>
+              <div className='flex justify-center items-center'>
                 <img src={triviagora_logo_blue} alt="logo" width={100} />
-                <div className='pt-5 pl-3'>
+                <div className='pl-3'>
                   <p className='text-2xl'>Triviagora</p>
-                  <p className='text-2xl'>where trivia gather</p>
+                  <p className='text-sm sm:text-2xl md:text-lg lg:text-2xl'>where trivia gather</p>
                 </div>
               </div>
 

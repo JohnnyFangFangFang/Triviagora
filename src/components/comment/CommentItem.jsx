@@ -8,16 +8,19 @@ import { db } from "@/utils/firebase"
 import { doc, getDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { DEFAULT_AVATAR_SVG } from '@/constants';
+import DeleteComment from './DeleteComment';
 
-export default function CommentItem({ comment, createdAt, authorUid }) {
+export default function CommentItem({ comment, createdAt, authorUid, triviaId, commentId }) {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(true);
   const [author, setAuthor] = useState({});
 
+  // 先拿使用者資料
+  const auth = getAuth();
+  const user = auth.currentUser;
+
   // 看留言者細節
   function handleAvatarClick() {
-    const auth = getAuth();
-    const user = auth.currentUser;
     // 如果作者是自己，那就回到自己的 profile 頁面
     if (user.uid === authorUid) {
       navigate(`/profile`)
@@ -54,7 +57,7 @@ export default function CommentItem({ comment, createdAt, authorUid }) {
   return (
     <div className="flex items-center justify-center min-h-max my-4">
       {/* comment 卡片 */}
-      <div className="w-full rounded-xl border p-5 shadow-md bg-slate-50">
+      <div className="relative w-full rounded-xl border p-5 shadow-md bg-slate-50">
         <div className="flex w-full items-center justify-between border-b pb-3">
           {/* 頭像與名稱 */}
           <div
@@ -66,16 +69,20 @@ export default function CommentItem({ comment, createdAt, authorUid }) {
             </div>
             <div className="text-lg font-bold text-slate-700">{author.displayName || 'author'}</div>
           </div>
+          {/* 時間戳記 */}
           <div className="flex items-center space-x-8">
             <div className="text-xs text-neutral-500">
               <ReactTimeAgo date={createdAt?.toDate()} locale="en-US" timeStyle="twitter" />
             </div>
           </div>
+
         </div>
         <div className="mt-4">
           {/* 內文 */}
           <div className="text-sm text-neutral-600">{comment}</div>
         </div>
+        {/* 如果是自己的貼文才會出現刪除鈕 */}
+        {user.uid === authorUid && <DeleteComment triviaId={triviaId} commentId={commentId} />}
       </div>
     </div>
   )

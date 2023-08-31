@@ -7,7 +7,7 @@ import { NavbarContainer } from '@/components/other';
 import { TriviaItemForPage } from '@/components/trivia';
 
 export default function TriviaItemPage() {
-  console.log("看到這個代表畫面重新渲染一次")
+  console.log("畫面重新渲染")
   const triviaId = useParams().id; // 從 URL 中取得文章 ID
 
   const [isLoading, setIsLoading] = useState(true);

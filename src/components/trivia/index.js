@@ -4,6 +4,7 @@ import TriviaCollection from "./TriviaCollection";
 import TriviaItem from "./TriviaItem";
 import TriviaItemForPage from "./TriviaItemForPage";
 import TriviaItemForProfile from "./TriviaItemForProfile";
+import DeleteTrivia from "./DeleteTrivia";
 
 export {
   PostTrivia,
@@ -12,4 +13,5 @@ export {
   TriviaItem,
   TriviaItemForPage,
   TriviaItemForProfile,
+  DeleteTrivia,
 };
