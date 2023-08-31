@@ -17,8 +17,8 @@ export default function DeleteTrivia({ triviaId, commentId }) {
   // 刪除功能
   async function handleDeleteClick() {
     await deleteDoc(doc(db, "trivia", triviaId, "comments", commentId));
-    // 刪除完畢後導向首頁
-    navigate('/')
+    // 刪除完畢後導向原頁面
+    navigate(`/trivia/${triviaId}`)
   }
 
   return (
