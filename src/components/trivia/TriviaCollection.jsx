@@ -50,7 +50,7 @@ export default function TriviaCollection({ page, userId }) {
         {allTrivia.length !== 0 ?
           (allTrivia.map((trivia) => {
             // 首頁跟 profile 頁面渲染的元件不同
-            if (page === 'homepage') {
+            if (page === 'alltriviapage') {
               return (
                 <TriviaItem key={trivia.id} {...trivia} />
               )

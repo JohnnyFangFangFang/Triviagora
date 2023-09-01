@@ -1,4 +1,5 @@
 import HomePage from "./HomePage";
+import AllTriviaPage from "./AllTriviaPage";
 import RegisterPage from "./RegisterPage";
 import LoginPage from "./LoginPage";
 import ProfilePage from "./ProfilePage";
@@ -10,6 +11,7 @@ import NewsPage from "./NewsPage";
 
 export {
   HomePage,
+  AllTriviaPage,
   RegisterPage,
   LoginPage,
   ProfilePage,

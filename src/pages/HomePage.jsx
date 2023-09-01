@@ -1,15 +1,12 @@
-// 記得做分頁功能或無限捲軸
-
-import { NavbarContainer } from '@/components/other';
-import { TriviaCollection } from "@/components/trivia";
+import { HomePageContainer } from '@/components/other';
 
 export default function HomePage() {
   console.log("畫面重新渲染")
   return (
-    <NavbarContainer currentPage="HomePage">
+    <HomePageContainer currentPage={'HomePage'}>
       <div className="relative pt-24 pb-12">
-        <TriviaCollection page={'homepage'} />
+        <p>This is Homepage</p>
       </div>
-    </NavbarContainer>
+    </HomePageContainer>
   )
 }

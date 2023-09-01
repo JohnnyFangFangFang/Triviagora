@@ -1,6 +1,4 @@
 /* eslint-disable react/prop-types */
-// 使用的 UI 元件：https://tailwindcomponents.com/component/sidebar-with-navbar-and-breadcrumb
-// UI 元件備案：https://tailwindcomponents.com/component/sticky-navbar-component
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { app } from "@/utils/firebase"
@@ -8,9 +6,11 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { DEFAULT_AVATAR_SVG } from '@/constants';
 import { RiGithubFill } from 'react-icons/ri'
 import { BiLogOut } from "react-icons/bi";
+import { AiFillLock } from "react-icons/ai";
 
-export default function NavbarContainer({ children, currentPage }) {
+export default function HomePageContainer({ children, currentPage }) {
   const navigate = useNavigate()
+  const [isLogin, setIsLogin] = useState(false)
   const [userPhoto, setUserPhoto] = useState(null)
 
   // 登出功能
@@ -19,6 +19,7 @@ export default function NavbarContainer({ children, currentPage }) {
     signOut(auth).then(() => {
       // Sign-out successful.
       // 若使用者登出則導回登入頁面
+      setIsLogin(false)
       console.log("成功登出")
       navigate('/login');
     }).catch((error) => {
@@ -27,14 +28,15 @@ export default function NavbarContainer({ children, currentPage }) {
     });
   }
 
-  // 撈使用者頭像
+  // 確認使用者登入狀態並撈使用者頭像
   const auth = getAuth(app);
   onAuthStateChanged(auth, (user) => {
     if (user) {
+      setIsLogin(true)
       setUserPhoto(user.photoURL)
     } else {
-      // 若使用者未登入則導回登入頁
-      navigate('/login');
+      // 若使用者未登入則不做任何動作停留在首頁
+      setIsLogin(false)
     }
   });
 
@@ -140,107 +142,123 @@ export default function NavbarContainer({ children, currentPage }) {
             id="sidebar"
             className="fixed left-0 mt-6 min-h-fit px-2 pt-3 flex flex-col w-2/4 sm:w-44 -translate-x-full overflow-y-auto bg-water-blue rounded-r-2xl"
           >
-            {/* 主要功能區 */}
-            <div className="px-4 pb-1 text-white font-bold">
-              <h3 className="mb-2 text-xl uppercase">
-                Main
-              </h3>
-              <ul className="mb-8 text-sm font-medium">
-                {/* 首頁 */}
-                <li>
-                  <a
-                    className={` ${currentPage === 'HomePage' ? 'bg-gray-800/50' : ''} flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer`}
-                    onClick={() => navigate('/')}
-                  >
-                    <span className="select-none">HomePage</span>
-                  </a>
-                </li>
-                {/* all trivia 頁面 */}
-                <li>
-                  <a
-                    className={` ${currentPage === 'All Trivia' ? 'bg-gray-800/50' : ''} flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer`}
-                    onClick={() => navigate('/alltrivia')}
-                  >
-                    <span className="select-none">All Trivia</span>
-                  </a>
-                </li>
-                {/* 個人頁面 */}
-                <li>
-                  <a
-                    className={` ${currentPage === 'Profile & Settings' ? 'bg-gray-800/50' : ''} flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer`}
-                    // href="profile"
-                    onClick={() => navigate('/profile')}
-                  >
-                    <span className="select-none">Profile & Settings</span>
-                  </a>
-                </li>
-                {/* 發文頁面 */}
-                <li>
-                  <a
-                    className={` ${currentPage === 'PostTrivia' ? 'bg-gray-800/50' : ''} flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer`}
-                    // href="posttrivia"
-                    onClick={() => navigate('/posttrivia')}
-                  >
-                    <span className="select-none">Post Trivia</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-            {/* 主要功能區 end*/}
+            {/* 尚未登入則渲染以下資料 */}
+            {!isLogin &&
+              <div className='flex flex-col items-center px-2 py-2 gap-2'>
+                <AiFillLock className='text-5xl text-white' />
+                <div className='w-full h-full text-center pb-2 border-b-2 border-white'>Please login to unlock other features.</div>
+                <button
+                  className='rounded-2xl px-3 py-3 border-2 text-white hover:text-black bg-slate-500 hover:bg-slate-300 cursor-pointer'
+                  onClick={() => navigate('/login')}
+                >
+                  To Login Page
+                </button>
+              </div>}
 
-            {/* 第二區 */}
-            <div className="px-4 pb-1 text-white font-bold">
-              <h3 className="mb-2 text-xl uppercase">
-                Others
-              </h3>
-              <ul className="mb-8 text-sm font-medium">
-                <li>
-                  <a
-                    className={`${currentPage === 'About' ? 'bg-gray-800/50' : ''} flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer`}
-                    onClick={() => navigate('/about')}
-                  >
-                    <span className="select-none">About</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className={`${currentPage === 'News' ? 'bg-gray-800/50' : ''} flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer`}
-                    onClick={() => navigate('/news')}
-                  >
-                    <span className="select-none">News</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50"
-                    href="#"
-                  >
-                    <span className="select-none">to be done</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-            {/* 第二區 end */}
+            {/* 若有登入再渲染以下資料 */}
+            {isLogin && <>
+              {/* 主要功能區 */}
+              <div className="px-4 pb-1 text-white font-bold">
+                <h3 className="mb-2 text-xl uppercase">
+                  Main
+                </h3>
+                <ul className="mb-8 text-sm font-medium">
+                  {/* 首頁 */}
+                  <li>
+                    <a
+                      className={` ${currentPage === 'HomePage' ? 'bg-gray-800/50' : ''} flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer`}
+                      onClick={() => navigate('/')}
+                    >
+                      <span className="select-none">HomePage</span>
+                    </a>
+                  </li>
+                  {/* all trivia 頁面 */}
+                  <li>
+                    <a
+                      className={` ${currentPage === 'All Trivia' ? 'bg-gray-800/50' : ''} flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer`}
+                      onClick={() => navigate('/alltrivia')}
+                    >
+                      <span className="select-none">All Trivia</span>
+                    </a>
+                  </li>
+                  {/* 個人頁面 */}
+                  <li>
+                    <a
+                      className={` ${currentPage === 'Profile & Settings' ? 'bg-gray-800/50' : ''} flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer`}
+                      // href="profile"
+                      onClick={() => navigate('/profile')}
+                    >
+                      <span className="select-none">Profile & Settings</span>
+                    </a>
+                  </li>
+                  {/* 發文頁面 */}
+                  <li>
+                    <a
+                      className={` ${currentPage === 'PostTrivia' ? 'bg-gray-800/50' : ''} flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer`}
+                      // href="posttrivia"
+                      onClick={() => navigate('/posttrivia')}
+                    >
+                      <span className="select-none">Post Trivia</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              {/* 主要功能區 end*/}
 
-            {/* 第三區 */}
-            <div className="px-4 pb-1 text-white font-bold border-t-2">
-              {/* 標題暫時不需要 */}
-              {/* <h3 className="mb-2 text-xl uppercase">
+              {/* 第二區 */}
+              <div className="px-4 pb-1 text-white font-bold">
+                <h3 className="mb-2 text-xl uppercase">
+                  Others
+                </h3>
+                <ul className="mb-8 text-sm font-medium">
+                  <li>
+                    <a
+                      className={`${currentPage === 'About' ? 'bg-gray-800/50' : ''} flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer`}
+                      onClick={() => navigate('/about')}
+                    >
+                      <span className="select-none">About</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className={`${currentPage === 'News' ? 'bg-gray-800/50' : ''} flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer`}
+                      onClick={() => navigate('/news')}
+                    >
+                      <span className="select-none">News</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50"
+                      href="#"
+                    >
+                      <span className="select-none">to be done</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              {/* 第二區 end */}
+
+              {/* 第三區 */}
+              <div className="px-4 pb-1 text-white font-bold border-t-2">
+                {/* 標題暫時不需要 */}
+                {/* <h3 className="mb-2 text-xl uppercase">
                 Others
               </h3> */}
-              <ul className="my-2 text-sm font-medium">
-                <li>
-                  <div
-                    className="flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer"
-                    onClick={handleLogoutClick}
-                  >
-                    <BiLogOut className='text-2xl' />
-                    <span className="select-none ml-1">Log out</span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            {/* 第三區 end */}
+                <ul className="my-2 text-sm font-medium">
+                  <li>
+                    <div
+                      className="flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer"
+                      onClick={handleLogoutClick}
+                    >
+                      <BiLogOut className='text-2xl' />
+                      <span className="select-none ml-1">Log out</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              {/* 第三區 end */}
+            </>}
           </nav>
         </div>
       </div>

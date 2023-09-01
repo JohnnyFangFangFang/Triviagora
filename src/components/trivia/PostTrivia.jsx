@@ -61,8 +61,8 @@ export default function PostTrivia() {
                 authorUid: userId
               });
               console.log('成功上傳檔案與文章內容，爽啦！文章 ID: ', docRef.id);
-              // 成功發文後導回首頁
-              navigate('/')
+              // 成功發文後導回 alltrivia 頁
+              navigate('/alltrivia')
             })
           });
         } else {
@@ -84,9 +84,9 @@ export default function PostTrivia() {
     }
   }
 
-  // 取消發文，導回首頁
+  // 取消發文，導回 alltrivia 頁
   function handleCancelTriviaClick() {
-    navigate('/')
+    navigate('/alltrivia')
   }
 
   // 確認使用者登入狀態，以方便抓到發文者 ID
