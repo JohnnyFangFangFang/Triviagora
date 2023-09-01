@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 // 不用把 auth 從 firebase.js 引入嗎？
 import { app, db } from "@/utils/firebase"
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
 import triviagora_logo_blue from "@/assets/triviagora_logo_blue.png"
 import login_bg from "@/assets/login_bg.jpg"
@@ -17,6 +17,16 @@ export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  // 確認使用者登入狀態
+  const auth = getAuth(app);
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // 若已登入就導向 profile 頁面
+      navigate('/profile');
+    } else {
+      // 若使用者未登入則停留在登入頁
+    }
+  });
 
   // 按下登入鈕
   function handleLoginClick(e) {

@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 // 不用把 auth 從 firebase.js 引入嗎？
 import { app } from "@/utils/firebase"
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword } from "firebase/auth";
 import { db } from "@/utils/firebase"
 import { doc, setDoc } from "firebase/firestore";
 import triviagora_logo_blue from "@/assets/triviagora_logo_blue.png"
@@ -18,10 +18,19 @@ export default function Register() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  // 確認使用者登入狀態
+  const auth = getAuth(app);
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // 若已登入就導向 profile 頁面
+      navigate('/profile');
+    } else {
+      // 若使用者未登入則停留在註冊頁
+    }
+  });
 
   // 按下註冊鈕
   function onSubmit() {
-    const auth = getAuth(app);
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         // 先到一般資料庫建立使用者資料，目前先放空陣列，之後 profile 再讓使用者編輯

@@ -27,7 +27,7 @@ export default function NavbarContainer({ children, currentPage }) {
     });
   }
 
-  // 撈使用者頭像
+  // 確認使用者登入狀態並撈使用者頭像
   const auth = getAuth(app);
   onAuthStateChanged(auth, (user) => {
     if (user) {
