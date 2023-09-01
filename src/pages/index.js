@@ -6,6 +6,7 @@ import PostTriviaPage from "./PostTriviaPage";
 import TriviaItemPage from "./TriviaItemPage";
 import ProfilePageOtherUser from "./ProfilePageOtherUser";
 import AboutPage from "./AboutPage";
+import NewsPage from "./NewsPage";
 
 export {
   HomePage,
@@ -16,4 +17,5 @@ export {
   TriviaItemPage,
   ProfilePageOtherUser,
   AboutPage,
+  NewsPage,
 };

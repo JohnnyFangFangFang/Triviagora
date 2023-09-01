@@ -17,7 +17,7 @@ export default function About() {
       <div className='absolute top-0 h-full w-full bg-gray-300/[0.7]'></div>
 
       {/* 資訊框外層 container */}
-      <div className="absolute top-[16%] sm:left-[16%] h-2/3 sm:w-2/3 bg-gray-100/50 backdrop-blur-sm text-gray-500 rounded-3xl shadow-xl overflow-y-scroll overscroll-contain z-10"
+      <div className="absolute top-[8%] sm:left-[16%] h-5/6 sm:w-2/3 bg-gray-100/50 backdrop-blur-sm text-gray-500 rounded-3xl shadow-xl z-10"
       >
         {/* 資訊框 */}
         <div className="w-full py-10 px-5 md:px-10">
@@ -30,7 +30,7 @@ export default function About() {
             </div>
           </div>
           {/* 放說明 */}
-          <div className="sm:text-xl">
+          <div className="sm:text-xl overflow-y-scroll overscroll-contain h-[25rem]">
             {/* 標題 */}
             <div className="flex items-center mt-10">
               <FcQuestions className="text-6xl" />

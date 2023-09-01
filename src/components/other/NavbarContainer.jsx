@@ -186,7 +186,7 @@ export default function NavbarContainer({ children, currentPage }) {
               <ul className="mb-8 text-sm font-medium">
                 <li>
                   <a
-                    className={`${currentPage === 'about' ? 'bg-gray-800/50' : ''} flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer`}
+                    className={`${currentPage === 'About' ? 'bg-gray-800/50' : ''} flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer`}
                     onClick={() => navigate('/about')}
                   >
                     <span className="select-none">About</span>
@@ -194,10 +194,10 @@ export default function NavbarContainer({ children, currentPage }) {
                 </li>
                 <li>
                   <a
-                    className="flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50"
-                    href="#"
+                    className={`${currentPage === 'News' ? 'bg-gray-800/50' : ''} flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer`}
+                    onClick={() => navigate('/news')}
                   >
-                    <span className="select-none">to be done</span>
+                    <span className="select-none">News</span>
                   </a>
                 </li>
                 <li>
