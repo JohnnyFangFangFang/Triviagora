@@ -74,7 +74,7 @@ export default function TriviaItem({ id, title, triviaContent, createdAt, imageU
     <div className="flex items-center justify-center min-h-max my-4">
       {/* trivia 卡片 */}
       <div
-        className="flex rounded-xl border p-5 shadow-md w-9/12 bg-white cursor-pointer hover:bg-slate-100"
+        className="flex rounded-xl border p-5 shadow-md w-9/12 bg-white cursor-pointer hover:bg-slate-100 transition duration-700 ease-in-out hover:scale-110"
         onClick={handleTriviaDetailClick}
       >
         {/* 左側圖片區，該篇 trivia 圖片，高度為寬度 40% */}

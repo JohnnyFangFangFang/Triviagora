@@ -7,6 +7,7 @@ import { app } from "@/utils/firebase"
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { DEFAULT_AVATAR_SVG } from '@/constants';
 import { RiGithubFill } from 'react-icons/ri'
+import { BiLogOut } from "react-icons/bi";
 
 export default function NavbarContainer({ children, currentPage }) {
   const navigate = useNavigate()
@@ -137,7 +138,7 @@ export default function NavbarContainer({ children, currentPage }) {
         <div className="relative z-40">
           <nav
             id="sidebar"
-            className="fixed left-0 mt-6 min-h-fit pt-3 pb-1 flex flex-col w-2/4 sm:w-44 -translate-x-full overflow-y-auto bg-water-blue rounded-r-2xl"
+            className="fixed left-0 mt-6 min-h-fit px-2 pt-3 flex flex-col w-2/4 sm:w-44 -translate-x-full overflow-y-auto bg-water-blue rounded-r-2xl"
           >
             {/* 主要功能區 */}
             <div className="px-4 pb-1 text-white font-bold">
@@ -213,17 +214,19 @@ export default function NavbarContainer({ children, currentPage }) {
             {/* 第二區 end */}
 
             {/* 第三區 */}
-            <div className="px-4 pb-1 text-white font-bold">
-              <h3 className="mb-2 text-xl uppercase">
+            <div className="px-4 pb-1 text-white font-bold border-t-2">
+              {/* 標題暫時不需要 */}
+              {/* <h3 className="mb-2 text-xl uppercase">
                 Others
-              </h3>
-              <ul className="mb-8 text-sm font-medium">
+              </h3> */}
+              <ul className="my-2 text-sm font-medium">
                 <li>
                   <div
                     className="flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer"
                     onClick={handleLogoutClick}
                   >
-                    <span className="select-none">Log out</span>
+                    <BiLogOut className='text-2xl' />
+                    <span className="select-none ml-1">Log out</span>
                   </div>
                 </li>
               </ul>

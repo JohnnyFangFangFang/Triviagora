@@ -54,7 +54,7 @@ export default function NewsItem({ title, tag, date, content }) {
 
       {/* 卡片細節 Modal */}
       {showModal && (
-        <div className="fixed left-[8%] sm:left-1/4 top-[8%] w-5/6 sm:w-1/2 h-5/6 inset-0 z-50 outline-none focus:outline-none">
+        <div className="fixed left-[8%] sm:left-1/4 top-[8%] w-5/6 sm:w-1/2 h-5/6 inset-0 z-50 outline-none focus:outline-none transition duration-700 ease-in-out hover:scale-110">
           {/* 透明效果層 */}
           <div className="absolute bg-gray-500 opacity-80 inset-0 z-0 rounded-xl" />
 
