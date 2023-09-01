@@ -270,11 +270,11 @@ export default function HomePageContainer({ children, currentPage }) {
       </main>
 
       {/* Footer */}
-      <footer className="fixed bottom-0 w-full py-1 bg-water-blue text-white lg:flex lg:justify-center lg:gap-10">
-        <p className="w-fit mx-auto lg:mx-0 font-bold text-xl">
+      <footer className="fixed bottom-0 w-full py-1 bg-water-blue text-white flex justify-center gap-10">
+        <p className="hidden sm:block w-fit font-bold text-xl">
           Triviagora
         </p>
-        <p className="flex w-fit mx-auto items-center lg:mx-0 text-lg">
+        <p className="flex w-fit items-center sm:text-lg">
           Copyright © 2023
           {/* 資安考量：noopener 會阻止新開啟的分頁存取原始頁面的 window 物件，而 noreferrer 會隱藏來源網站的信息 */}
           <a href="https://github.com/JohnnyFangFangFang" target="_blank" rel="noopener noreferrer" className="ml-3 underline hover:text-yellow-300">

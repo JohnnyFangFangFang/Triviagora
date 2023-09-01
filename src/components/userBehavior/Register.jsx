@@ -300,7 +300,7 @@ export default function Register() {
             <div className="w-full md:w-1/2 py-10 px-5 md:px-10">
 
               {/* 放 logo 與 slogan */}
-              <div className='flex justify-center items-center'>
+              <div className='flex justify-center items-center cursor-pointer' onClick={() => navigate('/')}>
                 <img src={triviagora_logo_blue} alt="logo" width={100} />
                 <div className='pl-3'>
                   <p className='text-2xl'>Triviagora</p>

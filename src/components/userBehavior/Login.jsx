@@ -66,7 +66,7 @@ export default function Login() {
           <div className="text-white">
             <div className="mb-8 flex flex-col items-center">
               {/* 放 logo 圖 */}
-              <img src={triviagora_logo_blue} alt="logo" width={150} />
+              <img src={triviagora_logo_blue} alt="logo" width={150} className='cursor-pointer' onClick={() => navigate('/')} />
               <h1 className="mb-2 text-2xl">Triviagora</h1>
               <span className="text-gray-300">Enter Login Details</span>
             </div>
