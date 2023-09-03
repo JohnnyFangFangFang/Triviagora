@@ -8,6 +8,7 @@ import TriviaItemPage from "./TriviaItemPage";
 import ProfilePageOtherUser from "./ProfilePageOtherUser";
 import AboutPage from "./AboutPage";
 import NewsPage from "./NewsPage";
+import CreditPage from "./CreditPage";
 
 export {
   HomePage,
@@ -20,4 +21,5 @@ export {
   ProfilePageOtherUser,
   AboutPage,
   NewsPage,
+  CreditPage,
 };

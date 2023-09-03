@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { HomePage, AllTriviaPage, RegisterPage, LoginPage, ProfilePage, PostTriviaPage, TriviaItemPage, ProfilePageOtherUser, AboutPage, NewsPage } from './pages'
+import { HomePage, AllTriviaPage, RegisterPage, LoginPage, ProfilePage, PostTriviaPage, TriviaItemPage, ProfilePageOtherUser, AboutPage, NewsPage, CreditPage } from './pages'
 
 function App() {
   const basename = import.meta.env.PUBLIC_URL
@@ -17,6 +17,7 @@ function App() {
           <Route path="profile/:id" element={<ProfilePageOtherUser />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="news" element={<NewsPage />} />
+          <Route path="credit" element={<CreditPage />} />
         </Routes>
       </BrowserRouter>
     </>

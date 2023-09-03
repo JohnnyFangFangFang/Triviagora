@@ -212,10 +212,10 @@ export default function NavbarContainer({ children, currentPage }) {
                 </li>
                 <li>
                   <a
-                    className="flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50"
-                    href="#"
+                    className={`${currentPage === 'Credit' ? 'bg-gray-800/50' : ''} flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer`}
+                    onClick={() => navigate('/credit')}
                   >
-                    <span className="select-none">to be done</span>
+                    <span className="select-none">Credit</span>
                   </a>
                 </li>
               </ul>
