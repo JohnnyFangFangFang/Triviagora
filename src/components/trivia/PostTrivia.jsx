@@ -8,6 +8,7 @@ import { collection, addDoc, updateDoc, Timestamp } from "firebase/firestore";
 import { db, app } from "@/utils/firebase"
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import posttrivia_socialsharing from '@/assets/posttrivia_socialsharing.svg'
 
 export default function PostTrivia() {
   const navigate = useNavigate()
@@ -108,19 +109,24 @@ export default function PostTrivia() {
   if (isLoading) return <div className="mt-24">Loading...</div>;
 
   return (
-    <div className='pt-20'>
-      <div className="heading text-center font-bold text-2xl m-5 text-gray-800">
+    <div className='relative pt-20 pb-36 flex flex-col items-center'>
+      {/* 大標題 */}
+      <div className="text-center font-bold text-lg sm:text-2xl m-5 text-gray-800">
         Let's share a new post, happy trivia!
       </div>
 
-      <div className="grid grid-cols-3 mt-10 px-10">
-        {/* 上傳圖片鈕 */}
+      {/* 插圖 top-[18rem] */}
+      <img src={posttrivia_socialsharing} alt="post illustration image" className='fixed bottom-0 left-0 hidden sm:block z-[-1] w-2/6' />
+
+      {/* 主要內容區 */}
+      <div className="w-full sm:grid sm:grid-cols-3 pt-10 sm:pl-40 sm:pr-20">
+        {/* 上傳圖片區 */}
         <div
-          className=" col-span-1 h-full flex bg-black bg-opacity-60 bg-cover bg-center shadow-lg rounded-l-xl"
+          className=" col-span-1 h-full flex bg-black bg-opacity-60 bg-cover bg-center shadow-lg rounded-xl sm:rounded-l-xl py-3"
           style={{ backgroundImage: `url(${imageTempUrl})` }}
         >
           {/* 上傳卡片樣式 */}
-          <div className="p-4 bg-white w-full sm:min-w-min max-w-max m-auto rounded-lg bg-opacity-70">
+          <div className="p-4 bg-white w-full max-w-max m-auto rounded-lg bg-opacity-70">
             <div className="flex flex-col items-center p-5 relative border-4 border-dotted border-gray-400 rounded-lg">
               <svg
                 className="text-indigo-500 w-full max-w-[6rem] mx-auto mb-4"
@@ -154,7 +160,7 @@ export default function PostTrivia() {
         </div>
 
         {/* 右側發文區 */}
-        <div className="editor col-span-2 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg rounded-r-xl">
+        <div className="editor col-span-2 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg rounded-xl sm:rounded-r-xl">
           {/* 標題 */}
           <input
             className="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none"
@@ -226,13 +232,13 @@ export default function PostTrivia() {
             </div>
           </div> */}
           {/* buttons */}
-          <div className="flex mt-4">
-            <div className="ml-auto border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 rounded-xl hover:bg-red-400 hover:text-white"
+          <div className="flex flex-col items-center gap-6 sm:flex-row mt-4">
+            <div className="w-2/3 sm:w-fit sm:ml-auto border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 rounded-xl hover:bg-red-400 hover:text-white text-center"
               onClick={handleCancelTriviaClick}>
               Cancel
             </div>
             <div
-              className="ml-2 border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 bg-indigo-600 rounded-xl hover:bg-indigo-400 "
+              className="w-2/3 sm:w-fit sm:ml-2 border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 bg-indigo-600 rounded-xl hover:bg-indigo-400 text-center"
               onClick={handlePostTriviaClick}
             >
               Post

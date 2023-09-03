@@ -8,6 +8,7 @@ import EditProfileInfoModal from './EditProfileInfoModal';
 import EditProfilePhotoModal from './EditProfilePhotoModal';
 import { TriviaCollection, SavedTriviaCollection } from '@/components/trivia';
 import { DEFAULT_AVATAR_SVG } from '@/constants';
+import profilepage from '@/assets/profilepage.svg'
 
 export default function Profile() {
   const navigate = useNavigate()
@@ -115,6 +116,8 @@ export default function Profile() {
               </ul>
             </div>
             {/* End of profile card */}
+
+            <img src={profilepage} alt="profilepage illustration image" className='hidden md:block mt-8' />
 
             {/* Friends card，暫時不會用到 */}
             {/* <div className="my-4">

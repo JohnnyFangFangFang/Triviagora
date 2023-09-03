@@ -45,8 +45,7 @@ export default function TriviaCollection({ page, userId }) {
   if (isLoading) return <div className="mt-24">Loading...</div>;
 
   return (
-    <div className="">
-      <div className="">
+      <div className="mt-10">
         {allTrivia.length !== 0 ?
           (allTrivia.map((trivia) => {
             // 首頁跟 profile 頁面渲染的元件不同
@@ -62,6 +61,5 @@ export default function TriviaCollection({ page, userId }) {
           })) : <div className='text-center'>You have not posted any trivia.</div>
         }
       </div>
-    </div>
   )
 }

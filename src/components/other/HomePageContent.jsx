@@ -16,9 +16,9 @@ export default function HomePageContent() {
       {/* 第一段，問句開頭 */}
       <div className='relative font-mono text-xl sm:text-3xl'>
         <img src={homepage_thoughts} alt="thoughts" />
-        <p className='absolute top-0 sm:top-[5rem] sm:right-[5rem]'>A fan of trivia?</p>
-        <p className='absolute top-10 sm:top-[13rem] sm:right-[15rem]'>Wanna know some fun facts?</p>
-        <p className='absolute top-28 sm:top-[21rem] sm:right-[5rem] animate-bounce'>Have tons of trivia to share?</p>
+        <p className='absolute top-0 sm:top-[5rem] sm:right-[5rem] drop-shadow-md'>A fan of trivia?</p>
+        <p className='absolute top-10 sm:top-[13rem] sm:right-[15rem] drop-shadow-md'>Wanna know some fun facts?</p>
+        <p className='absolute top-28 sm:top-[21rem] sm:right-[5rem] drop-shadow-md animate-bounce'>Have tons of trivia to share?</p>
       </div>
 
       {/* 第二段，分享 */}
