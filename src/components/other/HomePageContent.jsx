@@ -33,8 +33,8 @@ export default function HomePageContent() {
       <div className='relative font-mono mt-32 text-lg sm:text-3xl text-center'>
 
         {/* 標題與插圖 */}
-        <div className='py-3'>Have an account? Login and enjoy!</div>
-        <div className='pt-3 pb-12'>No account? Let's get one!</div>
+        <div className=''>Have an account? Login and enjoy!</div>
+        <div className='pt-3 pb-20'>No account? Let's get one!</div>
         <div className='flex px-10'>
           <img src={homepage_register} alt="teamup" className='w-1/2' />
           <img src={homepage_login} alt="teamup" className='w-1/2 mt-[73px]' />

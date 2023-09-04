@@ -177,7 +177,7 @@ export default function NavbarContainer({ children, currentPage }) {
                 {/* 發文頁面 */}
                 <li>
                   <a
-                    className={` ${currentPage === 'PostTrivia' ? 'bg-gray-800/50' : ''} flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer`}
+                    className={` ${currentPage === 'Post Trivia' ? 'bg-gray-800/50' : ''} flex items-center rounded-2xl py-3 pl-3 pr-4 hover:bg-gray-500/50 cursor-pointer`}
                     // href="posttrivia"
                     onClick={() => navigate('/posttrivia')}
                   >

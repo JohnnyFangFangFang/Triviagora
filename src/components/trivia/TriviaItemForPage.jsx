@@ -112,7 +112,7 @@ export default function TriviaItemForPage({ title, triviaContent, createdAt, ima
   return (
     <div className="flex items-center justify-center min-h-max pt-28 pb-24">
       {/* trivia 卡片 */}
-      <div className="relative rounded-xl border p-5 shadow-md w-10/12 bg-white">
+      <div className="relative rounded-xl border p-5 shadow-md w-10/12 max-w-4xl bg-white">
         <div className="flex w-full items-center justify-between border-b pb-3">
           {/* 標題 */}
           <div className="flex items-center space-x-3">

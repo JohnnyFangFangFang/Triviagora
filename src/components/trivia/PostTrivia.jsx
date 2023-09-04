@@ -115,11 +115,11 @@ export default function PostTrivia() {
         Let's share a new post, happy trivia!
       </div>
 
-      {/* 插圖 top-[18rem] */}
-      <img src={posttrivia_socialsharing} alt="post illustration image" className='fixed bottom-0 left-0 hidden sm:block z-[-1] w-2/6' />
+      {/* 插圖 */}
+      <img src={posttrivia_socialsharing} alt="post illustration image" className='fixed bottom-0 left-0 hidden sm:block z-[-1] w-52' />
 
       {/* 主要內容區 */}
-      <div className="w-full sm:grid sm:grid-cols-3 pt-10 sm:pl-40 sm:pr-20">
+      <div className="w-11/12 sm:grid sm:grid-cols-3 pt-10 sm:pl-40 sm:pr-20">
         {/* 上傳圖片區 */}
         <div
           className=" col-span-1 h-full flex bg-black bg-opacity-60 bg-cover bg-center shadow-lg rounded-xl sm:rounded-l-xl py-3"
@@ -160,7 +160,7 @@ export default function PostTrivia() {
         </div>
 
         {/* 右側發文區 */}
-        <div className="editor col-span-2 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg rounded-xl sm:rounded-r-xl">
+        <div className="mt-6 sm:mt-0 col-span-2 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg rounded-xl sm:rounded-r-xl">
           {/* 標題 */}
           <input
             className="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none"

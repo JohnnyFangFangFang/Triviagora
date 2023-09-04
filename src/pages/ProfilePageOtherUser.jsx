@@ -36,7 +36,7 @@ export default function ProfilePageOtherUser() {
   if (isLoading) return <div className="mt-24">Loading...</div>;
 
   return (
-    <NavbarContainer currentPage="Profile & Settings">
+    <NavbarContainer currentPage="Profile Page">
       <ProfileOtherUser {...author} authorUid={authorUid} />
     </NavbarContainer>
   )

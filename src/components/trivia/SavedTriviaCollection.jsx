@@ -68,16 +68,14 @@ export default function SavedTriviaCollection({ userId }) {
   if (isLoading) return <div className="mt-24">Loading...</div>;
 
   return (
-    <div className="">
-      <div className="">
-        {allTrivia.length !== 0 ?
-          (allTrivia.map((trivia) => {
-            return (
-              <TriviaItemForProfile key={trivia.id} {...trivia} />
-            )
-          })) : <div className='text-center'>Have not saved any trivia.</div>
-        }
-      </div>
+    <div className="mt-10">
+      {allTrivia.length !== 0 ?
+        (allTrivia.map((trivia) => {
+          return (
+            <TriviaItemForProfile key={trivia.id} {...trivia} />
+          )
+        })) : <div className='text-center'>Have not saved any trivia.</div>
+      }
     </div>
   )
 }
