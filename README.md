@@ -71,6 +71,8 @@ password: (to be done)
 * react-time-ago 7.2.1
 * react-icons 4.10.1
 * react-router-dom 6.15.0
+* Tailwind Components
+* unDraw
 
 
 # Installation and Execution (if you plan to run locally)
