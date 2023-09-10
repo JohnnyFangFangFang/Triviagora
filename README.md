@@ -1,5 +1,5 @@
-Last updated: 20230831  
-（找工作前記得放 gif demo、介紹 blog 連結）
+Last updated: 20230910  
+（找工作前記得放開發紀錄連結）
 
 # ✈️Conclusion First✈️
 Triviagora is a webiste for sharing trivia, just give it a try: [Triviagora](https://triviagora.web.app/)
@@ -8,49 +8,59 @@ Triviagora is a webiste for sharing trivia, just give it a try: [Triviagora](htt
 This is my first side project, a website where people share their trivia or interesting facts. There are tons of ideas in my brain, I will keep updating more functions through time while upscaling my skills in React, Tailwind, Firebase, etc.
 
 This is the homepage:  
+![demo 首頁](https://github.com/JohnnyFangFangFang/Triviagora/assets/121143837/7beb440d-c421-4f42-a4c0-873d1673d626)
 
 
 # Features
 👨‍👩‍👧‍👦 A few features are listed here. As a user, you can...  
 
 
-To browse other's trivia or reply to it:
+After login, to use the menu bar to go any page you like or log out:  
+![demo 漢堡排](https://github.com/JohnnyFangFangFang/Triviagora/assets/121143837/899ac8fe-8107-4186-ab26-f468216feb6c)
 
+
+To browse trivia or reply to it:
+![demo 瀏覽文章與留言](https://github.com/JohnnyFangFangFang/Triviagora/assets/121143837/4060c97e-d44a-429e-b777-f912a67fb212)
 
 
 To check the author's profile:
-
+![demo 看作者個人頁面](https://github.com/JohnnyFangFangFang/Triviagora/assets/121143837/92262c89-0d86-4922-9d13-f36459f987cf)
 
 
 To save the trivia and browse what you have saved:
-
+![demo 收藏文章](https://github.com/JohnnyFangFangFang/Triviagora/assets/121143837/70af78b5-18e3-422b-8495-d24e46555420)
 
 
 To post your trivia with or without image:
-
+![demo post trivia](https://github.com/JohnnyFangFangFang/Triviagora/assets/121143837/04546937-9e17-4431-a81d-a62d4a7e8685)
 
 
 To delete your post or comment:
-
+![demo delete trivia or comment](https://github.com/JohnnyFangFangFang/Triviagora/assets/121143837/26aac45c-9b96-4e8c-9f12-b6818f1e153e)
 
 
 To change your avatar:
-
+![demo change avatar](https://github.com/JohnnyFangFangFang/Triviagora/assets/121143837/afa82023-0c6e-4482-af3f-833c9132c9df)
 
 
 To edit your personal profile:
+![demo change info](https://github.com/JohnnyFangFangFang/Triviagora/assets/121143837/4143cd16-2163-443f-bafd-15ed89166bf5)
 
 
+To browse other pages in the website:  
+![demo other pages](https://github.com/JohnnyFangFangFang/Triviagora/assets/121143837/7f44556d-07ee-43d5-b747-92f61d8d5a36)
 
-To :
+
+RWD (Responsive Web Design):  
+![demo RWD](https://github.com/JohnnyFangFangFang/Triviagora/assets/121143837/5b2e720d-62f1-42ca-a63c-50f4d42a8b0f)
 
 
 
 # Just wanna have a taste of this project?
 You are welcome to directly visit https://triviagora.web.app without downloading any thing. Just in case you don't want to register, here is a test account available. Please don't change its password, thank you. (If you do, your projects will be full of bugs.)  
 
-account: (to be done)  
-password: (to be done)
+account: test@example.com  
+password: 123456
 
 
 # Tech Stack
