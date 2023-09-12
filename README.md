@@ -1,7 +1,9 @@
 Last updated: 20230912  
 
 # ✈️Conclusion First✈️
-Triviagora is a webiste for sharing trivia, just give it a try: [Triviagora](https://triviagora.web.app/)
+Triviagora is a webiste for sharing trivia, just give it a try: [Triviagora](https://triviagora.web.app/)  
+test account: test@example.com  
+password: 123456  
 
 # 🚀Introduction🚀
 This is my first side project, a website where people share their trivia or interesting facts. There are tons of ideas in my brain, I will keep updating more functions through time while upscaling my skills in React, Tailwind, Firebase, etc.  
