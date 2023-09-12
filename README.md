@@ -1,11 +1,12 @@
-Last updated: 20230910  
-（找工作前記得放開發紀錄連結）
+Last updated: 20230912  
 
 # ✈️Conclusion First✈️
 Triviagora is a webiste for sharing trivia, just give it a try: [Triviagora](https://triviagora.web.app/)
 
 # 🚀Introduction🚀
-This is my first side project, a website where people share their trivia or interesting facts. There are tons of ideas in my brain, I will keep updating more functions through time while upscaling my skills in React, Tailwind, Firebase, etc.
+This is my first side project, a website where people share their trivia or interesting facts. There are tons of ideas in my brain, I will keep updating more functions through time while upscaling my skills in React, Tailwind, Firebase, etc.  
+
+[Project Retrospective](https://medium.com/@johnnyfang_11536/side-project-triviagora-f8eaa4593423): I recorded the development process, e.g., my thoughts about the product, obstacles encountered during development, and what could be improved, etc. The article is in Mandarin; an English version will be available in the near future.  
 
 This is the homepage:  
 ![demo 首頁](https://github.com/JohnnyFangFangFang/Triviagora/assets/121143837/7beb440d-c421-4f42-a4c0-873d1673d626)
