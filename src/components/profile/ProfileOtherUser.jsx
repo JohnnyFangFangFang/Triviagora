@@ -59,9 +59,10 @@ export default function ProfileOtherUser({ displayName, photoURL, introduction, 
                   <p>Registered</p>
                   <p className="ml-auto">{formattedCreationTime}</p>
                 </li>
+                {/* 如果註冊後就沒再登入，那要換成註冊時間，不然會沒資料 */}
                 <li className="flex md:block lg:flex items-center py-3">
                   <p>Last sign in</p>
-                  <p className="ml-auto">{formattedLastSignInTime}</p>
+                  <p className="ml-auto">{formattedLastSignInTime === "Invalid Date" ? formattedCreationTime : formattedLastSignInTime}</p>
                 </li>
               </ul>
             </div>

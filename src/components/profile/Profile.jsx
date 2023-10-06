@@ -109,9 +109,10 @@ export default function Profile() {
                   <p>Registered</p>
                   <p className="ml-auto">{userCreationTime}</p>
                 </li>
+                {/* 如果註冊後就沒再登入，那要換成註冊時間，不然會沒資料 */}
                 <li className="flex md:block lg:flex items-center py-3">
                   <p>Last sign in</p>
-                  <p className="ml-auto">{userLastSignInTime}</p>
+                  <p className="ml-auto">{userLastSignInTime === "Invalid Date" ? userCreationTime : userLastSignInTime}</p>
                 </li>
               </ul>
             </div>

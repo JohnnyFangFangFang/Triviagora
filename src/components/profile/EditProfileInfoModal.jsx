@@ -10,8 +10,6 @@ export default function EditProfileInfoModal({ userId, editContent, setDisplayNa
   const [showModal, setShowModal] = useState(false);
   const [profileInfo, setProfileInfo] = useState('');
 
-  console.log("userId 是什麼：", userId)
-
   // 控制彈跳視窗
   function toggleModal() {
     setShowModal(!showModal);
