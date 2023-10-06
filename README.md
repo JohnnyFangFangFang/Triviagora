@@ -1,7 +1,7 @@
 Last updated: 20230912  
 
 # ✈️Conclusion First✈️
-Triviagora is a webiste for sharing trivia, just give it a try: [Triviagora](https://triviagora.web.app/)  
+Triviagora is a website for sharing trivia, just give it a try: [Triviagora](https://triviagora.web.app/)  
 test account: test@example.com  
 password: 123456  
 
