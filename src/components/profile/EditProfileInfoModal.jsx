@@ -10,6 +10,8 @@ export default function EditProfileInfoModal({ userId, editContent, setDisplayNa
   const [showModal, setShowModal] = useState(false);
   const [profileInfo, setProfileInfo] = useState('');
 
+  console.log("userId 是什麼：", userId)
+
   // 控制彈跳視窗
   function toggleModal() {
     setShowModal(!showModal);
@@ -32,6 +34,7 @@ export default function EditProfileInfoModal({ userId, editContent, setDisplayNa
     const auth = getAuth();
     // 先提供使用者資料指引，方便後面資料操作
     const userRef = doc(db, "users", userId);
+
 
     // 先加個條件式判斷使用者是否輸入東西，若沒輸入就想送出則跳提醒
     if (profileInfo === '') {

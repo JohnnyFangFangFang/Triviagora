@@ -181,6 +181,7 @@ export default function Profile() {
                       <a className="text-blue-800" href="mailto:jane@example.com">{email}</a>
                     </div>
                     <EditProfileInfoModal
+                      userId={userId}
                       setEmail={setEmail}
                       editContent="email"
                     />
@@ -190,6 +191,7 @@ export default function Profile() {
                     <div className="px-4 py-2 font-semibold">Password</div>
                     <div className="px-4 py-2">********</div>
                     <EditProfileInfoModal
+                      userId={userId}
                       editContent="password"
                     />
                   </div>
