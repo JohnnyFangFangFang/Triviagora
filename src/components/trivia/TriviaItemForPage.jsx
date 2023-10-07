@@ -46,7 +46,6 @@ export default function TriviaItemForPage({ title, triviaContent, createdAt, ima
         savedTriviaId: [triviaId]
       });
       setIsTriviaSaved(true)
-      alert('Save the trivia successfully!');
       // 判斷是否已收藏本文
     } else if (isTriviaSaved) {
       // 已收藏則取消收藏
@@ -113,18 +112,21 @@ export default function TriviaItemForPage({ title, triviaContent, createdAt, ima
     <div className="flex items-center justify-center min-h-max pt-28 pb-24">
       {/* trivia 卡片 */}
       <div className="relative rounded-xl border p-5 shadow-md w-10/12 max-w-4xl bg-white">
-        <div className="flex w-full items-center justify-between border-b pb-3">
+
+        {/* 文章表頭區 */}
+        <div className="md:flex w-full items-center justify-between border-b pb-3">
           {/* 標題 */}
-          <div className="flex items-center space-x-3">
-            <div className="text-3xl font-bold">{title}</div>
+          <div className="flex w-full md:w-[65%] items-center space-x-3">
+            <div className="text-xl sm:text-2xl lg:text-3xl font-bold">{title}</div>
           </div>
-          <div className="flex items-center space-x-8">
+          {/* 頭像、名稱、時間 */}
+          <div className="flex w-full md:w-[35%] md:justify-end items-center md:space-x-4">
             {/* 頭像與使用者名稱 */}
             <div
-              className="flex items-center space-x-3 p-2 rounded-lg border-2 border-slate-200 cursor-pointer hover:bg-slate-300"
+              className="flex items-center space-x-3 p-2 rounded-lg cursor-pointer hover:bg-slate-300"
               onClick={handleAvatarClick}
             >
-              <div className='h-16 w-16 rounded-full bg-slate-400'>
+              <div className='h-16 w-16 rounded-full bg-slate-400 flex-shrink-0'>
                 {author.photoURL ? <img src={author.photoURL} alt="user photo" className="object-cover h-full w-full rounded-full shadow-xl" /> : DEFAULT_AVATAR_SVG}
               </div>
               <div className="text-lg font-bold text-slate-700">{author.displayName || 'author'}</div>
@@ -141,14 +143,16 @@ export default function TriviaItemForPage({ title, triviaContent, createdAt, ima
             {user.uid === authorUid && <DeleteTrivia triviaId={triviaId} />}
           </div>
         </div>
+
+        {/* 文章內容區 */}
         <div className="mt-4 mb-6">
           {/* 該篇 trivia 圖片，高度為寬度 40% */}
-          <div className="heightToWidth-40 flex justify-center">
+          <div className="heightToWidth-40 flex justify-center my-8">
             {/* 若沒圖則使用預設圖片 */}
             <img src={imageUrl ? imageUrl : earth_light_blue} alt="trivia image" className="object-cover h-full rounded-xl shadow-xl" />
           </div>
           {/* 內文 */}
-          <div className="mt-4 text-xl text-neutral-600">{triviaContent}</div>
+          <div className="mt-4 sm:text-xl text-neutral-600">{triviaContent}</div>
         </div>
 
         {/* 留言、收藏 icon 區 */}
@@ -156,7 +160,7 @@ export default function TriviaItemForPage({ title, triviaContent, createdAt, ima
           <div className="flex items-center justify-between text-slate-500 border-b pb-3">
             <div className="flex space-x-4 md:space-x-8">
               {/* 留言數 */}
-              <div className="flex cursor-pointer items-center transition hover:text-slate-600">
+              <div className="flex items-center transition hover:text-slate-600">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="mr-1.5 h-5 w-5"
@@ -207,14 +211,15 @@ export default function TriviaItemForPage({ title, triviaContent, createdAt, ima
             </div>
           </div>
         </div>
+
         {/* 留言區 */}
-        <div className='mt-3 text-3xl font-bold text-slate-400'>測試留言區</div>
+        <div className='mt-3 text-3xl font-bold text-slate-400'>留言區</div>
         <CommentCollection
           triviaId={triviaId}
           setCommentsQuantity={setCommentsQuantity}
         />
-      </div>
 
+      </div>
     </div>
   )
 }
