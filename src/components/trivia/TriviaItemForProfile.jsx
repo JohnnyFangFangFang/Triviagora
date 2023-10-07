@@ -106,9 +106,9 @@ export default function TriviaItemForProfile({ id, title, triviaContent, created
           </div>
 
           <div className="w-full my-2">
-            {/* 標題 */}
-            <div className="mb-1 text-base font-bold">{title}</div>
-            {/* 內文，將字數限制在最多 3 行 */}
+            {/* 標題，將字數限制在最多 1 行 */}
+            <div className="mb-1 text-base font-bold line-clamp-[1]">{title}</div>
+            {/* 內文，將字數限制在最多 1 行 */}
             <div className="text-sm text-neutral-600 line-clamp-[1]">{triviaContent}</div>
           </div>
           <div>
