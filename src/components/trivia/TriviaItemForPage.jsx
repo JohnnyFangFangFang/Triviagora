@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Fragment } from 'react'
 import { useNavigate } from 'react-router-dom';
 import ReactTimeAgo from 'react-time-ago'
 import { db } from "@/utils/firebase"
@@ -24,6 +24,16 @@ export default function TriviaItemForPage({ title, triviaContent, createdAt, ima
   // 先提供使用者資料指引，方便後面資料操作
   const userRef = doc(db, "users", user.uid);
 
+  // 為了讓換行符能夠實際變成 JSX 這樣畫面才會實際換行，所以要做一下轉換
+  // 因為是用換行符切陣列元素，所以只要不是陣列最後一個元素，都要加個空白行
+  const formattedTriviaContent = triviaContent.split('\n').map((str, index, array) =>
+    index === array.length - 1 ? str : (
+      <Fragment key={index}>
+        {str}
+        <br />
+      </Fragment>
+    )
+  );
 
   // 看作者細節
   function handleAvatarClick() {
@@ -152,7 +162,7 @@ export default function TriviaItemForPage({ title, triviaContent, createdAt, ima
             <img src={imageUrl ? imageUrl : earth_light_blue} alt="trivia image" className="object-cover h-full rounded-xl shadow-xl" />
           </div>
           {/* 內文 */}
-          <div className="mt-4 sm:text-xl text-neutral-600">{triviaContent}</div>
+          <div className="mt-4 sm:text-xl text-neutral-600">{formattedTriviaContent}</div>
         </div>
 
         {/* 留言、收藏 icon 區 */}

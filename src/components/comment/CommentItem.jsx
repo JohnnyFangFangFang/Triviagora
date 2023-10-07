@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 // 使用的 UI 元件：https://tailwindcomponents.com/component/user-post-card
 // UI 元件備案：https://tailwindcomponents.com/component/maede
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Fragment } from 'react'
 import { useNavigate } from 'react-router-dom';
 import ReactTimeAgo from 'react-time-ago'
 import { db } from "@/utils/firebase"
@@ -14,6 +14,17 @@ export default function CommentItem({ comment, createdAt, authorUid, triviaId, c
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(true);
   const [author, setAuthor] = useState({});
+
+  // 為了讓換行符能夠實際變成 JSX 這樣畫面才會實際換行，所以要做一下轉換
+  // 因為是用換行符切陣列元素，所以只要不是陣列最後一個元素，都要加個空白行
+  const formattedComment = comment.split('\n').map((str, index, array) =>
+    index === array.length - 1 ? str : (
+      <Fragment key={index}>
+        {str}
+        <br />
+      </Fragment>
+    )
+  );
 
   // 先拿使用者資料
   const auth = getAuth();
@@ -79,7 +90,7 @@ export default function CommentItem({ comment, createdAt, authorUid, triviaId, c
         </div>
         <div className="mt-4">
           {/* 內文 */}
-          <div className="text-sm text-neutral-600">{comment}</div>
+          <div className="text-sm text-neutral-600">{formattedComment}</div>
         </div>
         {/* 如果是自己的貼文才會出現刪除鈕 */}
         {user.uid === authorUid && <DeleteComment triviaId={triviaId} commentId={commentId} />}
