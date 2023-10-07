@@ -13,6 +13,12 @@ export default function News() {
       {/* 卡片區 */}
       <div className="min-h-max">
         <NewsItem
+          title={'Thanks for recommendation!'}
+          tag={'News'}
+          date={'07 Oct 2023'}
+          content={'We got recommendation from our dear users, Richie and Adelina. We really appreciate those inspiring thoughts on this platform and thus put them on the homepage for more people to know this incredible trivia-sharing website. Can\'t wait to see more feedbacks!'}
+        />
+        <NewsItem
           title={'Debut!'}
           tag={'Update'}
           date={'31 Aug 2023'}
