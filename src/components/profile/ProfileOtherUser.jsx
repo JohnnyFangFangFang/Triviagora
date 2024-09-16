@@ -120,9 +120,9 @@ export default function ProfileOtherUser({ displayName, photoURL, introduction, 
                   </div>
                   {/* 使用者 email，暫時不顯示其他人的 email */}
                   {/* <div className="grid grid-cols-3 my-1">
-                      <div className="px-4 py-2 font-semibold">Email.</div>
+                      <div className="px-4 py-2 font-semibold">Email</div>
                       <div className="px-4 py-2">
-                        <a className="text-blue-800" href="mailto:jane@example.com">{email}</a>
+                        <a className="text-blue-800">{email}</a>
                       </div>
                     </div> */}
                 </div>
