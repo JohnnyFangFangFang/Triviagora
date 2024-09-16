@@ -21,6 +21,9 @@ export default function Profile() {
   const [isPhotoChanged, setIsPhotoChanged] = useState(false);
   const [userCreationTime, setUserCreationTime] = useState('no record');
   const [userLastSignInTime, setUserLastSignInTime] = useState('no record');
+  const [isEditAvailable, setIsEditAvailable] = useState(true)
+
+  const testAccounts = ['user1@example.com', 'user2@example.com', 'user3@example.com', 'user4@example.com', 'user5@example.com', 'user6@example.com', 'test@example.com']
 
   // 另外從資料庫拿 introduction
   async function getUserIntroduction() {
@@ -48,6 +51,11 @@ export default function Profile() {
         setEmail(user.email);
         setDisplayName(user.displayName || "Please edit your display name")
         setPhotoURL(user.photoURL)
+
+        // 若為測試帳號則不得改帳密
+        if (testAccounts.includes(user.email)) {
+          setIsEditAvailable(false)
+        }
 
         // 轉換帳號註冊、上次上線時間的資料格式
         const creationTime = new Date(user.metadata.creationTime);
@@ -177,24 +185,24 @@ export default function Profile() {
                   </div>
                   {/* 使用者 email */}
                   <div className="grid grid-cols-3 my-1">
-                    <div className="px-4 py-2 font-semibold">Email.</div>
+                    <div className="px-4 py-2 font-semibold">Email</div>
                     <div className="px-4 py-2">
-                      <a className="text-blue-800" href="mailto:jane@example.com">{email}</a>
+                      <a className="text-blue-800">{email}</a>
                     </div>
-                    <EditProfileInfoModal
+                    {isEditAvailable && <EditProfileInfoModal
                       userId={userId}
                       setEmail={setEmail}
                       editContent="email"
-                    />
+                    />}
                   </div>
                   {/* 使用者密碼 */}
                   <div className="grid grid-cols-3 my-1">
                     <div className="px-4 py-2 font-semibold">Password</div>
                     <div className="px-4 py-2">********</div>
-                    <EditProfileInfoModal
+                    {isEditAvailable && <EditProfileInfoModal
                       userId={userId}
                       editContent="password"
-                    />
+                    />}
                   </div>
                 </div>
               </div>
